@@ -232,11 +232,11 @@
             <div class="subtitle">Mfumo wa Usimamizi wa Majukumu</div>
             <div class="field">
                 <label>Namba ya Mfanyakazi</label>
-                <input type="text" id="loginId" placeholder="Weka namba yako" value="123">
+                <input type="text" id="loginId" placeholder="Weka namba yako" value="***">
             </div>
             <div class="field">
                 <label>Nenosiri</label>
-                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="123">
+                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="***">
             </div>
             <div class="login-error" id="loginError">Namba au nenosiri si sahihi!</div>
             <button class="btn-gold login-btn" onclick="handleLogin()">
@@ -253,12 +253,11 @@
     <div id="mainApp">
         <div class="app-container">
 
-            <!-- TOP BAR -->
             <div class="topbar">
                 <div class="brand">
                     <div class="icon">🩺</div>
                     <div>
-                        <div class="name">MFUMO WA MAJUKUMU <span>DR WILLIM CLINIC</span></div>
+                        <div class="name">Dr. <span>William</span></div>
                         <div class="role" id="userRoleDisplay">Mfanyakazi</div>
                     </div>
                 </div>
@@ -281,22 +280,21 @@
                 </div>
             </div>
 
-            <!-- NAV TABS -->
             <div class="nav-tabs" id="navTabs">
                 <div class="nav-tab active" data-page="dashboard" onclick="showPage('dashboard')">
-                    <span class="dot"></span> MWANZO
+                    <span class="dot"></span> Nyumbani
                 </div>
                 <div class="nav-tab" data-page="tasks" onclick="showPage('tasks')">
-                    <span class="dot"></span> MAJUKUMU/DUTY
+                    <span class="dot"></span> Majukumu
                 </div>
                 <div class="nav-tab" data-page="attendance" onclick="showPage('attendance')">
-                    <span class="dot"></span> MAUDHULIO/ATTENDANCE
+                    <span class="dot"></span> Mahudhurio
                 </div>
                 <div class="nav-tab" data-page="performance" onclick="showPage('performance')">
-                    <span class="dot"></span> UTENDAJI/PERFOMANCE
+                    <span class="dot"></span> Utendaji
                 </div>
                 <div class="nav-tab" data-page="calendar" onclick="showPage('calendar')">
-                    <span class="dot"></span> CALENDER
+                    <span class="dot"></span> Kalenda
                 </div>
                 <div class="nav-tab" data-page="admin" id="adminTab" onclick="showPage('admin')" style="display:none;">
                     <span class="dot" style="background:var(--gold);"></span> 👑 Admin
@@ -315,22 +313,10 @@
                 </div>
 
                 <div class="stats-grid" id="dashboardStats">
-                    <div class="stat-card">
-                        <div class="number" id="statTasksTotal">0</div>
-                        <div class="label">Majukumu Yote</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="number green" id="statTasksDone">0</div>
-                        <div class="label">Yamekamilika</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="number red" id="statTasksPending">0</div>
-                        <div class="label">Yamesalia</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="number gold" id="statPerformance">0%</div>
-                        <div class="label">Utendaji</div>
-                    </div>
+                    <div class="stat-card"><div class="number" id="statTasksTotal">0</div><div class="label">Majukumu Yote</div></div>
+                    <div class="stat-card"><div class="number green" id="statTasksDone">0</div><div class="label">Yamekamilika</div></div>
+                    <div class="stat-card"><div class="number red" id="statTasksPending">0</div><div class="label">Yamesalia</div></div>
+                    <div class="stat-card"><div class="number gold" id="statPerformance">0%</div><div class="label">Utendaji</div></div>
                 </div>
 
                 <div class="card card-gold">
@@ -338,19 +324,11 @@
                         <i class="fa-solid fa-bullhorn"></i> Habari za Leo
                         <span class="cloud-badge"><i class="fa-solid fa-cloud"></i> Cloud Sync</span>
                     </h4>
-                    <p style="color:var(--text-dim);font-size:14px;" id="dashboardGreeting">
-                        Karibu! Angalia majukumu yako ya leo.
-                    </p>
+                    <p style="color:var(--text-dim);font-size:14px;" id="dashboardGreeting">Karibu! Angalia majukumu yako ya leo.</p>
                     <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-                        <button class="btn-gold btn-sm" onclick="showPage('tasks')">
-                            <i class="fa-solid fa-list-check"></i> Angalia Majukumu
-                        </button>
-                        <button class="btn-ghost btn-sm" onclick="showPage('attendance')">
-                            <i class="fa-solid fa-clock"></i> Mahudhurio
-                        </button>
-                        <button class="btn-ghost btn-sm" onclick="syncData()" id="syncBtn">
-                            <i class="fa-solid fa-rotate"></i> Sawazisha
-                        </button>
+                        <button class="btn-gold btn-sm" onclick="showPage('tasks')"><i class="fa-solid fa-list-check"></i> Angalia Majukumu</button>
+                        <button class="btn-ghost btn-sm" onclick="showPage('attendance')"><i class="fa-solid fa-clock"></i> Mahudhurio</button>
+                        <button class="btn-ghost btn-sm" onclick="syncData()" id="syncBtn"><i class="fa-solid fa-rotate"></i> Sawazisha</button>
                     </div>
                 </div>
 
@@ -367,34 +345,26 @@
                         <h3 style="font-family:'Space Grotesk';font-size:17px;">📋 Majukumu Yangu</h3>
                         <p style="font-size:12px;color:var(--text-dim);">Tarehe: <span id="taskDateDisplay"></span></p>
                     </div>
-                    <button class="btn-gold btn-sm" onclick="openModal('newTaskModal')">
-                        <i class="fa-solid fa-plus"></i> Ongeza Kazi
-                    </button>
+                    <button class="btn-gold btn-sm" onclick="openModal('newTaskModal')"><i class="fa-solid fa-plus"></i> Ongeza Kazi</button>
                 </div>
                 <div id="taskListContainer"></div>
             </div>
 
             <!-- PAGE: ATTENDANCE -->
             <div class="page" id="page-attendance">
-                <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
-                    <i class="fa-solid fa-clock"></i> Mahudhurio
-                </h3>
+                <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;"><i class="fa-solid fa-clock"></i> Mahudhurio</h3>
                 <div class="attendance-box">
                     <div class="attendance-card">
                         <div class="label">🕐 Muda wa Kuingia</div>
                         <div class="time" id="checkInTime">--:--:--</div>
                         <div><span class="status-badge pending" id="checkInStatus">Bado</span></div>
-                        <button class="btn-gold" style="margin-top:10px;width:100%;" onclick="handleCheckIn()" id="checkInBtn">
-                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia Kazini
-                        </button>
+                        <button class="btn-gold" style="margin-top:10px;width:100%;" onclick="handleCheckIn()" id="checkInBtn"><i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia Kazini</button>
                     </div>
                     <div class="attendance-card">
                         <div class="label">🕐 Muda wa Kutoka</div>
                         <div class="time" id="checkOutTime">--:--:--</div>
                         <div><span class="status-badge pending" id="checkOutStatus">Bado</span></div>
-                        <button class="btn-red" style="margin-top:10px;width:100%;" onclick="handleCheckOut()" id="checkOutBtn">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i> Toka Kazini
-                        </button>
+                        <button class="btn-red" style="margin-top:10px;width:100%;" onclick="handleCheckOut()" id="checkOutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Toka Kazini</button>
                     </div>
                 </div>
                 <div class="card" style="text-align:center;margin-bottom:16px;">
@@ -409,9 +379,7 @@
 
             <!-- PAGE: PERFORMANCE -->
             <div class="page" id="page-performance">
-                <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
-                    <i class="fa-solid fa-chart-line"></i> Utendaji Wangu
-                </h3>
+                <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;"><i class="fa-solid fa-chart-line"></i> Utendaji Wangu</h3>
                 <div class="card" style="text-align:center;">
                     <div class="performance-ring" id="performanceRing">
                         <svg width="120" height="120">
@@ -420,11 +388,7 @@
                         </svg>
                         <div class="value" id="performanceValue">0%</div>
                     </div>
-                    <div style="margin-top:10px;">
-                        <p style="color:var(--text-dim);font-size:13px;" id="performanceMessage">
-                            Bado hakuna majukumu yamekamilika.
-                        </p>
-                    </div>
+                    <div style="margin-top:10px;"><p style="color:var(--text-dim);font-size:13px;" id="performanceMessage">Bado hakuna majukumu yamekamilika.</p></div>
                 </div>
                 <div class="card" style="margin-top:14px;">
                     <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">Mwenendo wa Mwezi</h4>
@@ -434,9 +398,7 @@
 
             <!-- PAGE: CALENDAR -->
             <div class="page" id="page-calendar">
-                <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
-                    <i class="fa-solid fa-calendar-days"></i> Kalenda ya Majukumu
-                </h3>
+                <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;"><i class="fa-solid fa-calendar-days"></i> Kalenda ya Majukumu</h3>
                 <div class="card">
                     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
                         <button class="btn-ghost btn-sm" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
@@ -476,33 +438,18 @@
                     </div>
                     <div class="card">
                         <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">📋 Gawanya Majukumu</h4>
-                        <div class="field">
-                            <label>Chagua Mfanyakazi</label>
-                            <select id="adminTaskUser"></select>
-                        </div>
-                        <div class="field">
-                            <label>Jina la Kazi</label>
-                            <input type="text" id="adminTaskName" placeholder="K.mf. Andika ripoti">
-                        </div>
-                        <div class="field">
-                            <label>Maelezo</label>
-                            <input type="text" id="adminTaskDesc" placeholder="Maelezo ya ziada">
-                        </div>
-                        <div class="field">
-                            <label>Tarehe</label>
-                            <input type="date" id="adminTaskDate">
-                        </div>
-                        <div class="field">
-                            <label>Kipaumbele</label>
+                        <div class="field"><label>Chagua Mfanyakazi</label><select id="adminTaskUser"></select></div>
+                        <div class="field"><label>Jina la Kazi</label><input type="text" id="adminTaskName" placeholder="K.mf. Andika ripoti"></div>
+                        <div class="field"><label>Maelezo</label><input type="text" id="adminTaskDesc" placeholder="Maelezo ya ziada"></div>
+                        <div class="field"><label>Tarehe</label><input type="date" id="adminTaskDate"></div>
+                        <div class="field"><label>Kipaumbele</label>
                             <select id="adminTaskPriority">
                                 <option value="high">🔴 Juu</option>
                                 <option value="medium" selected>🟡 Kati</option>
                                 <option value="low">🟢 Chini</option>
                             </select>
                         </div>
-                        <button class="btn-gold" style="width:100%;" onclick="adminAssignTask()">
-                            <i class="fa-solid fa-paper-plane"></i> Gawanya Kazi
-                        </button>
+                        <button class="btn-gold" style="width:100%;" onclick="adminAssignTask()"><i class="fa-solid fa-paper-plane"></i> Gawanya Kazi</button>
                     </div>
                 </div>
             </div>
@@ -511,8 +458,6 @@
     </div>
 
     <!-- MODALS -->
-
-    <!-- Edit User Modal -->
     <div class="modal-overlay" id="editUserModal">
         <div class="modal-box">
             <div class="modal-head">
@@ -520,18 +465,9 @@
                 <button class="modal-close" onclick="closeModal('editUserModal')"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <input type="hidden" id="editUserId">
-            <div class="field">
-                <label>Jina Kamili</label>
-                <input type="text" id="editUserName" placeholder="Jina la mfanyakazi">
-            </div>
-            <div class="field">
-                <label>Namba ya Simu</label>
-                <input type="text" id="editUserPhone" placeholder="Namba ya simu">
-            </div>
-            <div class="field">
-                <label>Nenosiri Mpya (acha tupu kama hutaki kubadilisha)</label>
-                <input type="text" id="editUserPass" placeholder="Weka nenosiri jipya">
-            </div>
+            <div class="field"><label>Jina Kamili</label><input type="text" id="editUserName" placeholder="Jina la mfanyakazi"></div>
+            <div class="field"><label>Namba ya Simu</label><input type="text" id="editUserPhone" placeholder="Namba ya simu"></div>
+            <div class="field"><label>Nenosiri Mpya (acha tupu kama hutaki kubadilisha)</label><input type="text" id="editUserPass" placeholder="Weka nenosiri jipya"></div>
             <div class="modal-actions">
                 <button class="btn-ghost" onclick="closeModal('editUserModal')">Ghairi</button>
                 <button class="btn-gold" onclick="confirmEditUser()"><i class="fa-solid fa-check"></i> Hifadhi</button>
@@ -539,28 +475,17 @@
         </div>
     </div>
 
-    <!-- New Task Modal -->
     <div class="modal-overlay" id="newTaskModal">
         <div class="modal-box">
             <div class="modal-head">
                 <h3>📋 Kazi Mpya</h3>
                 <button class="modal-close" onclick="closeModal('newTaskModal')"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="field">
-                <label>Jina la Kazi</label>
-                <input type="text" id="taskNameInput" placeholder="K.mf. Andika ripoti ya mauzo">
-            </div>
-            <div class="field">
-                <label>Maelezo (hiari)</label>
-                <textarea id="taskDescInput" rows="2" placeholder="Maelezo ya ziada..."></textarea>
-            </div>
+            <div class="field"><label>Jina la Kazi</label><input type="text" id="taskNameInput" placeholder="K.mf. Andika ripoti ya mauzo"></div>
+            <div class="field"><label>Maelezo (hiari)</label><textarea id="taskDescInput" rows="2" placeholder="Maelezo ya ziada..."></textarea></div>
             <div class="field-row">
-                <div class="field">
-                    <label>Tarehe</label>
-                    <input type="date" id="taskDateInput">
-                </div>
-                <div class="field">
-                    <label>Kipaumbele</label>
+                <div class="field"><label>Tarehe</label><input type="date" id="taskDateInput"></div>
+                <div class="field"><label>Kipaumbele</label>
                     <select id="taskPriorityInput">
                         <option value="high">🔴 Juu</option>
                         <option value="medium" selected>🟡 Kati</option>
@@ -575,37 +500,18 @@
         </div>
     </div>
 
-    <!-- New User Modal -->
     <div class="modal-overlay" id="newUserModal">
         <div class="modal-box">
             <div class="modal-head">
                 <h3>👤 Sajili Mfanyakazi Mpya</h3>
                 <button class="modal-close" onclick="closeModal('newUserModal')"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="field">
-                <label>Jina Kamili</label>
-                <input type="text" id="newUserName" placeholder="K.mf. Juma Hassan">
-            </div>
+            <div class="field"><label>Jina Kamili</label><input type="text" id="newUserName" placeholder="K.mf. Juma Hassan"></div>
             <div class="field-row">
-                <div class="field">
-                    <label>Namba ya Mfanyakazi</label>
-                    <input type="text" id="newUserId" placeholder="K.mf. 001, W001, 100" value="">
-                    <div style="font-size:10px;color:var(--text-faint);margin-top:4px;">
-                        <i class="fa-solid fa-info-circle"></i> Mfanyakazi atatumia namba hii kuingia
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Namba ya Simu</label>
-                    <input type="text" id="newUserPhone" placeholder="K.mf. 0712345678" value="">
-                </div>
+                <div class="field"><label>Namba ya Mfanyakazi</label><input type="text" id="newUserId" placeholder="K.mf. 001, W001, 100" value=""></div>
+                <div class="field"><label>Namba ya Simu</label><input type="text" id="newUserPhone" placeholder="K.mf. 0712345678" value=""></div>
             </div>
-            <div class="field">
-                <label>Nenosiri</label>
-                <input type="text" id="newUserPass" placeholder="Weka nenosiri" value="123">
-                <div style="font-size:10px;color:var(--text-faint);margin-top:4px;">
-                    <i class="fa-solid fa-info-circle"></i> Mpe mfanyakazi nenosiri hili
-                </div>
-            </div>
+            <div class="field"><label>Nenosiri</label><input type="text" id="newUserPass" placeholder="Weka nenosiri" value="123"></div>
             <div class="modal-actions">
                 <button class="btn-ghost" onclick="closeModal('newUserModal')">Ghairi</button>
                 <button class="btn-gold" onclick="confirmAddUser()"><i class="fa-solid fa-check"></i> Sajili</button>
@@ -637,8 +543,8 @@
                 let options = { method, headers };
                 if (method === 'GET') url += '?select=*';
                 else if (method === 'POST') options.body = JSON.stringify(data);
-                else if (method === 'PATCH' && id) { url += `?id=eq.${id}`;
-                    options.body = JSON.stringify(data); } else if (method === 'DELETE' && id) { url += `?id=eq.${id}`; }
+                else if (method === 'PATCH' && id) { url += `?id=eq.${id}`; options.body = JSON.stringify(data); }
+                else if (method === 'DELETE' && id) { url += `?id=eq.${id}`; }
                 try {
                     const res = await fetch(url, options);
                     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -654,7 +560,6 @@
             async getAttendance() { return await this.query('attendance'); },
             async addUser(data) { return await this.query('users', 'POST', data); },
             async addTask(data) { return await this.query('tasks', 'POST', data); },
-            async addAttendance(data) { return await this.query('attendance', 'POST', data); },
             async updateTask(id, data) { return await this.query('tasks', 'PATCH', data, id); },
             async updateUser(id, data) { return await this.query('users', 'PATCH', data, id); },
             async deleteTask(id) { return await this.query('tasks', 'DELETE', null, id); },
@@ -664,23 +569,20 @@
         // ====================================================================
         // DATA STORE
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v13';
+        const STORAGE_KEY = 'dr_william_data_v14';
         let db = loadData();
         let currentUser = null;
         let currentPage = 'dashboard';
         let calendarMonth = new Date().getMonth();
         let calendarYear = new Date().getFullYear();
         let workTimerInterval = null;
-        let workStartTime = null;
 
         function loadData() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
-                if (!raw) return { users: [{ id: '123', name: 'Admin', password: '123', role: 'admin' }], tasks: [],
-                    attendance: [], currentUser: null };
+                if (!raw) return { users: [{ id: '123', name: 'Admin', password: '123', role: 'admin' }], tasks: [], attendance: [], currentUser: null };
                 return JSON.parse(raw);
-            } catch (e) { return { users: [{ id: '123', name: 'Admin', password: '123', role: 'admin' }], tasks: [],
-                    attendance: [], currentUser: null }; }
+            } catch (e) { return { users: [{ id: '123', name: 'Admin', password: '123', role: 'admin' }], tasks: [], attendance: [], currentUser: null }; }
         }
 
         function saveData() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); } catch (e) {} }
@@ -690,12 +592,10 @@
         // ====================================================================
         function getTodayStr() {
             const d = new Date();
-            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2,
-            '0');
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
         }
 
-        function escapeHtml(str) { if (!str) return ''; const d = document.createElement('div');
-            d.textContent = str; return d.innerHTML; }
+        function escapeHtml(str) { if (!str) return ''; const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
 
         function showToast(text, type = '') {
             const stack = document.getElementById('toastStack');
@@ -703,9 +603,7 @@
             el.className = 'toast' + (type ? ' ' + type : '');
             el.textContent = text;
             stack.appendChild(el);
-            setTimeout(() => { el.style.opacity = '0';
-                el.style.transition = 'opacity 0.3s';
-                setTimeout(() => el.remove(), 300); }, 5000);
+            setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity 0.3s'; setTimeout(() => el.remove(), 300); }, 5000);
         }
 
         function getHiddenPassword() { return '***'; }
@@ -732,32 +630,34 @@
         }
 
         // ====================================================================
-        // SYNC DATA
+        // FORCE SYNC - IMEBORESHA KABISA
         // ====================================================================
         async function syncData() {
             const btn = document.getElementById('syncBtn');
             const dot = document.getElementById('syncDot');
             const text = document.getElementById('syncText');
 
-            if (btn) { btn.disabled = true;
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Inasawazisha...'; }
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Inasawazisha...'; }
             dot.className = 'sync-dot syncing';
             text.textContent = 'Inasawazisha...';
 
             try {
+                // Fetch fresh data
                 const users = await supabase.getUsers();
                 const tasks = await supabase.getTasks();
                 const attendance = await supabase.getAttendance();
 
-                if (users && !users.error) db.users = users;
+                if (users && !users.error) {
+                    db.users = users;
+                    // Ensure admin exists
+                    if (!db.users.find(u => u.id === '123')) {
+                        await supabase.addUser({ id: '123', name: 'Admin', password: '123', role: 'admin' });
+                        const users2 = await supabase.getUsers();
+                        if (users2 && !users2.error) db.users = users2;
+                    }
+                }
                 if (tasks && !tasks.error) db.tasks = tasks;
                 if (attendance && !attendance.error) db.attendance = attendance;
-
-                if (!db.users.find(u => u.id === '123')) {
-                    await supabase.addUser({ id: '123', name: 'Admin', password: '123', role: 'admin' });
-                    const users2 = await supabase.getUsers();
-                    if (users2 && !users2.error) db.users = users2;
-                }
 
                 if (currentUser) {
                     const user = db.users.find(u => u.id === currentUser.id);
@@ -776,8 +676,7 @@
                 console.warn('Sync error:', e);
             }
 
-            if (btn) { btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-rotate"></i> Sawazisha'; }
+            if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-rotate"></i> Sawazisha'; }
         }
 
         // ====================================================================
@@ -795,8 +694,7 @@
 
             try {
                 const users = await supabase.getUsers();
-                if (users && !users.error) { db.users = users;
-                    saveData(); }
+                if (users && !users.error) { db.users = users; saveData(); }
             } catch (e) {}
 
             const user = db.users.find(u => u.id === id && u.password === pass);
@@ -816,8 +714,7 @@
             document.getElementById('mainApp').style.display = 'block';
 
             const adminTab = document.getElementById('adminTab');
-            if (user.id === '123' && user.role === 'admin') { adminTab.style.display = 'inline-flex'; } else { adminTab
-                    .style.display = 'none'; }
+            if (user.id === '123' && user.role === 'admin') { adminTab.style.display = 'inline-flex'; } else { adminTab.style.display = 'none'; }
 
             document.getElementById('userNameDisplay').textContent = user.name;
             document.getElementById('userIdDisplay').textContent = '(***)';
@@ -866,24 +763,12 @@
 
         function renderPage(page) {
             switch (page) {
-                case 'dashboard':
-                    renderDashboard();
-                    break;
-                case 'tasks':
-                    renderTasks();
-                    break;
-                case 'attendance':
-                    renderAttendance();
-                    break;
-                case 'performance':
-                    renderPerformance();
-                    break;
-                case 'calendar':
-                    renderCalendar();
-                    break;
-                case 'admin':
-                    renderAdmin();
-                    break;
+                case 'dashboard': renderDashboard(); break;
+                case 'tasks': renderTasks(); break;
+                case 'attendance': renderAttendance(); break;
+                case 'performance': renderPerformance(); break;
+                case 'calendar': renderCalendar(); break;
+                case 'admin': renderAdmin(); break;
             }
         }
 
@@ -932,21 +817,20 @@
         // WORK TIMER
         // ====================================================================
         function startWorkTimer(checkInTime) {
-            if (workTimerInterval) { clearInterval(workTimerInterval);
-                workTimerInterval = null; }
+            if (workTimerInterval) { clearInterval(workTimerInterval); workTimerInterval = null; }
             if (!checkInTime) { document.getElementById('workTimerDisplay').textContent = '00:00:00'; return; }
-            workStartTime = new Date();
+            const now = new Date();
             const [h, m, s] = checkInTime.split(':').map(Number);
-            workStartTime.setHours(h, m, s || 0, 0);
+            const start = new Date(now);
+            start.setHours(h, m, s || 0, 0);
             workTimerInterval = setInterval(() => {
-                const now = new Date();
-                const diff = (now - workStartTime) / 1000;
+                const current = new Date();
+                const diff = (current - start) / 1000;
                 if (diff > 0) { document.getElementById('workTimerDisplay').textContent = formatTime(diff); }
             }, 1000);
         }
 
-        function stopWorkTimer() { if (workTimerInterval) { clearInterval(workTimerInterval);
-                workTimerInterval = null; } }
+        function stopWorkTimer() { if (workTimerInterval) { clearInterval(workTimerInterval); workTimerInterval = null; } }
 
         // ====================================================================
         // RENDER: DASHBOARD
@@ -970,13 +854,11 @@
 
             const greeting = document.getElementById('dashboardGreeting');
             if (total === 0) greeting.textContent = '🎉 Hakuna majukumu leo! Pumzika au ongeza majukumu mapya.';
-            else if (done === total) greeting.textContent = '🎉 Hongera! Umetekeleza majukumu yote ya leo! Utendaji ' +
-                pct + '%';
+            else if (done === total) greeting.textContent = '🎉 Hongera! Umetekeleza majukumu yote ya leo! Utendaji ' + pct + '%';
             else greeting.textContent = '📋 Una ' + pending + ' majukumu yaliyobaki leo. Endelea kuyatekeleza!';
 
             const container = document.getElementById('dashboardTaskList');
-            if (todayTasks.length === 0) { container.innerHTML =
-                    '<div class="task-list-empty">Hakuna majukumu ya leo.</div>'; return; }
+            if (todayTasks.length === 0) { container.innerHTML = '<div class="task-list-empty">Hakuna majukumu ya leo.</div>'; return; }
             container.innerHTML = todayTasks.slice(0, 5).map(t => `
                 <div class="task-item ${t.done ? 'done' : ''}">
                     <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggleTask('${t.id}')">${t.done ? '✓' : ''}</div>
@@ -990,16 +872,13 @@
         }
 
         // ====================================================================
-        // RENDER: TASKS - Wafanyakazi hawana uwezo wa kufuta
+        // RENDER: TASKS
         // ====================================================================
         function renderTasks() {
             if (!currentUser) return;
 
             document.getElementById('taskDateDisplay').textContent = new Date().toLocaleDateString('sw-TZ', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
+                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
             });
 
             const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
@@ -1037,9 +916,7 @@
                     </div>
                     <span class="task-status ${t.done ? 'done' : 'pending'}">${t.done ? '✅ Imekamilika' : '⏳ Inasubiri'}</span>
                     ${currentUser.role === 'admin' ? 
-                        `<button class="task-delete-btn" onclick="deleteTask('${t.id}')">
-                            <i class="fa-solid fa-trash"></i> Futa
-                        </button>` : ''}
+                        `<button class="task-delete-btn" onclick="deleteTask('${t.id}')"><i class="fa-solid fa-trash"></i> Futa</button>` : ''}
                 </div>
             `).join('');
         }
@@ -1088,11 +965,9 @@
             }
 
             const historyContainer = document.getElementById('attendanceHistory');
-            const userRecords = db.attendance.filter(a => a.user_id === currentUser.id).sort((a, b) => b.date.localeCompare(a
-                .date));
+            const userRecords = db.attendance.filter(a => a.user_id === currentUser.id).sort((a, b) => b.date.localeCompare(a.date));
 
-            if (userRecords.length === 0) { historyContainer.innerHTML =
-                    '<div class="task-list-empty">Hakuna rekodi ya mahudhurio.</div>'; return; }
+            if (userRecords.length === 0) { historyContainer.innerHTML = '<div class="task-list-empty">Hakuna rekodi ya mahudhurio.</div>'; return; }
 
             historyContainer.innerHTML = userRecords.slice(0, 14).map(a => `
                 <div class="task-item" style="margin-bottom:6px;padding:10px 14px;">
@@ -1129,8 +1004,7 @@
             const msg = document.getElementById('performanceMessage');
             if (total === 0) msg.textContent = '📋 Hakuna majukumu ya leo. Ongeza majukumu ili kuona utendaji wako.';
             else if (pct === 100) msg.textContent = '🎉 Hongera! Umekamilisha majukumu yote ya leo! Utendaji bora!';
-            else if (pct >= 50) msg.textContent = '👍 Vizuri! Umekamilisha ' + pct +
-                '% ya majukumu yako. Endelea hivyo!';
+            else if (pct >= 50) msg.textContent = '👍 Vizuri! Umekamilisha ' + pct + '% ya majukumu yako. Endelea hivyo!';
             else msg.textContent = '💪 Bado una ' + (total - done) + ' majukumu. Weka nguvu!';
 
             const monthlyContainer = document.getElementById('monthlyPerformance');
@@ -1140,8 +1014,7 @@
             const monthTotal = monthTasks.length;
             const monthPct = monthTotal > 0 ? Math.round((monthDone / monthTotal) * 100) : 0;
 
-            if (monthTotal === 0) { monthlyContainer.innerHTML =
-                '<div class="task-list-empty">Hakuna data ya mwezi huu.</div>'; return; }
+            if (monthTotal === 0) { monthlyContainer.innerHTML = '<div class="task-list-empty">Hakuna data ya mwezi huu.</div>'; return; }
 
             const days = {};
             monthTasks.forEach(t => {
@@ -1186,9 +1059,7 @@
         function renderCalendar() {
             if (!currentUser) return;
 
-            const monthNames = ['Januari', 'Februari', 'Machi', 'Aprili', 'Mei', 'Juni', 'Julai', 'Agosti', 'Septemba',
-                'Oktoba', 'Novemba', 'Desemba'
-            ];
+            const monthNames = ['Januari', 'Februari', 'Machi', 'Aprili', 'Mei', 'Juni', 'Julai', 'Agosti', 'Septemba', 'Oktoba', 'Novemba', 'Desemba'];
             document.getElementById('calendarMonthYear').textContent = monthNames[calendarMonth] + ' ' + calendarYear;
 
             const firstDay = new Date(calendarYear, calendarMonth, 1).getDay();
@@ -1199,8 +1070,7 @@
             let html = '';
             const dayLabels = ['J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J1'];
 
-            dayLabels.forEach(label => { html +=
-                    `<div class="day" style="font-weight:600;color:var(--text-dim);font-size:9px;">${label}</div>`; });
+            dayLabels.forEach(label => { html += `<div class="day" style="font-weight:600;color:var(--text-dim);font-size:9px;">${label}</div>`; });
 
             for (let i = 0; i < firstDay; i++) { html += `<div class="day"></div>`; }
 
@@ -1208,8 +1078,7 @@
             const taskDates = new Set(userTasks.map(t => t.date));
 
             for (let d = 1; d <= daysInMonth; d++) {
-                const dateStr = calendarYear + '-' + String(calendarMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2,
-                    '0');
+                const dateStr = calendarYear + '-' + String(calendarMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
                 const hasTask = taskDates.has(dateStr);
                 const isToday = dateStr === today;
 
@@ -1252,10 +1121,8 @@
 
         function changeMonth(delta) {
             calendarMonth += delta;
-            if (calendarMonth < 0) { calendarMonth = 11;
-                calendarYear--; }
-            if (calendarMonth > 11) { calendarMonth = 0;
-                calendarYear++; }
+            if (calendarMonth < 0) { calendarMonth = 11; calendarYear--; }
+            if (calendarMonth > 11) { calendarMonth = 0; calendarYear++; }
             renderCalendar();
         }
 
@@ -1290,24 +1157,19 @@
             }
 
             container.innerHTML = db.users.map(u => {
-                const displayPass = '***';
                 const isAdmin = u.id === '123';
                 return `
                     <div class="admin-user-card">
                         <div class="user-info">
                             <div class="name">${escapeHtml(u.name || '')}</div>
-                            <div class="role">ID: ${u.id || ''} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'} · Simu: ${u.phone || '-'} · Nenosiri: <span class="password-hidden">${displayPass}</span></div>
+                            <div class="role">ID: ${u.id || ''} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'} · Simu: ${u.phone || '-'} · Nenosiri: <span class="password-hidden">***</span></div>
                         </div>
                         <div class="user-actions">
                             ${isAdmin ? 
                                 '<span style="font-size:11px;color:var(--gold);font-weight:600;">👑 Admin</span>' : 
                                 `
-                                <button class="btn-edit btn-sm" onclick="openEditUser('${u.id}')">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-                                <button class="btn-danger btn-sm" onclick="deleteUser('${u.id}')">
-                                    <i class="fa-solid fa-trash"></i> Futa
-                                </button>
+                                <button class="btn-edit btn-sm" onclick="openEditUser('${u.id}')"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-danger btn-sm" onclick="deleteUser('${u.id}')"><i class="fa-solid fa-trash"></i> Futa</button>
                                 `
                             }
                         </div>
@@ -1325,7 +1187,7 @@
         }
 
         // ====================================================================
-        // EDIT USER - Admin anaweza kubadilisha majina na passwords
+        // EDIT USER
         // ====================================================================
         function openEditUser(userId) {
             const user = db.users.find(u => u.id === userId);
@@ -1381,7 +1243,6 @@
         }
 
         async function deleteTask(taskId) {
-            // Only admin can delete tasks
             if (!currentUser || currentUser.id !== '123') {
                 showToast('Sehemu hii ni ya Admin pekee!', 'warn');
                 return;
@@ -1593,7 +1454,11 @@
                 await supabase.deleteTask(task.id);
             }
 
-            await supabase.deleteUser(userId);
+            // Delete the user from Supabase
+            const result = await supabase.deleteUser(userId);
+            console.log('Delete user result:', result);
+
+            // Force sync to get fresh data
             await syncData();
             renderAll();
             showToast('✅ Mfanyakazi amefutwa!', 'ok');
@@ -1658,7 +1523,8 @@
         // INIT
         // ====================================================================
         function init() {
-            setTimeout(syncData, 2000);
+            // Force sync on load
+            setTimeout(syncData, 1000);
 
             if (db.currentUser) {
                 const user = db.users ? db.users.find(u => u.id === db.currentUser.id) : null;
@@ -1683,7 +1549,8 @@
                 });
             });
 
-            setInterval(syncData, 30000);
+            // Auto sync every 15 seconds
+            setInterval(syncData, 15000);
 
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.getVoices();
