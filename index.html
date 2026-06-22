@@ -15,7 +15,6 @@
         :root {
             --gold: #D4A24E;
             --gold-dark: #8a6a2f;
-            --gold-light: #f0d080;
             --gold-soft: rgba(212, 162, 78, 0.15);
             --bg: #0B0F14;
             --panel: #141A21;
@@ -28,13 +27,8 @@
             --green-soft: rgba(61, 190, 122, 0.14);
             --red: #E2574C;
             --red-soft: rgba(226, 87, 76, 0.14);
-            --blue: #4A9BE8;
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
@@ -54,9 +48,6 @@
             background: radial-gradient(ellipse 1200px 600px at 50% -10%, rgba(212, 162, 78, 0.06), transparent), var(--bg);
             border-radius: 20px;
         }
-        .gold-text {
-            color: var(--gold);
-        }
         .btn-gold {
             background: var(--gold);
             color: #1a1305;
@@ -69,14 +60,8 @@
             font-family: 'Inter';
             font-size: 14px;
         }
-        .btn-gold:hover {
-            transform: scale(0.97);
-            opacity: 0.85;
-        }
-        .btn-gold:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .btn-gold:hover { transform: scale(0.97); opacity: 0.85; }
+        .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
         .btn-ghost {
             background: var(--panel-2);
             color: var(--text-dim);
@@ -89,10 +74,7 @@
             font-family: 'Inter';
             font-size: 14px;
         }
-        .btn-ghost:hover {
-            border-color: var(--gold);
-            color: var(--text);
-        }
+        .btn-ghost:hover { border-color: var(--gold); color: var(--text); }
         .btn-red {
             background: var(--red-soft);
             color: var(--red);
@@ -105,9 +87,7 @@
             font-family: 'Inter';
             font-size: 14px;
         }
-        .btn-red:hover {
-            opacity: 0.8;
-        }
+        .btn-red:hover { opacity: 0.8; }
         .btn-green {
             background: var(--green);
             color: #0a2818;
@@ -120,17 +100,9 @@
             font-family: 'Inter';
             font-size: 14px;
         }
-        .btn-green:hover {
-            opacity: 0.8;
-            transform: scale(0.97);
-        }
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 12px;
-        }
-        input,
-        select,
-        textarea {
+        .btn-green:hover { opacity: 0.8; transform: scale(0.97); }
+        .btn-sm { padding: 8px 16px; font-size: 12px; }
+        input, select, textarea {
             background: var(--panel-2);
             border: 1px solid var(--line);
             color: var(--text);
@@ -141,11 +113,7 @@
             font-family: 'Inter';
             width: 100%;
         }
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: var(--gold);
-        }
+        input:focus, select:focus, textarea:focus { border-color: var(--gold); }
         .card {
             background: var(--panel);
             border: 1px solid var(--line);
@@ -153,15 +121,13 @@
             padding: 20px;
             transition: all 0.3s;
         }
-        .card:hover {
-            border-color: var(--gold);
-        }
+        .card:hover { border-color: var(--gold); }
         .card-gold {
             border-color: var(--gold);
             background: linear-gradient(135deg, rgba(212, 162, 78, 0.08), transparent);
         }
 
-        /* ===== LOGIN PAGE ===== */
+        /* LOGIN */
         #loginPage {
             display: flex;
             align-items: center;
@@ -179,28 +145,10 @@
             text-align: center;
             box-shadow: 0 0 60px rgba(212, 162, 78, 0.08);
         }
-        .login-box .logo {
-            font-family: 'Space Grotesk';
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--gold);
-        }
-        .login-box .subtitle {
-            color: var(--text-dim);
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
-        .login-box .field {
-            margin-bottom: 16px;
-            text-align: left;
-        }
-        .login-box .field label {
-            display: block;
-            font-size: 12px;
-            color: var(--text-dim);
-            margin-bottom: 6px;
-            font-weight: 500;
-        }
+        .login-box .logo { font-family: 'Space Grotesk'; font-size: 32px; font-weight: 700; color: var(--gold); }
+        .login-box .subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 24px; }
+        .login-box .field { margin-bottom: 16px; text-align: left; }
+        .login-box .field label { display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 6px; font-weight: 500; }
         .login-box .field input {
             background: var(--panel-2);
             border: 1px solid var(--line);
@@ -211,28 +159,14 @@
             font-size: 14px;
             outline: none;
         }
-        .login-box .field input:focus {
-            border-color: var(--gold);
-        }
-        .login-error {
-            color: var(--red);
-            font-size: 13px;
-            margin-top: 10px;
-            display: none;
-        }
-        .login-box .login-btn {
-            width: 100%;
-            padding: 14px;
-            font-size: 16px;
-            margin-top: 10px;
-        }
+        .login-box .field input:focus { border-color: var(--gold); }
+        .login-error { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
+        .login-box .login-btn { width: 100%; padding: 14px; font-size: 16px; margin-top: 10px; }
 
-        /* ===== MAIN APP ===== */
-        #mainApp {
-            display: none;
-        }
+        /* MAIN */
+        #mainApp { display: none; }
 
-        /* ===== TOP BAR ===== */
+        /* TOP BAR */
         .topbar {
             display: flex;
             align-items: center;
@@ -245,11 +179,7 @@
             flex-wrap: wrap;
             gap: 8px;
         }
-        .topbar .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .topbar .brand { display: flex; align-items: center; gap: 10px; }
         .topbar .brand .icon {
             width: 40px;
             height: 40px;
@@ -263,24 +193,10 @@
             color: #1a1305;
             font-family: 'Space Grotesk';
         }
-        .topbar .brand .name {
-            font-family: 'Space Grotesk';
-            font-size: 16px;
-            font-weight: 700;
-        }
-        .topbar .brand .name span {
-            color: var(--gold);
-        }
-        .topbar .brand .role {
-            font-size: 10px;
-            color: var(--text-dim);
-        }
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+        .topbar .brand .name { font-family: 'Space Grotesk'; font-size: 16px; font-weight: 700; }
+        .topbar .brand .name span { color: var(--gold); }
+        .topbar .brand .role { font-size: 10px; color: var(--text-dim); }
+        .topbar-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .topbar-right .user-badge {
             background: var(--panel-2);
             border: 1px solid var(--line);
@@ -291,26 +207,327 @@
             align-items: center;
             gap: 6px;
         }
-        .topbar-right .user-badge .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--green);
+        .topbar-right .user-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+        .clock-display { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim); }
+
+        /* NAV */
+        .nav-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
         }
-        .topbar-right .user-badge .avatar {
+        .nav-tab {
+            padding: 8px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dim);
+            border: 1px solid transparent;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            font-family: 'Inter';
+        }
+        .nav-tab:hover { background: var(--panel); color: var(--text); }
+        .nav-tab.active { background: var(--panel); border-color: var(--gold); color: var(--gold); }
+        .nav-tab .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-faint); }
+        .nav-tab.active .dot { background: var(--gold); }
+
+        .page { display: none; animation: fadeIn 0.3s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* STATS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .stat-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stat-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+        .stat-card .number { font-family: 'Space Grotesk'; font-size: 24px; font-weight: 700; color: var(--gold); }
+        .stat-card .label { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+        .stat-card .number.green { color: var(--green); }
+        .stat-card .number.red { color: var(--red); }
+
+        /* TASKS */
+        .task-item {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+        .task-item:hover { border-color: var(--gold); }
+        .task-item.done { opacity: 0.5; }
+        .task-item.done .task-name { text-decoration: line-through; }
+        .task-item .task-check {
             width: 28px;
             height: 28px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--gold);
+            border-radius: 8px;
+            border: 2px solid var(--line);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            background: var(--panel);
+            font-size: 14px;
+            color: transparent;
         }
-        .clock-display {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--text-dim);
+        .task-item .task-check:hover { border-color: var(--gold); }
+        .task-item .task-check.checked { background: var(--green); border-color: var(--green); color: #0a2818; }
+        .task-item .task-info { flex: 1; }
+        .task-item .task-name { font-size: 14px; font-weight: 500; }
+        .task-item .task-meta { font-size: 11px; color: var(--text-faint); }
+        .task-item .task-status {
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+        .task-item .task-status.pending { background: var(--red-soft); color: var(--red); }
+        .task-item .task-status.done { background: var(--green-soft); color: var(--green); }
+        .task-item .task-reminder {
+            font-size: 10px;
+            color: var(--gold);
+            background: var(--gold-soft);
+            padding: 2px 10px;
+            border-radius: 999px;
         }
 
-        /* ===== PROFILE PICTURE ===== */
+        /* ATTENDANCE */
+        .attendance-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 600px) { .attendance-box { grid-template-columns: 1fr; } }
+        .attendance-card {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+        .attendance-card .time { font-family: 'Space Grotesk'; font-size: 28px; font-weight: 700; color: var(--gold); }
+        .attendance-card .label { font-size: 12px; color: var(--text-dim); }
+        .attendance-card .status-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+        .attendance-card .status-badge.in { background: var(--green-soft); color: var(--green); }
+        .attendance-card .status-badge.out { background: var(--red-soft); color: var(--red); }
+        .attendance-card .status-badge.pending { background: var(--gold-soft); color: var(--gold); }
+
+        /* PERFORMANCE */
+        .performance-ring {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+        }
+        .performance-ring .value { font-family: 'Space Grotesk'; font-size: 28px; font-weight: 700; color: var(--gold); }
+        .performance-ring svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
+        .performance-ring svg circle { fill: none; stroke-width: 8; stroke-linecap: round; }
+        .performance-ring svg .bg { stroke: var(--panel-2); }
+        .performance-ring svg .progress { stroke: var(--gold); transition: stroke-dashoffset 1s ease; }
+
+        /* ADMIN */
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 900px) { .admin-grid { grid-template-columns: 1fr; } }
+        .admin-user-card {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+        .admin-user-card:hover { border-color: var(--gold); }
+        .admin-user-card .user-info .name { font-weight: 600; font-size: 14px; }
+        .admin-user-card .user-info .role { font-size: 11px; color: var(--text-dim); }
+        .admin-user-card .user-status {
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 999px;
+        }
+        .admin-user-card .user-status.active { background: var(--green-soft); color: var(--green); }
+        .admin-user-card .user-status.inactive { background: var(--red-soft); color: var(--red); }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            background: var(--panel);
+            border: 1px solid var(--gold);
+            border-radius: 18px;
+            padding: 24px;
+            max-width: 520px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalIn 0.25s ease;
+        }
+        @keyframes modalIn { from { opacity: 0; transform: translateY(20px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .modal-head h3 { font-family: 'Space Grotesk'; font-size: 18px; font-weight: 700; }
+        .modal-close {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            color: var(--text-dim);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+        .modal-close:hover { background: var(--red-soft); color: var(--red); }
+        .modal-box .field { margin-bottom: 12px; }
+        .modal-box .field label { display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 4px; font-weight: 500; }
+        .modal-box .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        @media (max-width: 500px) { .modal-box .field-row { grid-template-columns: 1fr; } }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+
+        /* TOAST */
+        #toastStack {
+            position: fixed;
+            bottom: 70px;
+            right: 16px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 340px;
+        }
+        .toast {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-left: 4px solid var(--gold);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 13px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            animation: toastIn 0.3s ease;
+        }
+        .toast.warn { border-left-color: var(--red); }
+        .toast.ok { border-left-color: var(--green); }
+        .toast.reminder { border-left-color: var(--gold); background: linear-gradient(135deg, var(--gold-soft), var(--panel-2)); }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* CALENDAR */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-top: 10px;
+        }
+        .calendar-grid .day {
+            background: var(--panel-2);
+            border-radius: 8px;
+            padding: 6px 2px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-dim);
+            transition: all 0.2s;
+        }
+        .calendar-grid .day.has-task { border: 1px solid var(--gold); color: var(--gold); cursor: pointer; }
+        .calendar-grid .day.has-task:hover { background: var(--gold-soft); }
+        .calendar-grid .day.today { background: var(--gold-soft); border: 1px solid var(--gold); color: var(--gold); font-weight: 700; }
+        .calendar-grid .day .day-num { font-size: 13px; font-weight: 600; }
+        .calendar-grid .day .day-label { font-size: 8px; text-transform: uppercase; color: var(--text-faint); }
+
+        .task-list-empty { color: var(--text-faint); text-align: center; padding: 30px 0; font-size: 14px; }
+        .download-btn {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text-dim);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: 'Inter';
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .download-btn:hover { border-color: var(--gold); color: var(--text); }
+        .ai-reminder-badge {
+            background: var(--gold-soft);
+            color: var(--gold);
+            font-size: 10px;
+            padding: 2px 12px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            animation: pulse-badge 2s infinite;
+        }
+        @keyframes pulse-badge { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            .app-container { padding: 8px; }
+            .topbar { padding: 10px 12px; }
+            .topbar .brand .name { font-size: 14px; }
+            .topbar-right .clock-display { display: none; }
+            .login-box { padding: 24px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .nav-tab { font-size: 11px; padding: 6px 10px; }
+            .admin-grid { grid-template-columns: 1fr; }
+            .modal-box { padding: 18px; }
+            #toastStack { right: 10px; left: 10px; max-width: 100%; }
+        }
+        @media (max-width: 400px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .topbar-right .user-badge { font-size: 10px; padding: 4px 8px; }
+        }
+
         .profile-container {
             display: flex;
             align-items: center;
@@ -338,653 +555,42 @@
             color: var(--text-faint);
         }
 
-        /* ===== NAV TABS ===== */
-        .nav-tabs {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        .nav-tab {
-            padding: 8px 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-dim);
-            border: 1px solid transparent;
-            transition: all 0.15s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: transparent;
-            font-family: 'Inter';
-        }
-        .nav-tab:hover {
-            background: var(--panel);
-            color: var(--text);
-        }
-        .nav-tab.active {
-            background: var(--panel);
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-        .nav-tab .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--text-faint);
-        }
-        .nav-tab.active .dot {
-            background: var(--gold);
-        }
-
-        /* ===== PAGES ===== */
-        .page {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        .page.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ===== STATS ===== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        .stat-card {
-            background: var(--panel);
-            border: 1px solid var(--line);
-            border-radius: 14px;
-            padding: 16px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        .stat-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-2px);
-        }
-        .stat-card .number {
-            font-family: 'Space Grotesk';
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--gold);
-        }
-        .stat-card .label {
-            font-size: 11px;
-            color: var(--text-dim);
-            margin-top: 4px;
-        }
-        .stat-card .number.green {
-            color: var(--green);
-        }
-        .stat-card .number.red {
-            color: var(--red);
-        }
-
-        /* ===== TASK ITEM ===== */
-        .task-item {
-            background: var(--panel-2);
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
-            transition: all 0.3s;
-        }
-        .task-item:hover {
-            border-color: var(--gold);
-        }
-        .task-item.done {
-            opacity: 0.5;
-        }
-        .task-item.done .task-name {
-            text-decoration: line-through;
-        }
-        .task-item .task-check {
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
-            border: 2px solid var(--line);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.2s;
-            background: var(--panel);
-            font-size: 14px;
-            color: transparent;
-        }
-        .task-item .task-check:hover {
-            border-color: var(--gold);
-        }
-        .task-item .task-check.checked {
-            background: var(--green);
-            border-color: var(--green);
-            color: #0a2818;
-        }
-        .task-item .task-info {
-            flex: 1;
-        }
-        .task-item .task-name {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .task-item .task-meta {
+        .sync-status {
             font-size: 11px;
             color: var(--text-faint);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .task-item .task-status {
-            font-size: 11px;
-            padding: 4px 12px;
-            border-radius: 999px;
-            font-weight: 600;
-        }
-        .task-item .task-status.pending {
-            background: var(--red-soft);
-            color: var(--red);
-        }
-        .task-item .task-status.done {
-            background: var(--green-soft);
-            color: var(--green);
-        }
-        .task-item .task-reminder {
-            font-size: 10px;
-            color: var(--gold);
-            background: var(--gold-soft);
-            padding: 2px 10px;
-            border-radius: 999px;
-        }
-
-        /* ===== ATTENDANCE ===== */
-        .attendance-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        @media (max-width: 600px) {
-            .attendance-box {
-                grid-template-columns: 1fr;
-            }
-        }
-        .attendance-card {
-            background: var(--panel-2);
-            border: 1px solid var(--line);
-            border-radius: 14px;
-            padding: 16px;
-            text-align: center;
-        }
-        .attendance-card .time {
-            font-family: 'Space Grotesk';
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--gold);
-        }
-        .attendance-card .label {
-            font-size: 12px;
-            color: var(--text-dim);
-        }
-        .attendance-card .status-badge {
+        .sync-status .sync-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
             display: inline-block;
-            padding: 4px 16px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 6px;
         }
-        .attendance-card .status-badge.in {
-            background: var(--green-soft);
-            color: var(--green);
-        }
-        .attendance-card .status-badge.out {
-            background: var(--red-soft);
-            color: var(--red);
-        }
-        .attendance-card .status-badge.pending {
+        .sync-status .sync-dot.online { background: var(--green); }
+        .sync-status .sync-dot.offline { background: var(--red); animation: blink 1s infinite; }
+        .sync-status .sync-dot.syncing { background: var(--gold); animation: blink 0.5s infinite; }
+        @keyframes blink { 50% { opacity: 0.3; } }
+
+        .cloud-badge {
             background: var(--gold-soft);
             color: var(--gold);
-        }
-
-        /* ===== PERFORMANCE RING ===== */
-        .performance-ring {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            position: relative;
-        }
-        .performance-ring .value {
-            font-family: 'Space Grotesk';
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--gold);
-        }
-        .performance-ring svg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform: rotate(-90deg);
-        }
-        .performance-ring svg circle {
-            fill: none;
-            stroke-width: 8;
-            stroke-linecap: round;
-        }
-        .performance-ring svg .bg {
-            stroke: var(--panel-2);
-        }
-        .performance-ring svg .progress {
-            stroke: var(--gold);
-            transition: stroke-dashoffset 1s ease;
-        }
-
-        /* ===== ADMIN ===== */
-        .admin-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        @media (max-width: 900px) {
-            .admin-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .admin-user-card {
-            background: var(--panel-2);
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            transition: all 0.3s;
-        }
-        .admin-user-card:hover {
-            border-color: var(--gold);
-        }
-        .admin-user-card .user-info .name {
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .admin-user-card .user-info .role {
-            font-size: 11px;
-            color: var(--text-dim);
-        }
-        .admin-user-card .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--gold);
-        }
-        .admin-user-card .user-status {
-            font-size: 11px;
-            padding: 4px 12px;
-            border-radius: 999px;
-        }
-        .admin-user-card .user-status.active {
-            background: var(--green-soft);
-            color: var(--green);
-        }
-        .admin-user-card .user-status.inactive {
-            background: var(--red-soft);
-            color: var(--red);
-        }
-
-        /* ===== MODAL ===== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .modal-overlay.open {
-            display: flex;
-        }
-        .modal-box {
-            background: var(--panel);
-            border: 1px solid var(--gold);
-            border-radius: 18px;
-            padding: 24px;
-            max-width: 520px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: modalIn 0.25s ease;
-        }
-        .modal-box.wide {
-            max-width: 700px;
-        }
-        @keyframes modalIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-        .modal-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        .modal-head h3 {
-            font-family: 'Space Grotesk';
-            font-size: 18px;
-            font-weight: 700;
-        }
-        .modal-close {
-            background: var(--panel-2);
-            border: 1px solid var(--line);
-            width: 32px;
-            height: 32px;
-            border-radius: 9px;
-            color: var(--text-dim);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.2s;
-        }
-        .modal-close:hover {
-            background: var(--red-soft);
-            color: var(--red);
-        }
-        .modal-box .field {
-            margin-bottom: 12px;
-        }
-        .modal-box .field label {
-            display: block;
-            font-size: 12px;
-            color: var(--text-dim);
-            margin-bottom: 4px;
-            font-weight: 500;
-        }
-        .modal-box .field-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        @media (max-width: 500px) {
-            .modal-box .field-row {
-                grid-template-columns: 1fr;
-            }
-        }
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-            margin-top: 16px;
-        }
-        .modal-box .camera-preview {
-            width: 100%;
-            max-height: 200px;
-            border-radius: 12px;
-            background: var(--panel-2);
-            border: 1px solid var(--line);
-            object-fit: cover;
-        }
-        .modal-box .capture-btn {
-            width: 100%;
-            margin-top: 8px;
-        }
-
-        /* ===== TOAST ===== */
-        #toastStack {
-            position: fixed;
-            bottom: 70px;
-            right: 16px;
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-width: 340px;
-        }
-        .toast {
-            background: var(--panel-2);
-            border: 1px solid var(--line);
-            border-left: 4px solid var(--gold);
-            border-radius: 12px;
-            padding: 12px 16px;
-            font-size: 13px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-            animation: toastIn 0.3s ease;
-        }
-        .toast.warn {
-            border-left-color: var(--red);
-        }
-        .toast.ok {
-            border-left-color: var(--green);
-        }
-        .toast.reminder {
-            border-left-color: var(--gold);
-            background: linear-gradient(135deg, var(--gold-soft), var(--panel-2));
-        }
-        @keyframes toastIn {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* ===== CALENDAR ===== */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            margin-top: 10px;
-        }
-        .calendar-grid .day {
-            background: var(--panel-2);
-            border-radius: 8px;
-            padding: 6px 2px;
-            text-align: center;
-            font-size: 12px;
-            color: var(--text-dim);
-            transition: all 0.2s;
-        }
-        .calendar-grid .day.has-task {
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            cursor: pointer;
-        }
-        .calendar-grid .day.has-task:hover {
-            background: var(--gold-soft);
-        }
-        .calendar-grid .day.today {
-            background: var(--gold-soft);
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            font-weight: 700;
-        }
-        .calendar-grid .day .day-num {
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .calendar-grid .day .day-label {
-            font-size: 8px;
-            text-transform: uppercase;
-            color: var(--text-faint);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 640px) {
-            .app-container {
-                padding: 8px;
-            }
-            .topbar {
-                padding: 10px 12px;
-            }
-            .topbar .brand .name {
-                font-size: 14px;
-            }
-            .topbar-right .clock-display {
-                display: none;
-            }
-            .login-box {
-                padding: 24px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .nav-tab {
-                font-size: 11px;
-                padding: 6px 10px;
-            }
-            .admin-grid {
-                grid-template-columns: 1fr;
-            }
-            .modal-box {
-                padding: 18px;
-            }
-            #toastStack {
-                right: 10px;
-                left: 10px;
-                max-width: 100%;
-            }
-            .profile-container .avatar-large {
-                width: 48px;
-                height: 48px;
-            }
-        }
-        @media (max-width: 400px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .topbar-right .user-badge {
-                font-size: 10px;
-                padding: 4px 8px;
-            }
-            .topbar-right .user-badge .avatar {
-                width: 22px;
-                height: 22px;
-            }
-        }
-
-        .task-list-empty {
-            color: var(--text-faint);
-            text-align: center;
-            padding: 30px 0;
-            font-size: 14px;
-        }
-
-        /* Download button */
-        .download-btn {
-            background: var(--panel-2);
-            border: 1px solid var(--line);
-            color: var(--text-dim);
-            padding: 8px 14px;
-            border-radius: 999px;
-            font-size: 12px;
-            cursor: pointer;
-            font-family: 'Inter';
-            font-weight: 500;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .download-btn:hover {
-            border-color: var(--gold);
-            color: var(--text);
-        }
-
-        /* AI Reminder badge */
-        .ai-reminder-badge {
-            background: var(--gold-soft);
-            color: var(--gold);
-            font-size: 10px;
-            padding: 2px 12px;
+            font-size: 9px;
+            padding: 2px 8px;
             border-radius: 999px;
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            animation: pulse-badge 2s infinite;
-        }
-        @keyframes pulse-badge {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        .field .capture-area {
-            border: 2px dashed var(--line);
-            border-radius: 12px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .field .capture-area:hover {
-            border-color: var(--gold);
-        }
-        .field .capture-area img {
-            max-width: 100%;
-            max-height: 150px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-        .field .capture-area .placeholder {
-            color: var(--text-faint);
-            font-size: 13px;
-        }
-        .field .capture-area .placeholder i {
-            font-size: 32px;
-            display: block;
-            margin-bottom: 6px;
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== TOAST STACK ===== -->
+    <!-- ===== TOAST ===== -->
     <div id="toastStack"></div>
 
-    <!-- ===== LOGIN PAGE ===== -->
+    <!-- ===== LOGIN ===== -->
     <div id="loginPage">
         <div class="login-box">
             <div class="logo">🩺 Dr. William</div>
@@ -1022,8 +628,11 @@
                     </div>
                 </div>
                 <div class="topbar-right">
+                    <div class="sync-status">
+                        <span class="sync-dot online" id="syncDot"></span>
+                        <span id="syncText">Imeunganishwa</span>
+                    </div>
                     <div class="user-badge">
-                        <img class="avatar" id="userAvatar" src="" alt="Avatar" style="display:none;">
                         <span class="dot" id="avatarDot"></span>
                         <span id="userNameDisplay">Mfanyakazi</span>
                         <span style="color:var(--text-faint);font-size:10px;" id="userIdDisplay">(123)</span>
@@ -1062,19 +671,14 @@
 
             <!-- PAGE: DASHBOARD -->
             <div class="page active" id="page-dashboard">
-                <!-- Profile Section -->
                 <div class="card card-gold" style="margin-bottom:16px;">
                     <div class="profile-container">
-                        <img class="avatar-large" id="profileAvatar" src="" alt="Profile" style="display:none;">
                         <div class="avatar-placeholder" id="profilePlaceholder">
                             <i class="fa-solid fa-user"></i>
                         </div>
                         <div>
                             <h4 style="font-family:'Space Grotesk';font-size:16px;" id="profileName">Mfanyakazi</h4>
                             <p style="font-size:12px;color:var(--text-dim);">ID: <span id="profileId">123</span></p>
-                            <button class="btn-ghost btn-sm" onclick="openModal('cameraModal')" style="padding:4px 12px;font-size:11px;">
-                                <i class="fa-solid fa-camera"></i> Picha yangu
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -1101,7 +705,7 @@
                 <div class="card card-gold">
                     <h4 style="font-family:'Space Grotesk';margin-bottom:10px;color:var(--gold);">
                         <i class="fa-solid fa-bullhorn"></i> Habari za Leo
-                        <span class="ai-reminder-badge"><i class="fa-solid fa-robot"></i> AI Inakumbusha</span>
+                        <span class="ai-reminder-badge"><i class="fa-solid fa-cloud"></i> Cloud Sync</span>
                     </h4>
                     <p style="color:var(--text-dim);font-size:14px;" id="dashboardGreeting">
                         Karibu! Angalia majukumu yako ya leo.
@@ -1145,9 +749,7 @@
                     <div class="attendance-card">
                         <div class="label">🕐 Muda wa Kuingia</div>
                         <div class="time" id="checkInTime">--:--:--</div>
-                        <div>
-                            <span class="status-badge pending" id="checkInStatus">Bado</span>
-                        </div>
+                        <div><span class="status-badge pending" id="checkInStatus">Bado</span></div>
                         <button class="btn-gold" style="margin-top:10px;width:100%;" onclick="handleCheckIn()" id="checkInBtn">
                             <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia Kazini
                         </button>
@@ -1155,9 +757,7 @@
                     <div class="attendance-card">
                         <div class="label">🕐 Muda wa Kutoka</div>
                         <div class="time" id="checkOutTime">--:--:--</div>
-                        <div>
-                            <span class="status-badge pending" id="checkOutStatus">Bado</span>
-                        </div>
+                        <div><span class="status-badge pending" id="checkOutStatus">Bado</span></div>
                         <button class="btn-red" style="margin-top:10px;width:100%;" onclick="handleCheckOut()" id="checkOutBtn">
                             <i class="fa-solid fa-arrow-right-from-bracket"></i> Toka Kazini
                         </button>
@@ -1217,6 +817,7 @@
             <div class="page" id="page-admin">
                 <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
                     <i class="fa-solid fa-crown"></i> Dhibiti Wafanyakazi
+                    <span class="cloud-badge"><i class="fa-solid fa-cloud"></i> Cloud Sync</span>
                 </h3>
                 <div class="admin-grid">
                     <div class="card">
@@ -1225,6 +826,11 @@
                         <button class="btn-gold btn-sm" style="margin-top:10px;width:100%;" onclick="openModal('newUserModal')">
                             <i class="fa-solid fa-user-plus"></i> Ongeza Mfanyakazi
                         </button>
+                        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                            <button class="btn-ghost btn-sm" onclick="syncData()" id="syncBtn">
+                                <i class="fa-solid fa-rotate"></i> Sync Data
+                            </button>
+                        </div>
                     </div>
                     <div class="card">
                         <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">📋 Gawanya Majukumu</h4>
@@ -1251,42 +857,6 @@
     </div>
 
     <!-- ===== MODALS ===== -->
-
-    <!-- Camera Modal -->
-    <div class="modal-overlay" id="cameraModal">
-        <div class="modal-box">
-            <div class="modal-head">
-                <h3>📸 Picha Yangu</h3>
-                <button class="modal-close" onclick="closeModal('cameraModal')"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="field">
-                <label>Piga Picha</label>
-                <div class="capture-area" id="captureArea" onclick="openCamera()">
-                    <div class="placeholder" id="capturePlaceholder">
-                        <i class="fa-solid fa-camera"></i>
-                        <span>Bonyeza kufungua kamera</span>
-                    </div>
-                    <video id="cameraVideo" autoplay playsinline style="display:none;width:100%;border-radius:8px;"></video>
-                    <canvas id="cameraCanvas" style="display:none;"></canvas>
-                    <img id="capturedImage" style="display:none;max-width:100%;max-height:200px;border-radius:8px;">
-                </div>
-                <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-                    <button class="btn-gold btn-sm" id="captureBtn" onclick="capturePhoto()" style="display:none;">
-                        <i class="fa-solid fa-camera"></i> Chukua Picha
-                    </button>
-                    <button class="btn-ghost btn-sm" id="closeCameraBtn" onclick="closeCamera()" style="display:none;">
-                        <i class="fa-solid fa-times"></i> Funga Kamera
-                    </button>
-                    <button class="btn-green btn-sm" id="savePhotoBtn" onclick="savePhoto()" style="display:none;">
-                        <i class="fa-solid fa-check"></i> Hifadhi Picha
-                    </button>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-ghost" onclick="closeModal('cameraModal')">Funga</button>
-            </div>
-        </div>
-    </div>
 
     <!-- New Task Modal -->
     <div class="modal-overlay" id="newTaskModal">
@@ -1361,81 +931,177 @@
 
     <script>
         // ====================================================================
-        // DATA STORE
+        // 🔧 SUPABASE CREDENTIALS - ZIMEWEKWA MOJA KWA MOJA
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v2';
+        const SUPABASE_URL = 'https://bojxzkdewtwblemwrkzw.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_WWDU_VhQgF-1111lGKtJdA_fxD5Zo_w';
 
-        function getDefaultData() {
-            return {
-                users: [
-                    { id: '123', name: 'Admin', password: '123', role: 'admin', photo: '' },
-                    { id: 'W001', name: 'Juma Hassan', password: '123', role: 'staff', photo: '' },
-                    { id: 'W002', name: 'Aisha Mwinyi', password: '123', role: 'staff', photo: '' },
-                    { id: 'W003', name: 'Salim Juma', password: '123', role: 'staff', photo: '' },
-                    { id: 'W004', name: 'Mwanamvua Hamisi', password: '123', role: 'staff', photo: '' }
-                ],
-                tasks: [
-                    { id: 't1', userId: 'W001', name: 'Andika ripoti ya mauzo', description: 'Ripoti ya wiki hii',
-                        date: getTodayStr(), priority: 'high', done: false, reminderCount: 0 },
-                    { id: 't2', userId: 'W001', name: 'Piga simu kwa wateja', description: 'Wateja 5', date: getTodayStr(),
-                        priority: 'medium', done: false, reminderCount: 0 },
-                    { id: 't3', userId: 'W002', name: 'Safisha duka', description: 'Safisha kabla ya saa 10',
-                        date: getTodayStr(), priority: 'medium', done: false, reminderCount: 0 },
-                    { id: 't4', userId: 'W002', name: 'Andika orodha ya bidhaa', description: 'Bidhaa zilizoisha',
-                        date: getTodayStr(), priority: 'low', done: false, reminderCount: 0 },
-                    { id: 't5', userId: 'W003', name: 'Pokea bidhaa kutoka kwa mzabuni', description: 'Bidhaa 50',
-                        date: getTodayStr(), priority: 'high', done: false, reminderCount: 0 },
-                    { id: 't6', userId: 'W004', name: 'Tengeneza orodha ya wateja', description: 'Wateja wapya',
-                        date: getTodayStr(), priority: 'medium', done: false, reminderCount: 0 }
-                ],
-                attendance: [],
-                currentUser: null
-            };
-        }
+        // ====================================================================
+        // SUPABASE CLIENT
+        // ====================================================================
+        const supabase = {
+            url: SUPABASE_URL,
+            key: SUPABASE_KEY,
 
+            async query(table, method = 'GET', data = null, id = null) {
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'apikey': this.key,
+                    'Authorization': 'Bearer ' + this.key
+                };
+
+                let url = `${this.url}/rest/v1/${table}`;
+                let options = { method, headers };
+
+                if (method === 'GET') {
+                    url += '?select=*';
+                } else if (method === 'POST') {
+                    options.body = JSON.stringify(data);
+                } else if (method === 'PATCH' && id) {
+                    url += `?id=eq.${id}`;
+                    options.body = JSON.stringify(data);
+                } else if (method === 'DELETE' && id) {
+                    url += `?id=eq.${id}`;
+                }
+
+                try {
+                    const res = await fetch(url, options);
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    if (method === 'GET') return await res.json();
+                    return { success: true };
+                } catch (e) {
+                    console.warn('Supabase error:', e);
+                    return { error: e.message };
+                }
+            },
+
+            async getUsers() { return await this.query('users'); },
+            async getTasks() { return await this.query('tasks'); },
+            async getAttendance() { return await this.query('attendance'); },
+
+            async addUser(data) { return await this.query('users', 'POST', data); },
+            async addTask(data) { return await this.query('tasks', 'POST', data); },
+            async addAttendance(data) { return await this.query('attendance', 'POST', data); },
+
+            async updateTask(id, data) { return await this.query('tasks', 'PATCH', data, id); },
+            async updateUser(id, data) { return await this.query('users', 'PATCH', data, id); },
+
+            async deleteTask(id) { return await this.query('tasks', 'DELETE', null, id); },
+            async deleteUser(id) { return await this.query('users', 'DELETE', null, id); }
+        };
+
+        // ====================================================================
+        // DATA STORE (Local cache)
+        // ====================================================================
+        let db = {
+            users: [],
+            tasks: [],
+            attendance: [],
+            currentUser: null
+        };
+
+        let currentUser = null;
+        let currentPage = 'dashboard';
+        let calendarMonth = new Date().getMonth();
+        let calendarYear = new Date().getFullYear();
+
+        // ====================================================================
+        // HELPERS
+        // ====================================================================
         function getTodayStr() {
             const d = new Date();
             return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2,
             '0');
         }
 
-        function loadData() {
+        function escapeHtml(str) {
+            if (!str) return '';
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        function showToast(text, type = '') {
+            const stack = document.getElementById('toastStack');
+            const el = document.createElement('div');
+            el.className = 'toast' + (type ? ' ' + type : '');
+            el.textContent = text;
+            stack.appendChild(el);
+            setTimeout(() => {
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 0.3s';
+                setTimeout(() => el.remove(), 300);
+            }, 5000);
+        }
+
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) return;
             try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                if (!raw) return getDefaultData();
-                const data = JSON.parse(raw);
-                const def = getDefaultData();
-                for (let key in def) {
-                    if (!(key in data)) data[key] = def[key];
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = 'sw-TZ';
+                utter.rate = 0.9;
+                const voices = window.speechSynthesis.getVoices();
+                const swVoice = voices.find(v => v.lang.startsWith('sw'));
+                if (swVoice) utter.voice = swVoice;
+                window.speechSynthesis.speak(utter);
+            } catch (e) { console.warn('Speech failed', e); }
+        }
+
+        // ====================================================================
+        // SYNC DATA WITH SUPABASE
+        // ====================================================================
+        async function syncData() {
+            const btn = document.getElementById('syncBtn');
+            const dot = document.getElementById('syncDot');
+            const text = document.getElementById('syncText');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Inasawazisha...';
+            dot.className = 'sync-dot syncing';
+            text.textContent = 'Inasawazisha...';
+
+            try {
+                // Fetch all data from Supabase
+                const users = await supabase.getUsers();
+                const tasks = await supabase.getTasks();
+                const attendance = await supabase.getAttendance();
+
+                // Check if we got valid data
+                if (users && !users.error) db.users = users;
+                if (tasks && !tasks.error) db.tasks = tasks;
+                if (attendance && !attendance.error) db.attendance = attendance;
+
+                // If we have current user, update their data
+                if (currentUser) {
+                    const user = db.users.find(u => u.id === currentUser.id);
+                    if (user) currentUser = user;
                 }
-                return data;
-            } catch (e) {
-                return getDefaultData();
-            }
-        }
 
-        function saveData() {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+                dot.className = 'sync-dot online';
+                text.textContent = 'Imeunganishwa';
+                showToast('✅ Data imesawazishwa!', 'ok');
+                renderAll();
             } catch (e) {
-                console.warn('Save failed', e);
+                dot.className = 'sync-dot offline';
+                text.textContent = 'Hitilafu';
+                showToast('❌ Hitilafu ya kuunganisha! Angalia mtandao.', 'warn');
             }
-        }
 
-        let db = loadData();
-        let currentUser = null;
-        let currentPage = 'dashboard';
-        let calendarMonth = new Date().getMonth();
-        let calendarYear = new Date().getFullYear();
-        let mediaStream = null;
-        let capturedPhotoData = null;
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-rotate"></i> Sync Data';
+        }
 
         // ====================================================================
         // LOGIN / LOGOUT
         // ====================================================================
-        function handleLogin() {
+        async function handleLogin() {
             const id = document.getElementById('loginId').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
+
+            // First sync from cloud
+            await syncData();
+
             const user = db.users.find(u => u.id === id && u.password === pass);
 
             if (!user) {
@@ -1446,7 +1112,6 @@
             document.getElementById('loginError').style.display = 'none';
             currentUser = user;
             db.currentUser = user;
-            saveData();
 
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('mainApp').style.display = 'block';
@@ -1454,60 +1119,40 @@
             const adminTab = document.getElementById('adminTab');
             adminTab.style.display = (user.role === 'admin') ? 'inline-flex' : 'none';
 
-            // Update user info
             document.getElementById('userNameDisplay').textContent = user.name;
             document.getElementById('userIdDisplay').textContent = '(' + user.id + ')';
             document.getElementById('userRoleDisplay').textContent = user.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi';
 
-            // Profile
             document.getElementById('profileName').textContent = user.name;
             document.getElementById('profileId').textContent = user.id;
-            if (user.photo) {
-                document.getElementById('profileAvatar').src = user.photo;
-                document.getElementById('profileAvatar').style.display = 'block';
-                document.getElementById('profilePlaceholder').style.display = 'none';
-                document.querySelector('.user-badge .avatar').src = user.photo;
-                document.querySelector('.user-badge .avatar').style.display = 'block';
-                document.querySelector('.user-badge .dot').style.display = 'none';
-            } else {
-                document.getElementById('profileAvatar').style.display = 'none';
-                document.getElementById('profilePlaceholder').style.display = 'flex';
-                document.querySelector('.user-badge .avatar').style.display = 'none';
-                document.querySelector('.user-badge .dot').style.display = 'block';
-            }
 
             renderAll();
             showToast('Karibu ' + user.name + '!', 'ok');
-
-            // Start reminder system
             startReminderSystem();
+
+            // Auto sync every 30 seconds
+            setInterval(syncData, 30000);
         }
 
         function handleLogout() {
             stopReminderSystem();
             currentUser = null;
             db.currentUser = null;
-            saveData();
             document.getElementById('mainApp').style.display = 'none';
             document.getElementById('loginPage').style.display = 'flex';
             document.getElementById('loginId').value = '';
             document.getElementById('loginPass').value = '';
             showToast('Umefanikiwa kutoka!', 'ok');
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(t => t.stop());
-                mediaStream = null;
-            }
         }
 
         // ====================================================================
-        // REMINDER SYSTEM - AI Voice Reminder every 10 minutes
+        // REMINDER SYSTEM
         // ====================================================================
         let reminderInterval = null;
 
         function startReminderSystem() {
             stopReminderSystem();
-            reminderInterval = setInterval(checkReminders, 60000); // Check every minute
-            // Check immediately
+            reminderInterval = setInterval(checkReminders, 60000);
             setTimeout(checkReminders, 3000);
         }
 
@@ -1520,227 +1165,25 @@
 
         function checkReminders() {
             if (!currentUser) return;
-
             const today = getTodayStr();
-            const userTasks = db.tasks.filter(t => t.userId === currentUser.id && t.date === today && !t.done);
+            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id && t.date === today && !t.done);
 
             userTasks.forEach(task => {
-                // Count how many times we've reminded
                 const reminderKey = 'reminder_' + task.id + '_' + today;
                 let count = parseInt(localStorage.getItem(reminderKey) || '0');
 
-                // Remind every 10 minutes (if count % 10 === 0)
-                // We check every minute, so remind when count is multiple of 10
                 if (count % 10 === 0 && count > 0) {
                     speakReminder(task);
                 }
 
-                // Also remind at specific times: 5 min before, at time, and every 10 min after
-                if (task.time) {
-                    const now = new Date();
-                    const [h, m] = task.time.split(':').map(Number);
-                    const taskTime = new Date(now);
-                    taskTime.setHours(h, m, 0, 0);
-                    const diff = Math.floor((taskTime - now) / 60000);
-
-                    if (diff === 5) {
-                        speakReminder(task, 'dakika 5');
-                    }
-                    if (diff === 0) {
-                        speakReminder(task, 'sasa hivi');
-                    }
-                }
-
-                // Increment reminder count
                 localStorage.setItem(reminderKey, String(count + 1));
-
-                // Update task reminder count in db
-                task.reminderCount = (task.reminderCount || 0) + 1;
-                saveData();
             });
-
-            // Also remind about savings if not done
-            if (getTodaySavings() === 0) {
-                const key = 'remind_savings_' + today;
-                const last = localStorage.getItem(key);
-                const now = Date.now();
-                if (!last || now - parseInt(last) > 600000) { // Every 10 minutes
-                    speakReminder('Bwana, leo hujatiki akiba. Tafadhali weka akiba.', null, true);
-                    localStorage.setItem(key, String(now));
-                }
-            }
         }
 
-        function speakReminder(task, timeMsg = '', isSavings = false) {
-            if (!currentUser) return;
-
-            let message = '';
-            if (isSavings) {
-                message = task;
-            } else {
-                const timeText = timeMsg ? ` (${timeMsg})` : '';
-                message = `Kumbuka: ${task.name}${timeText}. Bado hujakamilisha.`;
-                // Log reminder
-                logActivity('reminder', 'AI Inakumbusha: ' + task.name);
-            }
-
-            // Speak with voice
+        function speakReminder(task) {
+            const message = `Kumbuka: ${task.name}. Bado hujakamilisha.`;
             speakText(message);
-
-            // Show toast
             showToast('🔔 ' + message, 'reminder');
-
-            // If task has time, also show as notification
-            if (task && task.time) {
-                const now = new Date();
-                const [h, m] = task.time.split(':').map(Number);
-                const taskTime = new Date(now);
-                taskTime.setHours(h, m, 0, 0);
-                const diff = Math.floor((taskTime - now) / 60000);
-
-                if (diff <= 0 && diff > -10) {
-                    showToast('⏰ Muda wa ' + task.name + ' umefika!', 'warn');
-                }
-            }
-        }
-
-        function speakText(text) {
-            if (!('speechSynthesis' in window)) return;
-            try {
-                window.speechSynthesis.cancel();
-                const utter = new SpeechSynthesisUtterance(text);
-                utter.lang = 'sw-TZ';
-                utter.rate = 0.9;
-                // Try to find Swahili voice
-                const voices = window.speechSynthesis.getVoices();
-                const swVoice = voices.find(v => v.lang.startsWith('sw'));
-                if (swVoice) utter.voice = swVoice;
-                window.speechSynthesis.speak(utter);
-            } catch (e) {
-                console.warn('Speech failed', e);
-            }
-        }
-
-        // Load voices when available
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.onvoiceschanged = () => {
-                window.speechSynthesis.getVoices();
-            };
-        }
-
-        // ====================================================================
-        // CAMERA / PHOTO
-        // ====================================================================
-        function openCamera() {
-            const video = document.getElementById('cameraVideo');
-            const placeholder = document.getElementById('capturePlaceholder');
-            const captureBtn = document.getElementById('captureBtn');
-            const closeBtn = document.getElementById('closeCameraBtn');
-            const saveBtn = document.getElementById('savePhotoBtn');
-            const img = document.getElementById('capturedImage');
-
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                showToast('Kamera haitumiki kwenye kivinjari hiki', 'warn');
-                return;
-            }
-
-            // Close any existing stream
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(t => t.stop());
-                mediaStream = null;
-            }
-
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 320 } } })
-                .then(stream => {
-                    mediaStream = stream;
-                    video.srcObject = stream;
-                    video.style.display = 'block';
-                    placeholder.style.display = 'none';
-                    captureBtn.style.display = 'block';
-                    closeBtn.style.display = 'block';
-                    saveBtn.style.display = 'none';
-                    img.style.display = 'none';
-                    capturedPhotoData = null;
-                })
-                .catch(err => {
-                    showToast('Hitilafu ya kamera: ' + err.message, 'warn');
-                });
-        }
-
-        function capturePhoto() {
-            const video = document.getElementById('cameraVideo');
-            const canvas = document.getElementById('cameraCanvas');
-            const img = document.getElementById('capturedImage');
-            const captureBtn = document.getElementById('captureBtn');
-            const saveBtn = document.getElementById('savePhotoBtn');
-
-            canvas.width = video.videoWidth || 320;
-            canvas.height = video.videoHeight || 240;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            capturedPhotoData = canvas.toDataURL('image/jpeg', 0.8);
-            img.src = capturedPhotoData;
-            img.style.display = 'block';
-            video.style.display = 'none';
-            captureBtn.style.display = 'none';
-            saveBtn.style.display = 'block';
-
-            // Stop camera stream
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(t => t.stop());
-                mediaStream = null;
-            }
-        }
-
-        function savePhoto() {
-            if (!capturedPhotoData || !currentUser) return;
-
-            // Save photo to user profile
-            const user = db.users.find(u => u.id === currentUser.id);
-            if (user) {
-                user.photo = capturedPhotoData;
-                saveData();
-
-                // Update UI
-                document.getElementById('profileAvatar').src = capturedPhotoData;
-                document.getElementById('profileAvatar').style.display = 'block';
-                document.getElementById('profilePlaceholder').style.display = 'none';
-                document.querySelector('.user-badge .avatar').src = capturedPhotoData;
-                document.querySelector('.user-badge .avatar').style.display = 'block';
-                document.querySelector('.user-badge .dot').style.display = 'none';
-
-                showToast('✅ Picha imehifadhiwa!', 'ok');
-                closeModal('cameraModal');
-
-                // Reset camera UI
-                document.getElementById('cameraVideo').style.display = 'none';
-                document.getElementById('capturePlaceholder').style.display = 'block';
-                document.getElementById('captureBtn').style.display = 'none';
-                document.getElementById('closeCameraBtn').style.display = 'none';
-                document.getElementById('savePhotoBtn').style.display = 'none';
-                document.getElementById('capturedImage').style.display = 'none';
-                capturedPhotoData = null;
-
-                if (mediaStream) {
-                    mediaStream.getTracks().forEach(t => t.stop());
-                    mediaStream = null;
-                }
-            }
-        }
-
-        function closeCamera() {
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(t => t.stop());
-                mediaStream = null;
-            }
-            document.getElementById('cameraVideo').style.display = 'none';
-            document.getElementById('capturePlaceholder').style.display = 'block';
-            document.getElementById('captureBtn').style.display = 'none';
-            document.getElementById('closeCameraBtn').style.display = 'none';
-            document.getElementById('savePhotoBtn').style.display = 'none';
-            document.getElementById('capturedImage').style.display = 'none';
-            capturedPhotoData = null;
         }
 
         // ====================================================================
@@ -1789,7 +1232,7 @@
         function renderDashboard() {
             if (!currentUser) return;
 
-            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
             const today = getTodayStr();
             const todayTasks = userTasks.filter(t => t.date === today);
             const done = todayTasks.filter(t => t.done).length;
@@ -1814,7 +1257,6 @@
                     .name : '');
             }
 
-            // Recent tasks
             const container = document.getElementById('dashboardTaskList');
             if (todayTasks.length === 0) {
                 container.innerHTML = '<div class="task-list-empty">Hakuna majukumu ya leo.</div>';
@@ -1846,7 +1288,7 @@
                 year: 'numeric'
             });
 
-            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
             const today = getTodayStr();
             const todayTasks = userTasks.filter(t => t.date === today);
 
@@ -1877,7 +1319,7 @@
                         <div class="task-meta">
                             ${t.priority === 'high' ? '🔴 Juu' : t.priority === 'medium' ? '🟡 Kati' : '🟢 Chini'}
                             ${t.description ? '· ' + escapeHtml(t.description) : ''}
-                            ${!t.done ? '· <span class="task-reminder"><i class="fa-solid fa-robot"></i> AI inakumbusha kila dakika 10</span>' : ''}
+                            ${!t.done ? '· <span class="task-reminder"><i class="fa-solid fa-robot"></i> AI inakumbusha</span>' : ''}
                         </div>
                     </div>
                     <span class="task-status ${t.done ? 'done' : 'pending'}">${t.done ? '✅ Imekamilika' : '⏳ Inasubiri'}</span>
@@ -1895,7 +1337,7 @@
             if (!currentUser) return;
 
             const today = getTodayStr();
-            const record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
+            const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
 
             const checkInTime = document.getElementById('checkInTime');
             const checkOutTime = document.getElementById('checkOutTime');
@@ -1905,16 +1347,16 @@
             const checkOutBtn = document.getElementById('checkOutBtn');
 
             if (record) {
-                checkInTime.textContent = record.checkIn || '--:--:--';
-                checkOutTime.textContent = record.checkOut || '--:--:--';
-                checkInStatus.textContent = record.checkIn ? '✅ Imeingia' : 'Bado';
-                checkInStatus.className = 'status-badge ' + (record.checkIn ? 'in' : 'pending');
-                checkOutStatus.textContent = record.checkOut ? '✅ Imetoka' : 'Bado';
-                checkOutStatus.className = 'status-badge ' + (record.checkOut ? 'out' : 'pending');
-                checkInBtn.disabled = !!record.checkIn;
-                checkOutBtn.disabled = !record.checkIn || !!record.checkOut;
-                checkInBtn.style.opacity = record.checkIn ? '0.5' : '1';
-                checkOutBtn.style.opacity = (!record.checkIn || record.checkOut) ? '0.5' : '1';
+                checkInTime.textContent = record.check_in || '--:--:--';
+                checkOutTime.textContent = record.check_out || '--:--:--';
+                checkInStatus.textContent = record.check_in ? '✅ Imeingia' : 'Bado';
+                checkInStatus.className = 'status-badge ' + (record.check_in ? 'in' : 'pending');
+                checkOutStatus.textContent = record.check_out ? '✅ Imetoka' : 'Bado';
+                checkOutStatus.className = 'status-badge ' + (record.check_out ? 'out' : 'pending');
+                checkInBtn.disabled = !!record.check_in;
+                checkOutBtn.disabled = !record.check_in || !!record.check_out;
+                checkInBtn.style.opacity = record.check_in ? '0.5' : '1';
+                checkOutBtn.style.opacity = (!record.check_in || record.check_out) ? '0.5' : '1';
             } else {
                 checkInTime.textContent = '--:--:--';
                 checkOutTime.textContent = '--:--:--';
@@ -1928,10 +1370,9 @@
                 checkOutBtn.style.opacity = '0.5';
             }
 
-            // History
             const historyContainer = document.getElementById('attendanceHistory');
-            const userRecords = db.attendance.filter(a => a.userId === currentUser.id).sort((a, b) => b.date.localeCompare(a
-            .date));
+            const userRecords = db.attendance.filter(a => a.user_id === currentUser.id).sort((a, b) => b.date.localeCompare(a
+                .date));
 
             if (userRecords.length === 0) {
                 historyContainer.innerHTML = '<div class="task-list-empty">Hakuna rekodi ya mahudhurio.</div>';
@@ -1943,11 +1384,11 @@
                     <div class="task-info">
                         <div class="task-name">${a.date}</div>
                         <div class="task-meta">
-                            🟢 Kuingia: ${a.checkIn || '--:--'} 
-                            ${a.checkOut ? '🔴 Kutoka: ' + a.checkOut : '⚠️ Hajatoka'}
+                            🟢 Kuingia: ${a.check_in || '--:--'} 
+                            ${a.check_out ? '🔴 Kutoka: ' + a.check_out : '⚠️ Hajatoka'}
                         </div>
                     </div>
-                    <span class="task-status ${a.checkOut ? 'done' : 'pending'}">${a.checkOut ? 'Imekamilika' : 'Inasubiri'}</span>
+                    <span class="task-status ${a.check_out ? 'done' : 'pending'}">${a.check_out ? 'Imekamilika' : 'Inasubiri'}</span>
                 </div>
             `).join('');
         }
@@ -1958,7 +1399,7 @@
         function renderPerformance() {
             if (!currentUser) return;
 
-            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
             const today = getTodayStr();
             const todayTasks = userTasks.filter(t => t.date === today);
             const done = todayTasks.filter(t => t.done).length;
@@ -1981,7 +1422,6 @@
                 msg.textContent = '💪 Bado una ' + (total - done) + ' majukumu. Weka nguvu!';
             }
 
-            // Monthly performance
             const monthlyContainer = document.getElementById('monthlyPerformance');
             const monthStart = today.slice(0, 7);
             const monthTasks = userTasks.filter(t => t.date.startsWith(monthStart));
@@ -2058,7 +1498,7 @@
                 html += `<div class="day"></div>`;
             }
 
-            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
             const taskDates = new Set(userTasks.map(t => t.date));
 
             for (let d = 1; d <= daysInMonth; d++) {
@@ -2085,7 +1525,7 @@
             if (!currentUser) return;
 
             const container = document.getElementById('calendarTaskList');
-            const tasks = db.tasks.filter(t => t.userId === currentUser.id && t.date === dateStr);
+            const tasks = db.tasks.filter(t => t.user_id === currentUser.id && t.date === dateStr);
 
             if (tasks.length === 0) {
                 container.innerHTML = `<div class="task-list-empty">Hakuna majukumu kwa tarehe ${dateStr}.</div>`;
@@ -2122,12 +1562,9 @@
             const container = document.getElementById('adminUserList');
             container.innerHTML = db.users.map(u => `
                 <div class="admin-user-card">
-                    <div style="display:flex;align-items:center;gap:10px;">
-                        ${u.photo ? `<img class="user-avatar" src="${u.photo}" alt="">` : `<div class="user-avatar" style="background:var(--panel-2);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-faint);">👤</div>`}
-                        <div class="user-info">
-                            <div class="name">${escapeHtml(u.name)}</div>
-                            <div class="role">ID: ${u.id} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'}</div>
-                        </div>
+                    <div class="user-info">
+                        <div class="name">${escapeHtml(u.name)}</div>
+                        <div class="role">ID: ${u.id} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'}</div>
                     </div>
                     <div>
                         <span class="user-status ${u.id === currentUser.id ? 'active' : 'inactive'}">
@@ -2151,33 +1588,35 @@
         // ====================================================================
         // TASK OPERATIONS
         // ====================================================================
-        function toggleTask(taskId) {
+        async function toggleTask(taskId) {
             const task = db.tasks.find(t => t.id === taskId);
             if (!task) return;
+
             task.done = !task.done;
-            if (task.done) {
-                // Reset reminder count when done
-                const reminderKey = 'reminder_' + task.id + '_' + getTodayStr();
-                localStorage.setItem(reminderKey, '0');
-                task.reminderCount = 0;
-            }
-            saveData();
+
+            // Update in Supabase
+            await supabase.updateTask(taskId, { done: task.done });
+
+            // Update local
+            await syncData();
             renderAll();
+
             if (task.done) {
                 showToast('✅ ' + task.name + ' imekamilika!', 'ok');
                 speakText('Hongera! Umemaliza: ' + task.name);
             }
         }
 
-        function deleteTask(taskId) {
+        async function deleteTask(taskId) {
             if (!confirm('Je, una uhakika unataka kufuta kazi hii?')) return;
-            db.tasks = db.tasks.filter(t => t.id !== taskId);
-            saveData();
+
+            await supabase.deleteTask(taskId);
+            await syncData();
             renderAll();
             showToast('Kazi imefutwa', 'warn');
         }
 
-        function confirmAddTask() {
+        async function confirmAddTask() {
             if (!currentUser) return;
 
             const name = document.getElementById('taskNameInput').value.trim();
@@ -2192,26 +1631,26 @@
 
             const task = {
                 id: 't' + Date.now(),
-                userId: currentUser.id,
+                user_id: currentUser.id,
                 name: name,
                 description: desc || '',
                 date: date || getTodayStr(),
                 priority: priority || 'medium',
                 done: false,
-                reminderCount: 0
+                reminder_count: 0
             };
 
-            db.tasks.push(task);
-            saveData();
+            await supabase.addTask(task);
+            await syncData();
             closeModal('newTaskModal');
             document.getElementById('taskNameInput').value = '';
             document.getElementById('taskDescInput').value = '';
             renderAll();
-            showToast('✅ Kazi imeongezwa! Nitakukumbusha.', 'ok');
+            showToast('✅ Kazi imeongezwa!', 'ok');
             speakText('Kazi mpya imeongezwa: ' + name);
         }
 
-        function adminAssignTask() {
+        async function adminAssignTask() {
             if (!currentUser || currentUser.role !== 'admin') return;
 
             const userId = document.getElementById('adminTaskUser').value;
@@ -2225,17 +1664,17 @@
 
             const task = {
                 id: 't' + Date.now(),
-                userId: userId,
+                user_id: userId,
                 name: name,
                 description: 'Imepewa na Admin',
                 date: date || getTodayStr(),
                 priority: 'medium',
                 done: false,
-                reminderCount: 0
+                reminder_count: 0
             };
 
-            db.tasks.push(task);
-            saveData();
+            await supabase.addTask(task);
+            await syncData();
             document.getElementById('adminTaskName').value = '';
             renderAll();
             showToast('✅ Kazi imegawanywa!', 'ok');
@@ -2249,49 +1688,59 @@
         // ====================================================================
         // ATTENDANCE OPERATIONS
         // ====================================================================
-        function handleCheckIn() {
+        async function handleCheckIn() {
             if (!currentUser) return;
             const today = getTodayStr();
             const now = new Date();
             const timeStr = now.toTimeString().slice(0, 8);
 
-            let record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
-            if (record && record.checkIn) {
+            let record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
+
+            if (record && record.check_in) {
                 showToast('Tayari umeingia kazini!', 'warn');
                 return;
             }
 
-            if (!record) {
-                record = { userId: currentUser.id, date: today, checkIn: timeStr, checkOut: null };
-                db.attendance.push(record);
+            const data = {
+                user_id: currentUser.id,
+                date: today,
+                check_in: timeStr,
+                check_out: null
+            };
+
+            if (record) {
+                // Update existing
+                await supabase.query('attendance', 'PATCH', { check_in: timeStr }, record.id);
             } else {
-                record.checkIn = timeStr;
+                // Create new
+                await supabase.addAttendance(data);
             }
 
-            saveData();
+            await syncData();
             renderAll();
             showToast('✅ Umeingia kazini saa ' + timeStr, 'ok');
             speakText('Umeingia kazini saa ' + timeStr);
         }
 
-        function handleCheckOut() {
+        async function handleCheckOut() {
             if (!currentUser) return;
             const today = getTodayStr();
             const now = new Date();
             const timeStr = now.toTimeString().slice(0, 8);
 
-            const record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
-            if (!record || !record.checkIn) {
+            const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
+
+            if (!record || !record.check_in) {
                 showToast('Haujaingia kazini! Ingia kwanza.', 'warn');
                 return;
             }
-            if (record.checkOut) {
+            if (record.check_out) {
                 showToast('Tayari umetoka kazini!', 'warn');
                 return;
             }
 
-            record.checkOut = timeStr;
-            saveData();
+            await supabase.query('attendance', 'PATCH', { check_out: timeStr }, record.id);
+            await syncData();
             renderAll();
             showToast('✅ Umetoka kazini saa ' + timeStr, 'ok');
             speakText('Umetoka kazini saa ' + timeStr);
@@ -2300,7 +1749,7 @@
         // ====================================================================
         // USER OPERATIONS (Admin)
         // ====================================================================
-        function confirmAddUser() {
+        async function confirmAddUser() {
             if (!currentUser || currentUser.role !== 'admin') return;
 
             const name = document.getElementById('newUserName').value.trim();
@@ -2318,8 +1767,9 @@
                 return;
             }
 
-            db.users.push({ id, name, password: pass, role, photo: '' });
-            saveData();
+            const user = { id, name, password: pass, role, photo: '' };
+            await supabase.addUser(user);
+            await syncData();
             closeModal('newUserModal');
             document.getElementById('newUserName').value = '';
             document.getElementById('newUserId').value = '';
@@ -2327,7 +1777,7 @@
             showToast('✅ Mfanyakazi ' + name + ' ameongezwa!', 'ok');
         }
 
-        function deleteUser(userId) {
+        async function deleteUser(userId) {
             if (!currentUser || currentUser.role !== 'admin') return;
             if (userId === currentUser.id) {
                 showToast('Huwezi kujifuta mwenyewe!', 'warn');
@@ -2335,30 +1785,10 @@
             }
             if (!confirm('Je, una uhakika unataka kufuta mfanyakazi huyu?')) return;
 
-            db.users = db.users.filter(u => u.id !== userId);
-            db.tasks = db.tasks.filter(t => t.userId !== userId);
-            db.attendance = db.attendance.filter(a => a.userId !== userId);
-            saveData();
+            await supabase.deleteUser(userId);
+            await syncData();
             renderAll();
             showToast('Mfanyakazi amefutwa', 'warn');
-        }
-
-        // ====================================================================
-        // SAVINGS (for reminder)
-        // ====================================================================
-        function getTodaySavings() {
-            const entry = db.savings ? db.savings.find(s => s.date === getTodayStr()) : null;
-            return entry ? entry.amount : 0;
-        }
-
-        // ====================================================================
-        // ACTIVITY LOG
-        // ====================================================================
-        function logActivity(kind, text) {
-            if (!db.activityLog) db.activityLog = [];
-            db.activityLog.unshift({ id: Date.now(), ts: new Date().toISOString(), kind, text });
-            if (db.activityLog.length > 200) db.activityLog.length = 200;
-            saveData();
         }
 
         // ====================================================================
@@ -2376,40 +1806,10 @@
             if (!modal) return;
             modal.classList.remove('open');
             modal.style.display = 'none';
-            // Close camera if open
-            if (id === 'cameraModal') {
-                closeCamera();
-            }
         }
 
         // ====================================================================
-        // TOAST
-        // ====================================================================
-        function showToast(text, type = '') {
-            const stack = document.getElementById('toastStack');
-            const el = document.createElement('div');
-            el.className = 'toast' + (type ? ' ' + type : '');
-            el.textContent = text;
-            stack.appendChild(el);
-            setTimeout(() => {
-                el.style.opacity = '0';
-                el.style.transition = 'opacity 0.3s';
-                setTimeout(() => el.remove(), 300);
-            }, 6000);
-        }
-
-        // ====================================================================
-        // UTILITY
-        // ====================================================================
-        function escapeHtml(str) {
-            if (!str) return '';
-            const d = document.createElement('div');
-            d.textContent = str;
-            return d.innerHTML;
-        }
-
-        // ====================================================================
-        // DOWNLOAD APP (PWA)
+        // DOWNLOAD APP
         // ====================================================================
         function downloadApp() {
             try {
@@ -2450,9 +1850,10 @@
         tickClock();
 
         // ====================================================================
-        // AUTO-LOGIN
+        // INIT
         // ====================================================================
-        function autoLogin() {
+        function init() {
+            // Auto login if session exists
             if (db.currentUser) {
                 const user = db.users.find(u => u.id === db.currentUser.id);
                 if (user) {
@@ -2462,32 +1863,27 @@
                     return;
                 }
             }
+
             document.getElementById('loginPage').style.display = 'flex';
             document.getElementById('mainApp').style.display = 'none';
-        }
 
-        // ====================================================================
-        // INIT
-        // ====================================================================
-        function init() {
-            autoLogin();
-
-            document.querySelectorAll('.modal-overlay').forEach(m => {
-                m.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        this.classList.remove('open');
-                        this.style.display = 'none';
-                        closeCamera();
-                    }
-                });
-            });
-
+            // Set default date
             document.getElementById('taskDateInput').value = getTodayStr();
 
             // Load voices
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.getVoices();
             }
+
+            // Close modals on overlay click
+            document.querySelectorAll('.modal-overlay').forEach(m => {
+                m.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('open');
+                        this.style.display = 'none';
+                    }
+                });
+            });
         }
 
         document.addEventListener('DOMContentLoaded', init);
