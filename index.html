@@ -125,7 +125,6 @@
         .task-item .task-status { font-size: 11px; padding: 4px 12px; border-radius: 999px; font-weight: 600; }
         .task-item .task-status.pending { background: var(--red-soft); color: var(--red); }
         .task-item .task-status.done { background: var(--green-soft); color: var(--green); }
-        .task-item .task-reminder-badge { font-size: 9px; background: var(--gold-soft); color: var(--gold); padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
 
         /* ATTENDANCE */
         .attendance-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
@@ -225,8 +224,8 @@
         .staff-info-card .value { color: var(--text); font-weight: 500; }
         .timer-display { font-family: 'Space Grotesk'; font-size: 32px; font-weight: 700; color: var(--gold); text-align: center; padding: 8px 0; }
 
-        /* REMINDER BADGE */
-        .reminder-active { background: var(--red-soft); color: var(--red); border: 1px solid rgba(226,87,76,0.3); }
+        .btn-danger { background: var(--red); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter'; font-size: 12px; }
+        .btn-danger:hover { opacity: 0.8; transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -345,7 +344,7 @@
                     <h4 style="font-family:'Space Grotesk';margin-bottom:10px;color:var(--gold);">
                         <i class="fa-solid fa-bullhorn"></i> Habari za Leo
                         <span class="cloud-badge"><i class="fa-solid fa-cloud"></i> Cloud Sync</span>
-                        <span class="cloud-badge" style="background:var(--red-soft);color:var(--red);" id="reminderBadge"><i class="fa-solid fa-bell"></i> Reminder</span>
+                        <span class="cloud-badge" style="background:var(--red-soft);color:var(--red);display:none;" id="reminderBadge"><i class="fa-solid fa-bell"></i> Inakumbusha</span>
                     </h4>
                     <p style="color:var(--text-dim);font-size:14px;" id="dashboardGreeting">
                         Karibu! Angalia majukumu yako ya leo.
@@ -622,8 +621,11 @@
                     const res = await fetch(url, options);
                     if (!res.ok) throw new Error(`HTTP ${res.status}`);
                     if (method === 'GET') return await res.json();
-                    return { success: true };
-                } catch (e) { return { error: e.message }; }
+                    return { success: true, data: data };
+                } catch (e) {
+                    console.warn('Supabase error:', e);
+                    return { error: e.message };
+                }
             },
             async getUsers() { return await this.query('users'); },
             async getTasks() { return await this.query('tasks'); },
@@ -632,7 +634,6 @@
             async addTask(data) { return await this.query('tasks', 'POST', data); },
             async addAttendance(data) { return await this.query('attendance', 'POST', data); },
             async updateTask(id, data) { return await this.query('tasks', 'PATCH', data, id); },
-            async updateUser(id, data) { return await this.query('users', 'PATCH', data, id); },
             async deleteTask(id) { return await this.query('tasks', 'DELETE', null, id); },
             async deleteUser(id) { return await this.query('users', 'DELETE', null, id); }
         };
@@ -640,7 +641,7 @@
         // ====================================================================
         // DATA STORE
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v11';
+        const STORAGE_KEY = 'dr_william_data_v12';
         let db = loadData();
         let currentUser = null;
         let currentPage = 'dashboard';
@@ -653,11 +654,11 @@
         function loadData() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
-                if (!raw) return { users: [{ id: '123', name: 'Admin', password: '123', role: 'admin', phone: '' }],
-                    tasks: [], attendance: [], currentUser: null };
+                if (!raw) return { users: [{ id: '123', name: 'Admin', password: '123', role: 'admin' }], tasks: [],
+                    attendance: [], currentUser: null };
                 return JSON.parse(raw);
-            } catch (e) { return { users: [{ id: '123', name: 'Admin', password: '123', role: 'admin', phone: '' }],
-                    tasks: [], attendance: [], currentUser: null }; }
+            } catch (e) { return { users: [{ id: '123', name: 'Admin', password: '123', role: 'admin' }], tasks: [],
+                    attendance: [], currentUser: null }; }
         }
 
         function saveData() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); } catch (e) {} }
@@ -712,7 +713,7 @@
         }
 
         // ====================================================================
-        // REMINDER SYSTEM - Inakumbusha kwa sauti
+        // REMINDER SYSTEM
         // ====================================================================
         function startReminderSystem() {
             if (reminderInterval) clearInterval(reminderInterval);
@@ -730,19 +731,15 @@
             const today = getTodayStr();
             const userTasks = db.tasks.filter(t => t.user_id === currentUser.id && t.date === today && !t.done);
 
-            if (userTasks.length === 0) {
-                document.getElementById('reminderBadge').style.display = 'none';
-                return;
-            }
+            const badge = document.getElementById('reminderBadge');
+            if (userTasks.length === 0) { badge.style.display = 'none'; return; }
 
-            document.getElementById('reminderBadge').style.display = 'inline-flex';
-            document.getElementById('reminderBadge').textContent = '🔔 ' + userTasks.length + ' inakumbusha';
+            badge.style.display = 'inline-flex';
+            badge.textContent = '🔔 ' + userTasks.length + ' inakumbusha';
 
             userTasks.forEach(task => {
                 const key = 'reminder_' + task.id + '_' + today;
                 let count = parseInt(localStorage.getItem(key) || '0');
-
-                // Remind every 10 minutes
                 if (count % 10 === 0 && count > 0) {
                     const msg = 'Kumbuka: ' + task.name + '. Bado hujakamilisha.';
                     speakText(msg);
@@ -753,7 +750,7 @@
         }
 
         // ====================================================================
-        // SYNC DATA
+        // SYNC DATA WITH SUPABASE
         // ====================================================================
         async function syncData() {
             const btn = document.getElementById('syncBtn');
@@ -774,6 +771,13 @@
                 if (tasks && !tasks.error) db.tasks = tasks;
                 if (attendance && !attendance.error) db.attendance = attendance;
 
+                // Ensure admin exists
+                if (!db.users.find(u => u.id === '123')) {
+                    await supabase.addUser({ id: '123', name: 'Admin', password: '123', role: 'admin' });
+                    const users2 = await supabase.getUsers();
+                    if (users2 && !users2.error) db.users = users2;
+                }
+
                 if (currentUser) {
                     const user = db.users.find(u => u.id === currentUser.id);
                     if (user) currentUser = user;
@@ -788,6 +792,7 @@
                 dot.className = 'sync-dot offline';
                 text.textContent = 'Offline';
                 showToast('❌ Hitilafu ya Cloud!', 'warn');
+                console.warn('Sync error:', e);
             }
 
             if (btn) { btn.disabled = false;
@@ -1001,7 +1006,6 @@
                         <div class="task-meta">${t.priority === 'high' ? '🔴' : t.priority === 'medium' ? '🟡' : '🟢'} ${t.description || ''}</div>
                     </div>
                     <span class="task-status ${t.done ? 'done' : 'pending'}">${t.done ? 'Imekamilika' : 'Inasubiri'}</span>
-                    ${!t.done ? '<span class="task-reminder-badge"><i class="fa-solid fa-bell"></i> Inakumbusha</span>' : ''}
                 </div>
             `).join('');
         }
@@ -1050,7 +1054,6 @@
                         <div class="task-meta">
                             ${t.priority === 'high' ? '🔴 Juu' : t.priority === 'medium' ? '🟡 Kati' : '🟢 Chini'}
                             ${t.description ? '· ' + escapeHtml(t.description) : ''}
-                            ${!t.done ? '· <span class="task-reminder-badge"><i class="fa-solid fa-bell"></i> Inakumbusha</span>' : ''}
                         </div>
                     </div>
                     <span class="task-status ${t.done ? 'done' : 'pending'}">${t.done ? '✅ Imekamilika' : '⏳ Inasubiri'}</span>
@@ -1277,7 +1280,7 @@
         }
 
         // ====================================================================
-        // RENDER: ADMIN
+        // RENDER: ADMIN - IMEBORESHA KABISA
         // ====================================================================
         function renderAdmin() {
             if (!currentUser || currentUser.id !== '123') {
@@ -1301,7 +1304,7 @@
 
             const container = document.getElementById('adminUserList');
 
-            if (db.users.length === 0) {
+            if (!db.users || db.users.length === 0) {
                 container.innerHTML = '<div class="task-list-empty">Hakuna wafanyakazi bado. Sajili mfanyakazi wa kwanza!</div>';
                 return;
             }
@@ -1311,14 +1314,14 @@
                 return `
                     <div class="admin-user-card">
                         <div class="user-info">
-                            <div class="name">${escapeHtml(u.name)}</div>
-                            <div class="role">ID: ${u.id} · Simu: ${u.phone || '-'} · Nenosiri: <span class="password-hidden">${displayPass}</span></div>
+                            <div class="name">${escapeHtml(u.name || '')}</div>
+                            <div class="role">ID: ${u.id || ''} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'} · Nenosiri: <span class="password-hidden">${displayPass}</span></div>
                         </div>
                         <div>
                             ${u.id === '123' ? 
                                 '<span style="font-size:11px;color:var(--gold);font-weight:600;">👑 Admin</span>' : 
-                                `<button class="btn-red btn-sm" onclick="deleteUser('${u.id}')" style="padding:4px 10px;font-size:10px;">
-                                    <i class="fa-solid fa-trash"></i>
+                                `<button class="btn-danger btn-sm" onclick="deleteUser('${u.id}')" style="padding:4px 10px;font-size:10px;">
+                                    <i class="fa-solid fa-trash"></i> Futa
                                 </button>`
                             }
                         </div>
@@ -1327,9 +1330,9 @@
             }).join('');
 
             const select = document.getElementById('adminTaskUser');
-            const staffUsers = db.users.filter(u => u.id !== currentUser.id);
+            const staffUsers = db.users ? db.users.filter(u => u.id !== currentUser.id) : [];
             select.innerHTML = staffUsers.map(u =>
-                `<option value="${u.id}">${u.name} (${u.id})</option>`
+                `<option value="${u.id}">${u.name || u.id} (${u.id})</option>`
             ).join('') || '<option value="">Hakuna wafanyakazi</option>';
 
             document.getElementById('adminTaskDate').value = getTodayStr();
@@ -1395,7 +1398,7 @@
         }
 
         // ====================================================================
-        // ADMIN: ASSIGN TASK (IMEBORESHA)
+        // ADMIN: ASSIGN TASK - IMEBORESHA KABISA
         // ====================================================================
         async function adminAssignTask() {
             if (!currentUser || currentUser.id !== '123') {
@@ -1523,12 +1526,14 @@
                 return;
             }
 
-            if (db.users.find(u => u.id === id)) {
+            if (db.users && db.users.find(u => u.id === id)) {
                 showToast('Namba hii tayari ipo! Chagua namba nyingine.', 'warn');
                 return;
             }
 
-            const user = { id, name, password: pass, role: 'staff', phone: phone || '' };
+            const user = { id, name, password: pass, role: 'staff' };
+            if (phone) user.phone = phone;
+
             await supabase.addUser(user);
             await syncData();
             closeModal('newUserModal');
@@ -1553,7 +1558,7 @@
             if (!confirm('Je, una uhakika unataka kumfuta mfanyakazi huyu?')) return;
 
             // Delete all tasks for this user
-            const userTasks = db.tasks.filter(t => t.user_id === userId);
+            const userTasks = db.tasks ? db.tasks.filter(t => t.user_id === userId) : [];
             for (const task of userTasks) {
                 await supabase.deleteTask(task.id);
             }
@@ -1565,6 +1570,7 @@
             await syncData();
             renderAll();
             showToast('✅ Mfanyakazi amefutwa kabisa!', 'ok');
+            speakText('Mfanyakazi amefutwa');
         }
 
         // ====================================================================
@@ -1625,10 +1631,12 @@
         // INIT
         // ====================================================================
         function init() {
+            // Auto sync on load
             setTimeout(syncData, 2000);
 
+            // Auto login if session exists
             if (db.currentUser) {
-                const user = db.users.find(u => u.id === db.currentUser.id);
+                const user = db.users ? db.users.find(u => u.id === db.currentUser.id) : null;
                 if (user) {
                     document.getElementById('loginId').value = user.id;
                     document.getElementById('loginPass').value = user.password;
@@ -1657,11 +1665,14 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.getVoices();
             }
+
+            console.log('✅ Dr. William App imeanza!');
+            console.log('📋 Supabase URL:', SUPABASE_URL);
+            console.log('👑 Admin: 123 / 123');
         }
 
         document.addEventListener('DOMContentLoaded', init);
         if (document.readyState !== 'loading') init();
     </script>
-
 </body>
 </html>
