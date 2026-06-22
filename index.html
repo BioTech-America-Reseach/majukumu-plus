@@ -522,7 +522,6 @@
             color: var(--gold);
         }
 
-        /* Admin Only Badge */
         .admin-only {
             background: var(--gold-soft);
             color: var(--gold);
@@ -548,19 +547,19 @@
             <div class="subtitle">Mfumo wa Usimamizi wa Majukumu</div>
             <div class="field">
                 <label>Namba ya Mfanyakazi</label>
-                <input type="text" id="loginId" placeholder="****"value="123">
+                <input type="text" id="loginId" placeholder="Weka namba yako" value="">
             </div>
             <div class="field">
                 <label>Nenosiri</label>
-                <input type="password" id="loginPass" placeholder="Nenosiri lako" value="***">
+                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="">
             </div>
             <div class="login-error" id="loginError">Namba au nenosiri si sahihi!</div>
             <button class="btn-gold login-btn" onclick="handleLogin()">
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia
             </button>
             <div style="margin-top:14px;font-size:11px;color:var(--text-faint);">
-                <p>👑 Admin: 123 / 123</p>
-                <p>👤 Wafanyakazi wataingia na namba zao</p>
+                <p>👑 Msimamizi anaingia na namba yake</p>
+                <p>👤 Wafanyakazi wanaingia na namba zao</p>
             </div>
         </div>
     </div>
@@ -624,7 +623,7 @@
                         </div>
                         <div>
                             <h4 style="font-family:'Space Grotesk';font-size:16px;" id="profileName">Mfanyakazi</h4>
-                            <p style="font-size:12px;color:var(--text-dim);">ID: <span id="profileId">123</span></p>
+                            <p style="font-size:12px;color:var(--text-dim);">ID: <span id="profileId">***</span></p>
                         </div>
                     </div>
                 </div>
@@ -848,11 +847,11 @@
             <div class="field-row">
                 <div class="field">
                     <label>Namba ya Mfanyakazi</label>
-                    <input type="text" id="newUserId" placeholder="K.mf. W005">
+                    <input type="text" id="newUserId" placeholder="K.mf. W001">
                 </div>
                 <div class="field">
                     <label>Nenosiri</label>
-                    <input type="text" id="newUserPass" placeholder="Weka nenosiri" value="123">
+                    <input type="text" id="newUserPass" placeholder="Weka nenosiri" value="">
                 </div>
             </div>
             <div class="modal-actions">
@@ -866,7 +865,7 @@
         // ====================================================================
         // DATA STORE - LocalStorage
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v4';
+        const STORAGE_KEY = 'dr_william_data_v5';
 
         function getDefaultData() {
             return {
@@ -937,8 +936,8 @@
             }, 5000);
         }
 
-        function getHiddenPassword(length = 8) {
-            return '•'.repeat(Math.min(length, 12));
+        function getHiddenPassword() {
+            return '***';
         }
 
         // ====================================================================
@@ -948,9 +947,16 @@
             const id = document.getElementById('loginId').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
 
+            if (!id || !pass) {
+                document.getElementById('loginError').textContent = 'Tafadhali jaza namba na nenosiri!';
+                document.getElementById('loginError').style.display = 'block';
+                return;
+            }
+
             const user = db.users.find(u => u.id === id && u.password === pass);
 
             if (!user) {
+                document.getElementById('loginError').textContent = 'Namba au nenosiri si sahihi!';
                 document.getElementById('loginError').style.display = 'block';
                 return;
             }
@@ -971,12 +977,13 @@
                 adminTab.style.display = 'none';
             }
 
+            // Hide user ID (show ***)
             document.getElementById('userNameDisplay').textContent = user.name;
-            document.getElementById('userIdDisplay').textContent = '(' + user.id + ')';
+            document.getElementById('userIdDisplay').textContent = '(***)';
             document.getElementById('userRoleDisplay').textContent = user.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi';
 
             document.getElementById('profileName').textContent = user.name;
-            document.getElementById('profileId').textContent = user.id;
+            document.getElementById('profileId').textContent = '***';
 
             renderAll();
             showToast('Karibu ' + user.name + '!', 'ok');
@@ -1367,7 +1374,7 @@
                         <div class="task-list-empty" style="padding:20px;border:2px solid var(--red-soft);border-radius:12px;">
                             <i class="fa-solid fa-lock" style="font-size:32px;display:block;margin-bottom:10px;color:var(--red);"></i>
                             <strong style="color:var(--red);">Sehemu hii ni ya Admin pekee!</strong><br>
-                            <span style="font-size:12px;color:var(--text-dim);">Ingia kama Admin (123) kuona wafanyakazi.</span>
+                            <span style="font-size:12px;color:var(--text-dim);">Ingia kama Admin kuona wafanyakazi.</span>
                         </div>
                     `;
                 }
@@ -1388,28 +1395,32 @@
                 return;
             }
 
-            container.innerHTML = db.users.map(u => `
-                <div class="admin-user-card">
-                    <div class="user-info">
-                        <div class="name">${escapeHtml(u.name)}</div>
-                        <div class="role">ID: ${u.id} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'} · Nenosiri: <span class="password-hidden">${getHiddenPassword(u.password ? u.password.length : 4)}</span></div>
+            container.innerHTML = db.users.map(u => {
+                // Show password as *** for all users including admin
+                const displayPass = '***';
+                return `
+                    <div class="admin-user-card">
+                        <div class="user-info">
+                            <div class="name">${escapeHtml(u.name)}</div>
+                            <div class="role">ID: ${u.id} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'} · Nenosiri: <span class="password-hidden">${displayPass}</span></div>
+                        </div>
+                        <div>
+                            ${u.id === '123' ? 
+                                '<span style="font-size:11px;color:var(--gold);font-weight:600;">👑 Admin</span>' : 
+                                `<button class="btn-red btn-sm" onclick="deleteUser('${u.id}')" style="padding:4px 10px;font-size:10px;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>`
+                            }
+                        </div>
                     </div>
-                    <div>
-                        ${u.id === '123' ? 
-                            '<span style="font-size:11px;color:var(--gold);font-weight:600;">👑 Admin</span>' : 
-                            `<button class="btn-red btn-sm" onclick="deleteUser('${u.id}')" style="padding:4px 10px;font-size:10px;">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>`
-                        }
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
 
             const select = document.getElementById('adminTaskUser');
             const staffUsers = db.users.filter(u => u.id !== currentUser.id);
             select.innerHTML = staffUsers.map(u =>
                 `<option value="${u.id}">${u.name} (${u.id})</option>`
-            ).join('');
+            ).join('') || '<option value="">Hakuna wafanyakazi</option>';
 
             document.getElementById('adminTaskDate').value = getTodayStr();
         }
@@ -1577,7 +1588,7 @@
             closeModal('newUserModal');
             document.getElementById('newUserName').value = '';
             document.getElementById('newUserId').value = '';
-            document.getElementById('newUserPass').value = '123';
+            document.getElementById('newUserPass').value = '';
             renderAll();
             showToast('✅ Mfanyakazi ' + name + ' amesajiliwa!', 'ok');
             showToast('🔑 Nenosiri lake: ' + pass + ' (Mpe mfanyakazi)', 'ok');
