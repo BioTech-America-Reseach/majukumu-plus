@@ -55,16 +55,19 @@
         .btn-ghost:hover { border-color: var(--gold); color: var(--text); }
         .btn-red { background: var(--red-soft); color: var(--red); border: 1px solid rgba(226,87,76,0.3); padding: 12px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter'; font-size: 14px; }
         .btn-red:hover { opacity: 0.8; }
+        .btn-danger { background: #dc3545; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter'; font-size: 12px; }
+        .btn-danger:hover { opacity: 0.8; transform: scale(0.95); }
         .btn-green { background: var(--green); color: #0a2818; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter'; font-size: 14px; }
         .btn-green:hover { opacity: 0.8; transform: scale(0.97); }
         .btn-sm { padding: 8px 16px; font-size: 12px; }
+        .btn-edit { background: var(--blue); color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter'; font-size: 12px; }
+        .btn-edit:hover { opacity: 0.8; transform: scale(0.95); }
         input, select, textarea { background: var(--panel-2); border: 1px solid var(--line); color: var(--text); padding: 12px 15px; border-radius: 12px; font-size: 14px; outline: none; font-family: 'Inter'; width: 100%; }
         input:focus, select:focus, textarea:focus { border-color: var(--gold); }
         .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px; transition: all 0.3s; }
         .card:hover { border-color: var(--gold); }
         .card-gold { border-color: var(--gold); background: linear-gradient(135deg, rgba(212,162,78,0.08), transparent); }
 
-        /* LOGIN */
         #loginPage { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .login-box { background: var(--panel); border: 1px solid var(--gold); border-radius: 24px; padding: 40px; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 0 60px rgba(212,162,78,0.08); }
         .login-box .logo { font-family: 'Space Grotesk'; font-size: 32px; font-weight: 700; color: var(--gold); }
@@ -76,10 +79,8 @@
         .login-error { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
         .login-box .login-btn { width: 100%; padding: 14px; font-size: 16px; margin-top: 10px; }
 
-        /* MAIN */
         #mainApp { display: none; }
 
-        /* TOP BAR */
         .topbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
         .topbar .brand { display: flex; align-items: center; gap: 10px; }
         .topbar .brand .icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #1a1305; font-family: 'Space Grotesk'; }
@@ -90,7 +91,6 @@
         .topbar-right .user-badge { background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px; }
         .clock-display { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim); }
 
-        /* NAV */
         .nav-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
         .nav-tab { padding: 8px 14px; border-radius: 12px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text-dim); border: 1px solid transparent; transition: all 0.15s; display: flex; align-items: center; gap: 6px; background: transparent; font-family: 'Inter'; }
         .nav-tab:hover { background: var(--panel); color: var(--text); }
@@ -102,7 +102,6 @@
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* STATS */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
         .stat-card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; text-align: center; transition: all 0.3s; }
         .stat-card:hover { border-color: var(--gold); transform: translateY(-2px); }
@@ -111,7 +110,6 @@
         .stat-card .number.green { color: var(--green); }
         .stat-card .number.red { color: var(--red); }
 
-        /* TASKS */
         .task-item { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 8px; transition: all 0.3s; }
         .task-item:hover { border-color: var(--gold); }
         .task-item.done { opacity: 0.5; }
@@ -126,7 +124,6 @@
         .task-item .task-status.pending { background: var(--red-soft); color: var(--red); }
         .task-item .task-status.done { background: var(--green-soft); color: var(--green); }
 
-        /* ATTENDANCE */
         .attendance-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
         @media (max-width: 600px) { .attendance-box { grid-template-columns: 1fr; } }
         .attendance-card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 14px; padding: 16px; text-align: center; }
@@ -137,7 +134,6 @@
         .attendance-card .status-badge.out { background: var(--red-soft); color: var(--red); }
         .attendance-card .status-badge.pending { background: var(--gold-soft); color: var(--gold); }
 
-        /* PERFORMANCE */
         .performance-ring { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; position: relative; }
         .performance-ring .value { font-family: 'Space Grotesk'; font-size: 28px; font-weight: 700; color: var(--gold); }
         .performance-ring svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
@@ -145,15 +141,14 @@
         .performance-ring svg .bg { stroke: var(--panel-2); }
         .performance-ring svg .progress { stroke: var(--gold); transition: stroke-dashoffset 1s ease; }
 
-        /* ADMIN */
         .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         @media (max-width: 900px) { .admin-grid { grid-template-columns: 1fr; } }
         .admin-user-card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; transition: all 0.3s; }
         .admin-user-card:hover { border-color: var(--gold); }
         .admin-user-card .user-info .name { font-weight: 600; font-size: 14px; }
         .admin-user-card .user-info .role { font-size: 11px; color: var(--text-dim); }
+        .admin-user-card .user-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 
-        /* MODAL */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.open { display: flex; }
         .modal-box { background: var(--panel); border: 1px solid var(--gold); border-radius: 18px; padding: 24px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; animation: modalIn 0.25s ease; }
@@ -168,7 +163,6 @@
         @media (max-width: 500px) { .modal-box .field-row { grid-template-columns: 1fr; } }
         .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
 
-        /* TOAST */
         #toastStack { position: fixed; bottom: 70px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; max-width: 340px; }
         .toast { background: var(--panel-2); border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: 12px; padding: 12px 16px; font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); animation: toastIn 0.3s ease; }
         .toast.warn { border-left-color: var(--red); }
@@ -176,7 +170,6 @@
         .toast.reminder { border-left-color: var(--gold); background: linear-gradient(135deg, var(--gold-soft), var(--panel-2)); }
         @keyframes toastIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
 
-        /* CALENDAR */
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
         .calendar-grid .day { background: var(--panel-2); border-radius: 8px; padding: 6px 2px; text-align: center; font-size: 12px; color: var(--text-dim); transition: all 0.2s; }
         .calendar-grid .day.has-task { border: 1px solid var(--gold); color: var(--gold); cursor: pointer; }
@@ -224,8 +217,8 @@
         .staff-info-card .value { color: var(--text); font-weight: 500; }
         .timer-display { font-family: 'Space Grotesk'; font-size: 32px; font-weight: 700; color: var(--gold); text-align: center; padding: 8px 0; }
 
-        .btn-danger { background: var(--red); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter'; font-size: 12px; }
-        .btn-danger:hover { opacity: 0.8; transform: scale(0.95); }
+        .task-delete-btn { background: var(--red-soft); color: var(--red); border: 1px solid rgba(226,87,76,0.3); padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; font-family: 'Inter'; font-weight: 500; transition: all 0.2s; }
+        .task-delete-btn:hover { opacity: 0.8; transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -344,7 +337,6 @@
                     <h4 style="font-family:'Space Grotesk';margin-bottom:10px;color:var(--gold);">
                         <i class="fa-solid fa-bullhorn"></i> Habari za Leo
                         <span class="cloud-badge"><i class="fa-solid fa-cloud"></i> Cloud Sync</span>
-                        <span class="cloud-badge" style="background:var(--red-soft);color:var(--red);display:none;" id="reminderBadge"><i class="fa-solid fa-bell"></i> Inakumbusha</span>
                     </h4>
                     <p style="color:var(--text-dim);font-size:14px;" id="dashboardGreeting">
                         Karibu! Angalia majukumu yako ya leo.
@@ -519,6 +511,35 @@
     </div>
 
     <!-- MODALS -->
+
+    <!-- Edit User Modal -->
+    <div class="modal-overlay" id="editUserModal">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3>✏️ Badilisha Taarifa za Mfanyakazi</h3>
+                <button class="modal-close" onclick="closeModal('editUserModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <input type="hidden" id="editUserId">
+            <div class="field">
+                <label>Jina Kamili</label>
+                <input type="text" id="editUserName" placeholder="Jina la mfanyakazi">
+            </div>
+            <div class="field">
+                <label>Namba ya Simu</label>
+                <input type="text" id="editUserPhone" placeholder="Namba ya simu">
+            </div>
+            <div class="field">
+                <label>Nenosiri Mpya (acha tupu kama hutaki kubadilisha)</label>
+                <input type="text" id="editUserPass" placeholder="Weka nenosiri jipya">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-ghost" onclick="closeModal('editUserModal')">Ghairi</button>
+                <button class="btn-gold" onclick="confirmEditUser()"><i class="fa-solid fa-check"></i> Hifadhi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Task Modal -->
     <div class="modal-overlay" id="newTaskModal">
         <div class="modal-box">
             <div class="modal-head">
@@ -554,6 +575,7 @@
         </div>
     </div>
 
+    <!-- New User Modal -->
     <div class="modal-overlay" id="newUserModal">
         <div class="modal-box">
             <div class="modal-head">
@@ -634,6 +656,7 @@
             async addTask(data) { return await this.query('tasks', 'POST', data); },
             async addAttendance(data) { return await this.query('attendance', 'POST', data); },
             async updateTask(id, data) { return await this.query('tasks', 'PATCH', data, id); },
+            async updateUser(id, data) { return await this.query('users', 'PATCH', data, id); },
             async deleteTask(id) { return await this.query('tasks', 'DELETE', null, id); },
             async deleteUser(id) { return await this.query('users', 'DELETE', null, id); }
         };
@@ -641,7 +664,7 @@
         // ====================================================================
         // DATA STORE
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v12';
+        const STORAGE_KEY = 'dr_william_data_v13';
         let db = loadData();
         let currentUser = null;
         let currentPage = 'dashboard';
@@ -649,7 +672,6 @@
         let calendarYear = new Date().getFullYear();
         let workTimerInterval = null;
         let workStartTime = null;
-        let reminderInterval = null;
 
         function loadData() {
             try {
@@ -695,9 +717,6 @@
             return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
         }
 
-        // ====================================================================
-        // SPEECH / VOICE REMINDER
-        // ====================================================================
         function speakText(text) {
             if (!('speechSynthesis' in window)) return;
             try {
@@ -713,44 +732,7 @@
         }
 
         // ====================================================================
-        // REMINDER SYSTEM
-        // ====================================================================
-        function startReminderSystem() {
-            if (reminderInterval) clearInterval(reminderInterval);
-            reminderInterval = setInterval(checkReminders, 60000);
-            setTimeout(checkReminders, 5000);
-        }
-
-        function stopReminderSystem() {
-            if (reminderInterval) { clearInterval(reminderInterval);
-                reminderInterval = null; }
-        }
-
-        function checkReminders() {
-            if (!currentUser) return;
-            const today = getTodayStr();
-            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id && t.date === today && !t.done);
-
-            const badge = document.getElementById('reminderBadge');
-            if (userTasks.length === 0) { badge.style.display = 'none'; return; }
-
-            badge.style.display = 'inline-flex';
-            badge.textContent = '🔔 ' + userTasks.length + ' inakumbusha';
-
-            userTasks.forEach(task => {
-                const key = 'reminder_' + task.id + '_' + today;
-                let count = parseInt(localStorage.getItem(key) || '0');
-                if (count % 10 === 0 && count > 0) {
-                    const msg = 'Kumbuka: ' + task.name + '. Bado hujakamilisha.';
-                    speakText(msg);
-                    showToast('🔔 ' + msg, 'reminder');
-                }
-                localStorage.setItem(key, String(count + 1));
-            });
-        }
-
-        // ====================================================================
-        // SYNC DATA WITH SUPABASE
+        // SYNC DATA
         // ====================================================================
         async function syncData() {
             const btn = document.getElementById('syncBtn');
@@ -771,7 +753,6 @@
                 if (tasks && !tasks.error) db.tasks = tasks;
                 if (attendance && !attendance.error) db.attendance = attendance;
 
-                // Ensure admin exists
                 if (!db.users.find(u => u.id === '123')) {
                     await supabase.addUser({ id: '123', name: 'Admin', password: '123', role: 'admin' });
                     const users2 = await supabase.getUsers();
@@ -852,11 +833,9 @@
 
             renderAll();
             showToast('Karibu ' + user.name + '!', 'ok');
-            startReminderSystem();
         }
 
         function handleLogout() {
-            stopReminderSystem();
             stopWorkTimer();
             currentUser = null;
             db.currentUser = null;
@@ -1011,7 +990,7 @@
         }
 
         // ====================================================================
-        // RENDER: TASKS
+        // RENDER: TASKS - Wafanyakazi hawana uwezo wa kufuta
         // ====================================================================
         function renderTasks() {
             if (!currentUser) return;
@@ -1057,9 +1036,10 @@
                         </div>
                     </div>
                     <span class="task-status ${t.done ? 'done' : 'pending'}">${t.done ? '✅ Imekamilika' : '⏳ Inasubiri'}</span>
-                    <button class="btn-red btn-sm" onclick="deleteTask('${t.id}')" style="padding:4px 10px;font-size:11px;">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+                    ${currentUser.role === 'admin' ? 
+                        `<button class="task-delete-btn" onclick="deleteTask('${t.id}')">
+                            <i class="fa-solid fa-trash"></i> Futa
+                        </button>` : ''}
                 </div>
             `).join('');
         }
@@ -1311,18 +1291,24 @@
 
             container.innerHTML = db.users.map(u => {
                 const displayPass = '***';
+                const isAdmin = u.id === '123';
                 return `
                     <div class="admin-user-card">
                         <div class="user-info">
                             <div class="name">${escapeHtml(u.name || '')}</div>
-                            <div class="role">ID: ${u.id || ''} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'} · Nenosiri: <span class="password-hidden">${displayPass}</span></div>
+                            <div class="role">ID: ${u.id || ''} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'} · Simu: ${u.phone || '-'} · Nenosiri: <span class="password-hidden">${displayPass}</span></div>
                         </div>
-                        <div>
-                            ${u.id === '123' ? 
+                        <div class="user-actions">
+                            ${isAdmin ? 
                                 '<span style="font-size:11px;color:var(--gold);font-weight:600;">👑 Admin</span>' : 
-                                `<button class="btn-danger btn-sm" onclick="deleteUser('${u.id}')" style="padding:4px 10px;font-size:10px;">
+                                `
+                                <button class="btn-edit btn-sm" onclick="openEditUser('${u.id}')">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button class="btn-danger btn-sm" onclick="deleteUser('${u.id}')">
                                     <i class="fa-solid fa-trash"></i> Futa
-                                </button>`
+                                </button>
+                                `
                             }
                         </div>
                     </div>
@@ -1336,6 +1322,44 @@
             ).join('') || '<option value="">Hakuna wafanyakazi</option>';
 
             document.getElementById('adminTaskDate').value = getTodayStr();
+        }
+
+        // ====================================================================
+        // EDIT USER - Admin anaweza kubadilisha majina na passwords
+        // ====================================================================
+        function openEditUser(userId) {
+            const user = db.users.find(u => u.id === userId);
+            if (!user) return;
+
+            document.getElementById('editUserId').value = userId;
+            document.getElementById('editUserName').value = user.name || '';
+            document.getElementById('editUserPhone').value = user.phone || '';
+            document.getElementById('editUserPass').value = '';
+
+            openModal('editUserModal');
+        }
+
+        async function confirmEditUser() {
+            const userId = document.getElementById('editUserId').value;
+            const name = document.getElementById('editUserName').value.trim();
+            const phone = document.getElementById('editUserPhone').value.trim();
+            const pass = document.getElementById('editUserPass').value.trim();
+
+            if (!name) {
+                showToast('Tafadhali andika jina', 'warn');
+                return;
+            }
+
+            const updateData = { name: name };
+            if (phone) updateData.phone = phone;
+            if (pass) updateData.password = pass;
+
+            await supabase.updateUser(userId, updateData);
+            await syncData();
+            closeModal('editUserModal');
+            renderAll();
+            showToast('✅ Taarifa zimebadilishwa!', 'ok');
+            speakText('Taarifa za mfanyakazi zimebadilishwa');
         }
 
         // ====================================================================
@@ -1357,11 +1381,18 @@
         }
 
         async function deleteTask(taskId) {
+            // Only admin can delete tasks
+            if (!currentUser || currentUser.id !== '123') {
+                showToast('Sehemu hii ni ya Admin pekee!', 'warn');
+                return;
+            }
+
             if (!confirm('Je, una uhakika unataka kufuta kazi hii?')) return;
             await supabase.deleteTask(taskId);
             await syncData();
             renderAll();
             showToast('Kazi imefutwa', 'warn');
+            speakText('Kazi imefutwa na Admin');
         }
 
         async function confirmAddTask() {
@@ -1398,7 +1429,7 @@
         }
 
         // ====================================================================
-        // ADMIN: ASSIGN TASK - IMEBORESHA KABISA
+        // ADMIN: ASSIGN TASK
         // ====================================================================
         async function adminAssignTask() {
             if (!currentUser || currentUser.id !== '123') {
@@ -1429,8 +1460,6 @@
             };
 
             await supabase.addTask(task);
-
-            // Force sync to get latest data
             await syncData();
 
             document.getElementById('adminTaskName').value = '';
@@ -1508,7 +1537,7 @@
         }
 
         // ====================================================================
-        // USER OPERATIONS (Admin) - IMEBORESHA KUFUTA KUNATENDA KAZI
+        // USER OPERATIONS (Admin)
         // ====================================================================
         async function confirmAddUser() {
             if (!currentUser || currentUser.id !== '123') {
@@ -1542,8 +1571,9 @@
             document.getElementById('newUserPhone').value = '';
             document.getElementById('newUserPass').value = '123';
             renderAll();
-            showToast('✅ Mfanyakazi ' + name + ' amesajiliwa kwenye Cloud!', 'ok');
-            showToast('🔑 Namba: "' + id + '" · Nenosiri: "' + pass + '" (Tumia sawa)', 'ok');
+            showToast('✅ Mfanyakazi ' + name + ' amesajiliwa!', 'ok');
+            showToast('🔑 Namba: "' + id + '" · Nenosiri: "' + pass + '"', 'ok');
+            speakText('Mfanyakazi ' + name + ' amesajiliwa');
         }
 
         async function deleteUser(userId) {
@@ -1563,13 +1593,10 @@
                 await supabase.deleteTask(task.id);
             }
 
-            // Delete the user
             await supabase.deleteUser(userId);
-
-            // Force sync
             await syncData();
             renderAll();
-            showToast('✅ Mfanyakazi amefutwa kabisa!', 'ok');
+            showToast('✅ Mfanyakazi amefutwa!', 'ok');
             speakText('Mfanyakazi amefutwa');
         }
 
@@ -1631,10 +1658,8 @@
         // INIT
         // ====================================================================
         function init() {
-            // Auto sync on load
             setTimeout(syncData, 2000);
 
-            // Auto login if session exists
             if (db.currentUser) {
                 const user = db.users ? db.users.find(u => u.id === db.currentUser.id) : null;
                 if (user) {
@@ -1658,21 +1683,20 @@
                 });
             });
 
-            // Auto sync every 30 seconds
             setInterval(syncData, 30000);
 
-            // Load voices for speech
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.getVoices();
             }
 
             console.log('✅ Dr. William App imeanza!');
-            console.log('📋 Supabase URL:', SUPABASE_URL);
             console.log('👑 Admin: 123 / 123');
+            console.log('📋 Admin ndiye pekee anayeweza kufuta majukumu na wafanyakazi');
         }
 
         document.addEventListener('DOMContentLoaded', init);
         if (document.readyState !== 'loading') init();
     </script>
+
 </body>
 </html>
