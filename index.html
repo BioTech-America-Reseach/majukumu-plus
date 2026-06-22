@@ -535,7 +535,6 @@
             margin-left: 8px;
         }
 
-        /* Cloud Sync Status */
         .sync-status {
             font-size: 11px;
             color: var(--text-faint);
@@ -578,19 +577,19 @@
             <div class="subtitle">Mfumo wa Usimamizi wa Majukumu</div>
             <div class="field">
                 <label>Namba ya Mfanyakazi</label>
-                <input type="text" id="loginId" placeholder="Weka namba yako" value="123">
+                <input type="text" id="loginId" placeholder="Weka namba yako" value="***">
             </div>
             <div class="field">
                 <label>Nenosiri</label>
-                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="123">
+                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="***">
             </div>
             <div class="login-error" id="loginError">Namba au nenosiri si sahihi!</div>
             <button class="btn-gold login-btn" onclick="handleLogin()">
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia
             </button>
             <div style="margin-top:14px;font-size:11px;color:var(--text-faint);">
-                <p>👑 Admin: 123 / 123</p>
-                <p>☁️ Data inasawazishwa kwenye Cloud</p>
+                <p>👑 Admin: *** / ***</p>
+                <p>☁️ ...Loading....</p>
             </div>
         </div>
     </div>
@@ -979,7 +978,7 @@
         // ====================================================================
         // DATA STORE
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v8';
+        const STORAGE_KEY = 'dr_william_data_v9';
 
         function getDefaultData() {
             return {
@@ -1606,7 +1605,7 @@
         }
 
         // ====================================================================
-        // TASK OPERATIONS
+        // TASK OPERATIONS - IMEBORESHA (Inasawazisha Cloud)
         // ====================================================================
         async function toggleTask(taskId) {
             const task = db.tasks.find(t => t.id === taskId);
@@ -1617,7 +1616,7 @@
             // Update in Supabase
             await supabase.updateTask(taskId, { done: task.done });
 
-            // Update local
+            // Sync data
             await syncData();
             renderAll();
 
@@ -1698,7 +1697,13 @@
             await syncData();
             document.getElementById('adminTaskName').value = '';
             renderAll();
-            showToast('✅ Kazi imegawanywa!', 'ok');
+            showToast('✅ Kazi imegawanywa kwa ' + userId + '!', 'ok');
+
+            // Let the user know the task was assigned
+            const user = db.users.find(u => u.id === userId);
+            if (user) {
+                showToast('📋 ' + name + ' imepewa ' + user.name, 'ok');
+            }
         }
 
         // ====================================================================
@@ -1759,7 +1764,7 @@
         }
 
         // ====================================================================
-        // USER OPERATIONS (Admin)
+        // USER OPERATIONS (Admin) - IMEBORESHA (Kufuta kunafanya kazi)
         // ====================================================================
         async function confirmAddUser() {
             if (!currentUser || currentUser.id !== '123') {
@@ -1804,10 +1809,17 @@
             }
             if (!confirm('Je, una uhakika unataka kumfuta mfanyakazi huyu?')) return;
 
+            // First delete all tasks for this user
+            const userTasks = db.tasks.filter(t => t.user_id === userId);
+            for (const task of userTasks) {
+                await supabase.deleteTask(task.id);
+            }
+
+            // Then delete the user
             await supabase.deleteUser(userId);
             await syncData();
             renderAll();
-            showToast('Mfanyakazi amefutwa', 'warn');
+            showToast('✅ Mfanyakazi amefutwa!', 'ok');
         }
 
         // ====================================================================
