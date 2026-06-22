@@ -27,6 +27,7 @@
             --green-soft: rgba(61,190,122,0.14);
             --red: #E2574C;
             --red-soft: rgba(226,87,76,0.14);
+            --blue: #4A9BE8;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -533,6 +534,36 @@
             gap: 4px;
             margin-left: 8px;
         }
+
+        /* Cloud Sync Status */
+        .sync-status {
+            font-size: 11px;
+            color: var(--text-faint);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sync-status .sync-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .sync-status .sync-dot.online { background: var(--green); }
+        .sync-status .sync-dot.offline { background: var(--red); animation: blink 1s infinite; }
+        .sync-status .sync-dot.syncing { background: var(--gold); animation: blink 0.5s infinite; }
+        @keyframes blink { 50% { opacity: 0.3; } }
+
+        .cloud-badge {
+            background: var(--gold-soft);
+            color: var(--gold);
+            font-size: 9px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
     </style>
 </head>
 <body>
@@ -547,11 +578,11 @@
             <div class="subtitle">Mfumo wa Usimamizi wa Majukumu</div>
             <div class="field">
                 <label>Namba ya Mfanyakazi</label>
-                <input type="text" id="loginId" placeholder="Weka namba yako" value="">
+                <input type="text" id="loginId" placeholder="Weka namba yako" value="123">
             </div>
             <div class="field">
                 <label>Nenosiri</label>
-                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="">
+                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="123">
             </div>
             <div class="login-error" id="loginError">Namba au nenosiri si sahihi!</div>
             <button class="btn-gold login-btn" onclick="handleLogin()">
@@ -559,8 +590,7 @@
             </button>
             <div style="margin-top:14px;font-size:11px;color:var(--text-faint);">
                 <p>👑 Admin: 123 / 123</p>
-                <p>👤 Wafanyakazi wanaingia na namba zao</p>
-                <p style="font-size:10px;color:var(--text-faint);">💡 Hakikisha umeandika namba SAWA na uliyosajili</p>
+                <p>☁️ Data inasawazishwa kwenye Cloud</p>
             </div>
         </div>
     </div>
@@ -579,6 +609,10 @@
                     </div>
                 </div>
                 <div class="topbar-right">
+                    <div class="sync-status">
+                        <span class="sync-dot online" id="syncDot"></span>
+                        <span id="syncText">Cloud</span>
+                    </div>
                     <div class="user-badge">
                         <span id="userNameDisplay">Mfanyakazi</span>
                         <span style="color:var(--text-faint);font-size:10px;" id="userIdDisplay">(***)</span>
@@ -651,6 +685,7 @@
                 <div class="card card-gold">
                     <h4 style="font-family:'Space Grotesk';margin-bottom:10px;color:var(--gold);">
                         <i class="fa-solid fa-bullhorn"></i> Habari za Leo
+                        <span class="cloud-badge"><i class="fa-solid fa-cloud"></i> Cloud Sync</span>
                     </h4>
                     <p style="color:var(--text-dim);font-size:14px;" id="dashboardGreeting">
                         Karibu! Angalia majukumu yako ya leo.
@@ -661,6 +696,9 @@
                         </button>
                         <button class="btn-ghost btn-sm" onclick="showPage('attendance')">
                             <i class="fa-solid fa-clock"></i> Mahudhurio
+                        </button>
+                        <button class="btn-ghost btn-sm" onclick="syncData()" id="syncBtn">
+                            <i class="fa-solid fa-rotate"></i> Sawazisha
                         </button>
                     </div>
                 </div>
@@ -763,6 +801,7 @@
                 <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
                     <i class="fa-solid fa-crown"></i> Dhibiti Wafanyakazi
                     <span class="admin-only"><i class="fa-solid fa-lock"></i> Admin Pekee</span>
+                    <span class="cloud-badge"><i class="fa-solid fa-cloud"></i> Cloud</span>
                 </h3>
                 <div class="admin-grid">
                     <div class="card">
@@ -771,9 +810,13 @@
                         <button class="btn-gold btn-sm" style="margin-top:10px;width:100%;" onclick="openModal('newUserModal')">
                             <i class="fa-solid fa-user-plus"></i> Sajili Mfanyakazi
                         </button>
+                        <button class="btn-ghost btn-sm" style="margin-top:8px;width:100%;" onclick="syncData()">
+                            <i class="fa-solid fa-rotate"></i> Sawazisha na Cloud
+                        </button>
                         <div style="margin-top:8px;padding:10px;background:var(--gold-soft);border-radius:8px;font-size:11px;color:var(--text-dim);">
                             <i class="fa-solid fa-info-circle"></i> 
                             <strong>Muhimu:</strong> Mfanyakazi atatumia <strong>Namba</strong> na <strong>Nenosiri</strong> sawa na ulivyosajili.
+                            Data inasawazishwa kwenye Cloud.
                         </div>
                     </div>
                     <div class="card">
@@ -859,7 +902,7 @@
                 </div>
                 <div class="field">
                     <label>Nenosiri</label>
-                    <input type="text" id="newUserPass" placeholder="Weka nenosiri" value="">
+                    <input type="text" id="newUserPass" placeholder="Weka nenosiri" value="123">
                     <div style="font-size:10px;color:var(--text-faint);margin-top:4px;">
                         <i class="fa-solid fa-info-circle"></i> Mpe mfanyakazi nenosiri hili
                     </div>
@@ -874,9 +917,69 @@
 
     <script>
         // ====================================================================
-        // DATA STORE - LocalStorage
+        // 🔧 SUPABASE CREDENTIALS
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v6';
+        const SUPABASE_URL = 'https://bojxzkdewtwblemwrkzw.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_WWDU_VhQgF-1111lGKtJdA_fxD5Zo_w';
+
+        // ====================================================================
+        // SUPABASE CLIENT
+        // ====================================================================
+        const supabase = {
+            url: SUPABASE_URL,
+            key: SUPABASE_KEY,
+
+            async query(table, method = 'GET', data = null, id = null) {
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'apikey': this.key,
+                    'Authorization': 'Bearer ' + this.key
+                };
+
+                let url = `${this.url}/rest/v1/${table}`;
+                let options = { method, headers };
+
+                if (method === 'GET') {
+                    url += '?select=*';
+                } else if (method === 'POST') {
+                    options.body = JSON.stringify(data);
+                } else if (method === 'PATCH' && id) {
+                    url += `?id=eq.${id}`;
+                    options.body = JSON.stringify(data);
+                } else if (method === 'DELETE' && id) {
+                    url += `?id=eq.${id}`;
+                }
+
+                try {
+                    const res = await fetch(url, options);
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    if (method === 'GET') return await res.json();
+                    return { success: true };
+                } catch (e) {
+                    console.warn('Supabase error:', e);
+                    return { error: e.message };
+                }
+            },
+
+            async getUsers() { return await this.query('users'); },
+            async getTasks() { return await this.query('tasks'); },
+            async getAttendance() { return await this.query('attendance'); },
+
+            async addUser(data) { return await this.query('users', 'POST', data); },
+            async addTask(data) { return await this.query('tasks', 'POST', data); },
+            async addAttendance(data) { return await this.query('attendance', 'POST', data); },
+
+            async updateTask(id, data) { return await this.query('tasks', 'PATCH', data, id); },
+            async updateUser(id, data) { return await this.query('users', 'PATCH', data, id); },
+
+            async deleteTask(id) { return await this.query('tasks', 'DELETE', null, id); },
+            async deleteUser(id) { return await this.query('users', 'DELETE', null, id); }
+        };
+
+        // ====================================================================
+        // DATA STORE
+        // ====================================================================
+        const STORAGE_KEY = 'dr_william_data_v8';
 
         function getDefaultData() {
             return {
@@ -888,6 +991,12 @@
                 currentUser: null
             };
         }
+
+        let db = loadData();
+        let currentUser = null;
+        let currentPage = 'dashboard';
+        let calendarMonth = new Date().getMonth();
+        let calendarYear = new Date().getFullYear();
 
         function loadData() {
             try {
@@ -912,11 +1021,55 @@
             }
         }
 
-        let db = loadData();
-        let currentUser = null;
-        let currentPage = 'dashboard';
-        let calendarMonth = new Date().getMonth();
-        let calendarYear = new Date().getFullYear();
+        // ====================================================================
+        // SYNC DATA WITH SUPABASE
+        // ====================================================================
+        async function syncData() {
+            const btn = document.getElementById('syncBtn');
+            const dot = document.getElementById('syncDot');
+            const text = document.getElementById('syncText');
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Inasawazisha...';
+            }
+            dot.className = 'sync-dot syncing';
+            text.textContent = 'Inasawazisha...';
+
+            try {
+                // Fetch all data from Supabase
+                const users = await supabase.getUsers();
+                const tasks = await supabase.getTasks();
+                const attendance = await supabase.getAttendance();
+
+                if (users && !users.error) db.users = users;
+                if (tasks && !tasks.error) db.tasks = tasks;
+                if (attendance && !attendance.error) db.attendance = attendance;
+
+                // If we have current user, update their data
+                if (currentUser) {
+                    const user = db.users.find(u => u.id === currentUser.id);
+                    if (user) currentUser = user;
+                }
+
+                saveData();
+
+                dot.className = 'sync-dot online';
+                text.textContent = 'Cloud';
+                showToast('✅ Data imesawazishwa na Cloud!', 'ok');
+                renderAll();
+            } catch (e) {
+                dot.className = 'sync-dot offline';
+                text.textContent = 'Offline';
+                showToast('❌ Hitilafu ya kuunganisha Cloud!', 'warn');
+                console.warn('Sync error:', e);
+            }
+
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-rotate"></i> Sawazisha';
+            }
+        }
 
         // ====================================================================
         // HELPERS
@@ -954,7 +1107,7 @@
         // ====================================================================
         // LOGIN / LOGOUT
         // ====================================================================
-        function handleLogin() {
+        async function handleLogin() {
             const id = document.getElementById('loginId').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
 
@@ -964,11 +1117,21 @@
                 return;
             }
 
-            // Search for user with exact match
+            // First sync from cloud
+            try {
+                const users = await supabase.getUsers();
+                if (users && !users.error) {
+                    db.users = users;
+                    saveData();
+                }
+            } catch (e) {
+                console.warn('Cloud fetch failed, using local data', e);
+            }
+
             const user = db.users.find(u => u.id === id && u.password === pass);
 
             if (!user) {
-                document.getElementById('loginError').textContent = 'Namba au nenosiri si sahihi! Hakikisha umeandika sawa na uliyosajili.';
+                document.getElementById('loginError').textContent = 'Namba au nenosiri si sahihi!';
                 document.getElementById('loginError').style.display = 'block';
                 return;
             }
@@ -981,7 +1144,6 @@
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('mainApp').style.display = 'block';
 
-            // Show admin tab ONLY for admin (123)
             const adminTab = document.getElementById('adminTab');
             if (user.id === '123' && user.role === 'admin') {
                 adminTab.style.display = 'inline-flex';
@@ -989,13 +1151,23 @@
                 adminTab.style.display = 'none';
             }
 
-            // Hide user ID (show ***)
             document.getElementById('userNameDisplay').textContent = user.name;
             document.getElementById('userIdDisplay').textContent = '(***)';
             document.getElementById('userRoleDisplay').textContent = user.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi';
 
             document.getElementById('profileName').textContent = user.name;
             document.getElementById('profileId').textContent = '***';
+
+            // Sync tasks and attendance
+            try {
+                const tasks = await supabase.getTasks();
+                if (tasks && !tasks.error) db.tasks = tasks;
+                const attendance = await supabase.getAttendance();
+                if (attendance && !attendance.error) db.attendance = attendance;
+                saveData();
+            } catch (e) {
+                console.warn('Sync failed', e);
+            }
 
             renderAll();
             showToast('Karibu ' + user.name + '!', 'ok');
@@ -1436,26 +1608,34 @@
         // ====================================================================
         // TASK OPERATIONS
         // ====================================================================
-        function toggleTask(taskId) {
+        async function toggleTask(taskId) {
             const task = db.tasks.find(t => t.id === taskId);
             if (!task) return;
+
             task.done = !task.done;
-            saveData();
+
+            // Update in Supabase
+            await supabase.updateTask(taskId, { done: task.done });
+
+            // Update local
+            await syncData();
             renderAll();
+
             if (task.done) {
                 showToast('✅ ' + task.name + ' imekamilika!', 'ok');
             }
         }
 
-        function deleteTask(taskId) {
+        async function deleteTask(taskId) {
             if (!confirm('Je, una uhakika unataka kufuta kazi hii?')) return;
-            db.tasks = db.tasks.filter(t => t.id !== taskId);
-            saveData();
+
+            await supabase.deleteTask(taskId);
+            await syncData();
             renderAll();
             showToast('Kazi imefutwa', 'warn');
         }
 
-        function confirmAddTask() {
+        async function confirmAddTask() {
             if (!currentUser) return;
 
             const name = document.getElementById('taskNameInput').value.trim();
@@ -1470,16 +1650,17 @@
 
             const task = {
                 id: 't' + Date.now(),
-                userId: currentUser.id,
+                user_id: currentUser.id,
                 name: name,
                 description: desc || '',
                 date: date || getTodayStr(),
                 priority: priority || 'medium',
-                done: false
+                done: false,
+                reminder_count: 0
             };
 
-            db.tasks.push(task);
-            saveData();
+            await supabase.addTask(task);
+            await syncData();
             closeModal('newTaskModal');
             document.getElementById('taskNameInput').value = '';
             document.getElementById('taskDescInput').value = '';
@@ -1487,7 +1668,7 @@
             showToast('✅ Kazi imeongezwa!', 'ok');
         }
 
-        function adminAssignTask() {
+        async function adminAssignTask() {
             if (!currentUser || currentUser.id !== '123') {
                 showToast('Sehemu hii ni ya Admin pekee!', 'warn');
                 return;
@@ -1504,16 +1685,17 @@
 
             const task = {
                 id: 't' + Date.now(),
-                userId: userId,
+                user_id: userId,
                 name: name,
                 description: 'Imepewa na Admin',
                 date: date || getTodayStr(),
                 priority: 'medium',
-                done: false
+                done: false,
+                reminder_count: 0
             };
 
-            db.tasks.push(task);
-            saveData();
+            await supabase.addTask(task);
+            await syncData();
             document.getElementById('adminTaskName').value = '';
             renderAll();
             showToast('✅ Kazi imegawanywa!', 'ok');
@@ -1522,48 +1704,56 @@
         // ====================================================================
         // ATTENDANCE OPERATIONS
         // ====================================================================
-        function handleCheckIn() {
+        async function handleCheckIn() {
             if (!currentUser) return;
             const today = getTodayStr();
             const now = new Date();
             const timeStr = now.toTimeString().slice(0, 8);
 
-            let record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
-            if (record && record.checkIn) {
+            let record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
+
+            if (record && record.check_in) {
                 showToast('Tayari umeingia kazini!', 'warn');
                 return;
             }
 
-            if (!record) {
-                record = { userId: currentUser.id, date: today, checkIn: timeStr, checkOut: null };
-                db.attendance.push(record);
+            const data = {
+                user_id: currentUser.id,
+                date: today,
+                check_in: timeStr,
+                check_out: null
+            };
+
+            if (record) {
+                await supabase.query('attendance', 'PATCH', { check_in: timeStr }, record.id);
             } else {
-                record.checkIn = timeStr;
+                await supabase.addAttendance(data);
             }
 
-            saveData();
+            await syncData();
             renderAll();
             showToast('✅ Umeingia kazini saa ' + timeStr, 'ok');
         }
 
-        function handleCheckOut() {
+        async function handleCheckOut() {
             if (!currentUser) return;
             const today = getTodayStr();
             const now = new Date();
             const timeStr = now.toTimeString().slice(0, 8);
 
-            const record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
-            if (!record || !record.checkIn) {
+            const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
+
+            if (!record || !record.check_in) {
                 showToast('Haujaingia kazini! Ingia kwanza.', 'warn');
                 return;
             }
-            if (record.checkOut) {
+            if (record.check_out) {
                 showToast('Tayari umetoka kazini!', 'warn');
                 return;
             }
 
-            record.checkOut = timeStr;
-            saveData();
+            await supabase.query('attendance', 'PATCH', { check_out: timeStr }, record.id);
+            await syncData();
             renderAll();
             showToast('✅ Umetoka kazini saa ' + timeStr, 'ok');
         }
@@ -1571,14 +1761,14 @@
         // ====================================================================
         // USER OPERATIONS (Admin)
         // ====================================================================
-        function confirmAddUser() {
+        async function confirmAddUser() {
             if (!currentUser || currentUser.id !== '123') {
                 showToast('Sehemu hii ni ya Admin pekee!', 'warn');
                 return;
             }
 
             const name = document.getElementById('newUserName').value.trim();
-            let id = document.getElementById('newUserId').value.trim();
+            const id = document.getElementById('newUserId').value.trim();
             const pass = document.getElementById('newUserPass').value.trim() || '123';
 
             if (!name || !id) {
@@ -1586,33 +1776,24 @@
                 return;
             }
 
-            // Keep ID exactly as user types (no automatic uppercase conversion)
-            // But show a warning if they use different case
-
             if (db.users.find(u => u.id === id)) {
                 showToast('Namba hii tayari ipo! Chagua namba nyingine.', 'warn');
                 return;
             }
 
-            db.users.push({ id, name, password: pass, role: 'staff' });
-            saveData();
+            const user = { id, name, password: pass, role: 'staff', photo: '' };
+            await supabase.addUser(user);
+            await syncData();
             closeModal('newUserModal');
             document.getElementById('newUserName').value = '';
             document.getElementById('newUserId').value = '';
-            document.getElementById('newUserPass').value = '';
+            document.getElementById('newUserPass').value = '123';
             renderAll();
-
-            // Show important message with exact credentials
-            showToast('✅ Mfanyakazi ' + name + ' amesajiliwa!', 'ok');
+            showToast('✅ Mfanyakazi ' + name + ' amesajiliwa kwenye Cloud!', 'ok');
             showToast('🔑 Namba: "' + id + '" · Nenosiri: "' + pass + '" (Tumia sawa)', 'ok');
-
-            // Extra reminder
-            setTimeout(() => {
-                showToast('⚠️ Mfanyakazi atumie Namba: "' + id + '" na Nenosiri: "' + pass + '"', 'warn');
-            }, 2000);
         }
 
-        function deleteUser(userId) {
+        async function deleteUser(userId) {
             if (!currentUser || currentUser.id !== '123') {
                 showToast('Sehemu hii ni ya Admin pekee!', 'warn');
                 return;
@@ -1623,10 +1804,8 @@
             }
             if (!confirm('Je, una uhakika unataka kumfuta mfanyakazi huyu?')) return;
 
-            db.users = db.users.filter(u => u.id !== userId);
-            db.tasks = db.tasks.filter(t => t.userId !== userId);
-            db.attendance = db.attendance.filter(a => a.userId !== userId);
-            saveData();
+            await supabase.deleteUser(userId);
+            await syncData();
             renderAll();
             showToast('Mfanyakazi amefutwa', 'warn');
         }
@@ -1693,6 +1872,9 @@
         // INIT
         // ====================================================================
         function init() {
+            // Auto sync on load
+            setTimeout(syncData, 2000);
+
             // Auto login if session exists
             if (db.currentUser) {
                 const user = db.users.find(u => u.id === db.currentUser.id);
@@ -1719,6 +1901,9 @@
                     }
                 });
             });
+
+            // Auto sync every 30 seconds
+            setInterval(syncData, 30000);
         }
 
         document.addEventListener('DOMContentLoaded', init);
