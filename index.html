@@ -558,8 +558,9 @@
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia
             </button>
             <div style="margin-top:14px;font-size:11px;color:var(--text-faint);">
-                <p>👑 Msimamizi anaingia na namba yake</p>
+                <p>👑 Admin: 123 / 123</p>
                 <p>👤 Wafanyakazi wanaingia na namba zao</p>
+                <p style="font-size:10px;color:var(--text-faint);">💡 Hakikisha umeandika namba SAWA na uliyosajili</p>
             </div>
         </div>
     </div>
@@ -770,6 +771,10 @@
                         <button class="btn-gold btn-sm" style="margin-top:10px;width:100%;" onclick="openModal('newUserModal')">
                             <i class="fa-solid fa-user-plus"></i> Sajili Mfanyakazi
                         </button>
+                        <div style="margin-top:8px;padding:10px;background:var(--gold-soft);border-radius:8px;font-size:11px;color:var(--text-dim);">
+                            <i class="fa-solid fa-info-circle"></i> 
+                            <strong>Muhimu:</strong> Mfanyakazi atatumia <strong>Namba</strong> na <strong>Nenosiri</strong> sawa na ulivyosajili.
+                        </div>
                     </div>
                     <div class="card">
                         <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">📋 Gawanya Majukumu</h4>
@@ -847,11 +852,17 @@
             <div class="field-row">
                 <div class="field">
                     <label>Namba ya Mfanyakazi</label>
-                    <input type="text" id="newUserId" placeholder="K.mf. W001">
+                    <input type="text" id="newUserId" placeholder="K.mf. 001, W001, 100" value="">
+                    <div style="font-size:10px;color:var(--text-faint);margin-top:4px;">
+                        <i class="fa-solid fa-info-circle"></i> Mfanyakazi atatumia namba hii kuingia
+                    </div>
                 </div>
                 <div class="field">
                     <label>Nenosiri</label>
                     <input type="text" id="newUserPass" placeholder="Weka nenosiri" value="">
+                    <div style="font-size:10px;color:var(--text-faint);margin-top:4px;">
+                        <i class="fa-solid fa-info-circle"></i> Mpe mfanyakazi nenosiri hili
+                    </div>
                 </div>
             </div>
             <div class="modal-actions">
@@ -865,7 +876,7 @@
         // ====================================================================
         // DATA STORE - LocalStorage
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v5';
+        const STORAGE_KEY = 'dr_william_data_v6';
 
         function getDefaultData() {
             return {
@@ -953,10 +964,11 @@
                 return;
             }
 
+            // Search for user with exact match
             const user = db.users.find(u => u.id === id && u.password === pass);
 
             if (!user) {
-                document.getElementById('loginError').textContent = 'Namba au nenosiri si sahihi!';
+                document.getElementById('loginError').textContent = 'Namba au nenosiri si sahihi! Hakikisha umeandika sawa na uliyosajili.';
                 document.getElementById('loginError').style.display = 'block';
                 return;
             }
@@ -1363,10 +1375,9 @@
         }
 
         // ====================================================================
-        // RENDER: ADMIN - IMEBORESHA
+        // RENDER: ADMIN
         // ====================================================================
         function renderAdmin() {
-            // Hakikisha ni Admin pekee anayeona
             if (!currentUser || currentUser.id !== '123') {
                 const container = document.getElementById('adminUserList');
                 if (container) {
@@ -1374,17 +1385,15 @@
                         <div class="task-list-empty" style="padding:20px;border:2px solid var(--red-soft);border-radius:12px;">
                             <i class="fa-solid fa-lock" style="font-size:32px;display:block;margin-bottom:10px;color:var(--red);"></i>
                             <strong style="color:var(--red);">Sehemu hii ni ya Admin pekee!</strong><br>
-                            <span style="font-size:12px;color:var(--text-dim);">Ingia kama Admin kuona wafanyakazi.</span>
+                            <span style="font-size:12px;color:var(--text-dim);">Ingia kama Admin (123) kuona wafanyakazi.</span>
                         </div>
                     `;
                 }
-                // Ficha kitufe cha kusajili
                 const btn = document.querySelector('#page-admin .btn-gold');
                 if (btn) btn.style.display = 'none';
                 return;
             }
 
-            // Onyesha kitufe
             const btn = document.querySelector('#page-admin .btn-gold');
             if (btn) btn.style.display = 'inline-flex';
 
@@ -1396,7 +1405,6 @@
             }
 
             container.innerHTML = db.users.map(u => {
-                // Show password as *** for all users including admin
                 const displayPass = '***';
                 return `
                     <div class="admin-user-card">
@@ -1570,7 +1578,7 @@
             }
 
             const name = document.getElementById('newUserName').value.trim();
-            const id = document.getElementById('newUserId').value.trim().toUpperCase();
+            let id = document.getElementById('newUserId').value.trim();
             const pass = document.getElementById('newUserPass').value.trim() || '123';
 
             if (!name || !id) {
@@ -1578,8 +1586,11 @@
                 return;
             }
 
+            // Keep ID exactly as user types (no automatic uppercase conversion)
+            // But show a warning if they use different case
+
             if (db.users.find(u => u.id === id)) {
-                showToast('Namba hii tayari ipo!', 'warn');
+                showToast('Namba hii tayari ipo! Chagua namba nyingine.', 'warn');
                 return;
             }
 
@@ -1590,8 +1601,15 @@
             document.getElementById('newUserId').value = '';
             document.getElementById('newUserPass').value = '';
             renderAll();
+
+            // Show important message with exact credentials
             showToast('✅ Mfanyakazi ' + name + ' amesajiliwa!', 'ok');
-            showToast('🔑 Nenosiri lake: ' + pass + ' (Mpe mfanyakazi)', 'ok');
+            showToast('🔑 Namba: "' + id + '" · Nenosiri: "' + pass + '" (Tumia sawa)', 'ok');
+
+            // Extra reminder
+            setTimeout(() => {
+                showToast('⚠️ Mfanyakazi atumie Namba: "' + id + '" na Nenosiri: "' + pass + '"', 'warn');
+            }, 2000);
         }
 
         function deleteUser(userId) {
