@@ -1,0 +1,2498 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dr. William">
+    <meta name="theme-color" content="#D4A24E">
+    <title>Dr. William - Majukumu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #D4A24E;
+            --gold-dark: #8a6a2f;
+            --gold-light: #f0d080;
+            --gold-soft: rgba(212, 162, 78, 0.15);
+            --bg: #0B0F14;
+            --panel: #141A21;
+            --panel-2: #1B232C;
+            --line: rgba(255, 255, 255, 0.08);
+            --text: #ECEFF2;
+            --text-dim: #8C97A3;
+            --text-faint: #5B6670;
+            --green: #3DBE7A;
+            --green-soft: rgba(61, 190, 122, 0.14);
+            --red: #E2574C;
+            --red-soft: rgba(226, 87, 76, 0.14);
+            --blue: #4A9BE8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            padding-bottom: 70px;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 1400px;
+            min-height: 100vh;
+            padding: 15px;
+            background: radial-gradient(ellipse 1200px 600px at 50% -10%, rgba(212, 162, 78, 0.06), transparent), var(--bg);
+            border-radius: 20px;
+        }
+        .gold-text {
+            color: var(--gold);
+        }
+        .btn-gold {
+            background: var(--gold);
+            color: #1a1305;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter';
+            font-size: 14px;
+        }
+        .btn-gold:hover {
+            transform: scale(0.97);
+            opacity: 0.85;
+        }
+        .btn-gold:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn-ghost {
+            background: var(--panel-2);
+            color: var(--text-dim);
+            border: 1px solid var(--line);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter';
+            font-size: 14px;
+        }
+        .btn-ghost:hover {
+            border-color: var(--gold);
+            color: var(--text);
+        }
+        .btn-red {
+            background: var(--red-soft);
+            color: var(--red);
+            border: 1px solid rgba(226, 87, 76, 0.3);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter';
+            font-size: 14px;
+        }
+        .btn-red:hover {
+            opacity: 0.8;
+        }
+        .btn-green {
+            background: var(--green);
+            color: #0a2818;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter';
+            font-size: 14px;
+        }
+        .btn-green:hover {
+            opacity: 0.8;
+            transform: scale(0.97);
+        }
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+        input,
+        select,
+        textarea {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            font-family: 'Inter';
+            width: 100%;
+        }
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--gold);
+        }
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        .card:hover {
+            border-color: var(--gold);
+        }
+        .card-gold {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(212, 162, 78, 0.08), transparent);
+        }
+
+        /* ===== LOGIN PAGE ===== */
+        #loginPage {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .login-box {
+            background: var(--panel);
+            border: 1px solid var(--gold);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(212, 162, 78, 0.08);
+        }
+        .login-box .logo {
+            font-family: 'Space Grotesk';
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .login-box .subtitle {
+            color: var(--text-dim);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .login-box .field {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .login-box .field label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .login-box .field input {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text);
+            padding: 12px 15px;
+            border-radius: 12px;
+            width: 100%;
+            font-size: 14px;
+            outline: none;
+        }
+        .login-box .field input:focus {
+            border-color: var(--gold);
+        }
+        .login-error {
+            color: var(--red);
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+        .login-box .login-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        /* ===== MAIN APP ===== */
+        #mainApp {
+            display: none;
+        }
+
+        /* ===== TOP BAR ===== */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .topbar .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .topbar .brand .icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1305;
+            font-family: 'Space Grotesk';
+        }
+        .topbar .brand .name {
+            font-family: 'Space Grotesk';
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .topbar .brand .name span {
+            color: var(--gold);
+        }
+        .topbar .brand .role {
+            font-size: 10px;
+            color: var(--text-dim);
+        }
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .topbar-right .user-badge {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 4px 12px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .topbar-right .user-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+        .topbar-right .user-badge .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+        }
+        .clock-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* ===== PROFILE PICTURE ===== */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+        }
+        .profile-container .avatar-large {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+            background: var(--panel-2);
+        }
+        .profile-container .avatar-placeholder {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--panel-2);
+            border: 3px dashed var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: var(--text-faint);
+        }
+
+        /* ===== NAV TABS ===== */
+        .nav-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .nav-tab {
+            padding: 8px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dim);
+            border: 1px solid transparent;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            font-family: 'Inter';
+        }
+        .nav-tab:hover {
+            background: var(--panel);
+            color: var(--text);
+        }
+        .nav-tab.active {
+            background: var(--panel);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        .nav-tab .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-faint);
+        }
+        .nav-tab.active .dot {
+            background: var(--gold);
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== STATS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .stat-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+        .stat-card .number {
+            font-family: 'Space Grotesk';
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .stat-card .label {
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+        .stat-card .number.green {
+            color: var(--green);
+        }
+        .stat-card .number.red {
+            color: var(--red);
+        }
+
+        /* ===== TASK ITEM ===== */
+        .task-item {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+        .task-item:hover {
+            border-color: var(--gold);
+        }
+        .task-item.done {
+            opacity: 0.5;
+        }
+        .task-item.done .task-name {
+            text-decoration: line-through;
+        }
+        .task-item .task-check {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 2px solid var(--line);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            background: var(--panel);
+            font-size: 14px;
+            color: transparent;
+        }
+        .task-item .task-check:hover {
+            border-color: var(--gold);
+        }
+        .task-item .task-check.checked {
+            background: var(--green);
+            border-color: var(--green);
+            color: #0a2818;
+        }
+        .task-item .task-info {
+            flex: 1;
+        }
+        .task-item .task-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .task-item .task-meta {
+            font-size: 11px;
+            color: var(--text-faint);
+        }
+        .task-item .task-status {
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+        .task-item .task-status.pending {
+            background: var(--red-soft);
+            color: var(--red);
+        }
+        .task-item .task-status.done {
+            background: var(--green-soft);
+            color: var(--green);
+        }
+        .task-item .task-reminder {
+            font-size: 10px;
+            color: var(--gold);
+            background: var(--gold-soft);
+            padding: 2px 10px;
+            border-radius: 999px;
+        }
+
+        /* ===== ATTENDANCE ===== */
+        .attendance-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 600px) {
+            .attendance-box {
+                grid-template-columns: 1fr;
+            }
+        }
+        .attendance-card {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+        .attendance-card .time {
+            font-family: 'Space Grotesk';
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .attendance-card .label {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+        .attendance-card .status-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+        .attendance-card .status-badge.in {
+            background: var(--green-soft);
+            color: var(--green);
+        }
+        .attendance-card .status-badge.out {
+            background: var(--red-soft);
+            color: var(--red);
+        }
+        .attendance-card .status-badge.pending {
+            background: var(--gold-soft);
+            color: var(--gold);
+        }
+
+        /* ===== PERFORMANCE RING ===== */
+        .performance-ring {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+        }
+        .performance-ring .value {
+            font-family: 'Space Grotesk';
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .performance-ring svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+        }
+        .performance-ring svg circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+        .performance-ring svg .bg {
+            stroke: var(--panel-2);
+        }
+        .performance-ring svg .progress {
+            stroke: var(--gold);
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        /* ===== ADMIN ===== */
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 900px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .admin-user-card {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+        .admin-user-card:hover {
+            border-color: var(--gold);
+        }
+        .admin-user-card .user-info .name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .admin-user-card .user-info .role {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+        .admin-user-card .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+        }
+        .admin-user-card .user-status {
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 999px;
+        }
+        .admin-user-card .user-status.active {
+            background: var(--green-soft);
+            color: var(--green);
+        }
+        .admin-user-card .user-status.inactive {
+            background: var(--red-soft);
+            color: var(--red);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.open {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--panel);
+            border: 1px solid var(--gold);
+            border-radius: 18px;
+            padding: 24px;
+            max-width: 520px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalIn 0.25s ease;
+        }
+        .modal-box.wide {
+            max-width: 700px;
+        }
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .modal-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .modal-head h3 {
+            font-family: 'Space Grotesk';
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .modal-close {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            color: var(--text-dim);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+        .modal-close:hover {
+            background: var(--red-soft);
+            color: var(--red);
+        }
+        .modal-box .field {
+            margin-bottom: 12px;
+        }
+        .modal-box .field label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        .modal-box .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 500px) {
+            .modal-box .field-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+        .modal-box .camera-preview {
+            width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            object-fit: cover;
+        }
+        .modal-box .capture-btn {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        /* ===== TOAST ===== */
+        #toastStack {
+            position: fixed;
+            bottom: 70px;
+            right: 16px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 340px;
+        }
+        .toast {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-left: 4px solid var(--gold);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 13px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            animation: toastIn 0.3s ease;
+        }
+        .toast.warn {
+            border-left-color: var(--red);
+        }
+        .toast.ok {
+            border-left-color: var(--green);
+        }
+        .toast.reminder {
+            border-left-color: var(--gold);
+            background: linear-gradient(135deg, var(--gold-soft), var(--panel-2));
+        }
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ===== CALENDAR ===== */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-top: 10px;
+        }
+        .calendar-grid .day {
+            background: var(--panel-2);
+            border-radius: 8px;
+            padding: 6px 2px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-dim);
+            transition: all 0.2s;
+        }
+        .calendar-grid .day.has-task {
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            cursor: pointer;
+        }
+        .calendar-grid .day.has-task:hover {
+            background: var(--gold-soft);
+        }
+        .calendar-grid .day.today {
+            background: var(--gold-soft);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-weight: 700;
+        }
+        .calendar-grid .day .day-num {
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .calendar-grid .day .day-label {
+            font-size: 8px;
+            text-transform: uppercase;
+            color: var(--text-faint);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .app-container {
+                padding: 8px;
+            }
+            .topbar {
+                padding: 10px 12px;
+            }
+            .topbar .brand .name {
+                font-size: 14px;
+            }
+            .topbar-right .clock-display {
+                display: none;
+            }
+            .login-box {
+                padding: 24px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .nav-tab {
+                font-size: 11px;
+                padding: 6px 10px;
+            }
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+            .modal-box {
+                padding: 18px;
+            }
+            #toastStack {
+                right: 10px;
+                left: 10px;
+                max-width: 100%;
+            }
+            .profile-container .avatar-large {
+                width: 48px;
+                height: 48px;
+            }
+        }
+        @media (max-width: 400px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .topbar-right .user-badge {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+            .topbar-right .user-badge .avatar {
+                width: 22px;
+                height: 22px;
+            }
+        }
+
+        .task-list-empty {
+            color: var(--text-faint);
+            text-align: center;
+            padding: 30px 0;
+            font-size: 14px;
+        }
+
+        /* Download button */
+        .download-btn {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--text-dim);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: 'Inter';
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .download-btn:hover {
+            border-color: var(--gold);
+            color: var(--text);
+        }
+
+        /* AI Reminder badge */
+        .ai-reminder-badge {
+            background: var(--gold-soft);
+            color: var(--gold);
+            font-size: 10px;
+            padding: 2px 12px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            animation: pulse-badge 2s infinite;
+        }
+        @keyframes pulse-badge {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .field .capture-area {
+            border: 2px dashed var(--line);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .field .capture-area:hover {
+            border-color: var(--gold);
+        }
+        .field .capture-area img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .field .capture-area .placeholder {
+            color: var(--text-faint);
+            font-size: 13px;
+        }
+        .field .capture-area .placeholder i {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOAST STACK ===== -->
+    <div id="toastStack"></div>
+
+    <!-- ===== LOGIN PAGE ===== -->
+    <div id="loginPage">
+        <div class="login-box">
+            <div class="logo">🩺 Dr. William</div>
+            <div class="subtitle">Mfumo wa Usimamizi wa Majukumu</div>
+            <div class="field">
+                <label>Namba ya Mfanyakazi</label>
+                <input type="text" id="loginId" placeholder="K.mf. 123, W001, W002..." value="123">
+            </div>
+            <div class="field">
+                <label>Nenosiri</label>
+                <input type="password" id="loginPass" placeholder="Nenosiri lako" value="123">
+            </div>
+            <div class="login-error" id="loginError">Namba au nenosiri si sahihi!</div>
+            <button class="btn-gold login-btn" onclick="handleLogin()">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia
+            </button>
+            <div style="margin-top:14px;font-size:11px;color:var(--text-faint);">
+                <p>👑 Admin: 123 / 123</p>
+                <p>👤 W001, W002, W003, W004 / 123</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN APP ===== -->
+    <div id="mainApp">
+        <div class="app-container">
+
+            <!-- TOP BAR -->
+            <div class="topbar">
+                <div class="brand">
+                    <div class="icon">🩺</div>
+                    <div>
+                        <div class="name">Dr. <span>William</span></div>
+                        <div class="role" id="userRoleDisplay">Mfanyakazi</div>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-badge">
+                        <img class="avatar" id="userAvatar" src="" alt="Avatar" style="display:none;">
+                        <span class="dot" id="avatarDot"></span>
+                        <span id="userNameDisplay">Mfanyakazi</span>
+                        <span style="color:var(--text-faint);font-size:10px;" id="userIdDisplay">(123)</span>
+                    </div>
+                    <div class="clock-display" id="clockDisplay">--:--:--</div>
+                    <button class="download-btn" onclick="downloadApp()" title="Pakua App">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+                    <button class="btn-ghost" style="padding:4px 12px;font-size:11px;" onclick="handleLogout()">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- NAV TABS -->
+            <div class="nav-tabs" id="navTabs">
+                <div class="nav-tab active" data-page="dashboard" onclick="showPage('dashboard')">
+                    <span class="dot"></span> Nyumbani
+                </div>
+                <div class="nav-tab" data-page="tasks" onclick="showPage('tasks')">
+                    <span class="dot"></span> Majukumu
+                </div>
+                <div class="nav-tab" data-page="attendance" onclick="showPage('attendance')">
+                    <span class="dot"></span> Mahudhurio
+                </div>
+                <div class="nav-tab" data-page="performance" onclick="showPage('performance')">
+                    <span class="dot"></span> Utendaji
+                </div>
+                <div class="nav-tab" data-page="calendar" onclick="showPage('calendar')">
+                    <span class="dot"></span> Kalenda
+                </div>
+                <div class="nav-tab" data-page="admin" id="adminTab" onclick="showPage('admin')" style="display:none;">
+                    <span class="dot" style="background:var(--gold);"></span> 👑 Admin
+                </div>
+            </div>
+
+            <!-- PAGE: DASHBOARD -->
+            <div class="page active" id="page-dashboard">
+                <!-- Profile Section -->
+                <div class="card card-gold" style="margin-bottom:16px;">
+                    <div class="profile-container">
+                        <img class="avatar-large" id="profileAvatar" src="" alt="Profile" style="display:none;">
+                        <div class="avatar-placeholder" id="profilePlaceholder">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 style="font-family:'Space Grotesk';font-size:16px;" id="profileName">Mfanyakazi</h4>
+                            <p style="font-size:12px;color:var(--text-dim);">ID: <span id="profileId">123</span></p>
+                            <button class="btn-ghost btn-sm" onclick="openModal('cameraModal')" style="padding:4px 12px;font-size:11px;">
+                                <i class="fa-solid fa-camera"></i> Picha yangu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid" id="dashboardStats">
+                    <div class="stat-card">
+                        <div class="number" id="statTasksTotal">0</div>
+                        <div class="label">Majukumu Yote</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number green" id="statTasksDone">0</div>
+                        <div class="label">Yamekamilika</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number red" id="statTasksPending">0</div>
+                        <div class="label">Yamesalia</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number gold" id="statPerformance">0%</div>
+                        <div class="label">Utendaji</div>
+                    </div>
+                </div>
+
+                <div class="card card-gold">
+                    <h4 style="font-family:'Space Grotesk';margin-bottom:10px;color:var(--gold);">
+                        <i class="fa-solid fa-bullhorn"></i> Habari za Leo
+                        <span class="ai-reminder-badge"><i class="fa-solid fa-robot"></i> AI Inakumbusha</span>
+                    </h4>
+                    <p style="color:var(--text-dim);font-size:14px;" id="dashboardGreeting">
+                        Karibu! Angalia majukumu yako ya leo.
+                    </p>
+                    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                        <button class="btn-gold btn-sm" onclick="showPage('tasks')">
+                            <i class="fa-solid fa-list-check"></i> Angalia Majukumu
+                        </button>
+                        <button class="btn-ghost btn-sm" onclick="showPage('attendance')">
+                            <i class="fa-solid fa-clock"></i> Mahudhurio
+                        </button>
+                    </div>
+                </div>
+
+                <div style="margin-top:16px;">
+                    <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:15px;">Majukumu ya Leo</h4>
+                    <div id="dashboardTaskList"></div>
+                </div>
+            </div>
+
+            <!-- PAGE: TASKS -->
+            <div class="page" id="page-tasks">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+                    <div>
+                        <h3 style="font-family:'Space Grotesk';font-size:17px;">📋 Majukumu Yangu</h3>
+                        <p style="font-size:12px;color:var(--text-dim);">Tarehe: <span id="taskDateDisplay"></span></p>
+                    </div>
+                    <button class="btn-gold btn-sm" onclick="openModal('newTaskModal')">
+                        <i class="fa-solid fa-plus"></i> Ongeza Kazi
+                    </button>
+                </div>
+                <div id="taskListContainer"></div>
+            </div>
+
+            <!-- PAGE: ATTENDANCE -->
+            <div class="page" id="page-attendance">
+                <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
+                    <i class="fa-solid fa-clock"></i> Mahudhurio
+                </h3>
+                <div class="attendance-box">
+                    <div class="attendance-card">
+                        <div class="label">🕐 Muda wa Kuingia</div>
+                        <div class="time" id="checkInTime">--:--:--</div>
+                        <div>
+                            <span class="status-badge pending" id="checkInStatus">Bado</span>
+                        </div>
+                        <button class="btn-gold" style="margin-top:10px;width:100%;" onclick="handleCheckIn()" id="checkInBtn">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia Kazini
+                        </button>
+                    </div>
+                    <div class="attendance-card">
+                        <div class="label">🕐 Muda wa Kutoka</div>
+                        <div class="time" id="checkOutTime">--:--:--</div>
+                        <div>
+                            <span class="status-badge pending" id="checkOutStatus">Bado</span>
+                        </div>
+                        <button class="btn-red" style="margin-top:10px;width:100%;" onclick="handleCheckOut()" id="checkOutBtn">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i> Toka Kazini
+                        </button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">Rekodi ya Mahudhurio</h4>
+                    <div id="attendanceHistory"></div>
+                </div>
+            </div>
+
+            <!-- PAGE: PERFORMANCE -->
+            <div class="page" id="page-performance">
+                <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
+                    <i class="fa-solid fa-chart-line"></i> Utendaji Wangu
+                </h3>
+                <div class="card" style="text-align:center;">
+                    <div class="performance-ring" id="performanceRing">
+                        <svg width="120" height="120">
+                            <circle class="bg" cx="60" cy="60" r="50"/>
+                            <circle class="progress" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16" id="performanceCircle"/>
+                        </svg>
+                        <div class="value" id="performanceValue">0%</div>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <p style="color:var(--text-dim);font-size:13px;" id="performanceMessage">
+                            Bado hakuna majukumu yamekamilika.
+                        </p>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:14px;">
+                    <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">Mwenendo wa Mwezi</h4>
+                    <div id="monthlyPerformance"></div>
+                </div>
+            </div>
+
+            <!-- PAGE: CALENDAR -->
+            <div class="page" id="page-calendar">
+                <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
+                    <i class="fa-solid fa-calendar-days"></i> Kalenda ya Majukumu
+                </h3>
+                <div class="card">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+                        <button class="btn-ghost btn-sm" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <span style="font-family:'Space Grotesk';font-size:15px;font-weight:600;" id="calendarMonthYear"></span>
+                        <button class="btn-ghost btn-sm" onclick="changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                </div>
+                <div style="margin-top:12px;">
+                    <h4 style="font-family:'Space Grotesk';font-size:13px;margin-bottom:8px;">Majukumu ya Tarehe Iliyochaguliwa</h4>
+                    <div id="calendarTaskList"></div>
+                </div>
+            </div>
+
+            <!-- PAGE: ADMIN -->
+            <div class="page" id="page-admin">
+                <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
+                    <i class="fa-solid fa-crown"></i> Dhibiti Wafanyakazi
+                </h3>
+                <div class="admin-grid">
+                    <div class="card">
+                        <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">👥 Orodha ya Wafanyakazi</h4>
+                        <div id="adminUserList"></div>
+                        <button class="btn-gold btn-sm" style="margin-top:10px;width:100%;" onclick="openModal('newUserModal')">
+                            <i class="fa-solid fa-user-plus"></i> Ongeza Mfanyakazi
+                        </button>
+                    </div>
+                    <div class="card">
+                        <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">📋 Gawanya Majukumu</h4>
+                        <div class="field">
+                            <label>Chagua Mfanyakazi</label>
+                            <select id="adminTaskUser"></select>
+                        </div>
+                        <div class="field">
+                            <label>Jina la Kazi</label>
+                            <input type="text" id="adminTaskName" placeholder="K.mf. Andika ripoti">
+                        </div>
+                        <div class="field">
+                            <label>Tarehe</label>
+                            <input type="date" id="adminTaskDate">
+                        </div>
+                        <button class="btn-gold" style="width:100%;" onclick="adminAssignTask()">
+                            <i class="fa-solid fa-paper-plane"></i> Gawanya Kazi
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== MODALS ===== -->
+
+    <!-- Camera Modal -->
+    <div class="modal-overlay" id="cameraModal">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3>📸 Picha Yangu</h3>
+                <button class="modal-close" onclick="closeModal('cameraModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="field">
+                <label>Piga Picha</label>
+                <div class="capture-area" id="captureArea" onclick="openCamera()">
+                    <div class="placeholder" id="capturePlaceholder">
+                        <i class="fa-solid fa-camera"></i>
+                        <span>Bonyeza kufungua kamera</span>
+                    </div>
+                    <video id="cameraVideo" autoplay playsinline style="display:none;width:100%;border-radius:8px;"></video>
+                    <canvas id="cameraCanvas" style="display:none;"></canvas>
+                    <img id="capturedImage" style="display:none;max-width:100%;max-height:200px;border-radius:8px;">
+                </div>
+                <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                    <button class="btn-gold btn-sm" id="captureBtn" onclick="capturePhoto()" style="display:none;">
+                        <i class="fa-solid fa-camera"></i> Chukua Picha
+                    </button>
+                    <button class="btn-ghost btn-sm" id="closeCameraBtn" onclick="closeCamera()" style="display:none;">
+                        <i class="fa-solid fa-times"></i> Funga Kamera
+                    </button>
+                    <button class="btn-green btn-sm" id="savePhotoBtn" onclick="savePhoto()" style="display:none;">
+                        <i class="fa-solid fa-check"></i> Hifadhi Picha
+                    </button>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-ghost" onclick="closeModal('cameraModal')">Funga</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Task Modal -->
+    <div class="modal-overlay" id="newTaskModal">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3>📋 Kazi Mpya</h3>
+                <button class="modal-close" onclick="closeModal('newTaskModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="field">
+                <label>Jina la Kazi</label>
+                <input type="text" id="taskNameInput" placeholder="K.mf. Andika ripoti ya mauzo">
+            </div>
+            <div class="field">
+                <label>Maelezo (hiari)</label>
+                <textarea id="taskDescInput" rows="2" placeholder="Maelezo ya ziada..."></textarea>
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Tarehe</label>
+                    <input type="date" id="taskDateInput">
+                </div>
+                <div class="field">
+                    <label>Kipaumbele</label>
+                    <select id="taskPriorityInput">
+                        <option value="high">🔴 Juu</option>
+                        <option value="medium" selected>🟡 Kati</option>
+                        <option value="low">🟢 Chini</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-ghost" onclick="closeModal('newTaskModal')">Ghairi</button>
+                <button class="btn-gold" onclick="confirmAddTask()"><i class="fa-solid fa-check"></i> Ongeza</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New User Modal -->
+    <div class="modal-overlay" id="newUserModal">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3>👤 Mfanyakazi Mpya</h3>
+                <button class="modal-close" onclick="closeModal('newUserModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="field">
+                <label>Jina Kamili</label>
+                <input type="text" id="newUserName" placeholder="K.mf. Juma Hassan">
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Namba ya Mfanyakazi</label>
+                    <input type="text" id="newUserId" placeholder="K.mf. W005">
+                </div>
+                <div class="field">
+                    <label>Nenosiri</label>
+                    <input type="text" id="newUserPass" placeholder="Nenosiri" value="123">
+                </div>
+            </div>
+            <div class="field">
+                <label>Jukumu</label>
+                <select id="newUserRole">
+                    <option value="staff">Mfanyakazi</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-ghost" onclick="closeModal('newUserModal')">Ghairi</button>
+                <button class="btn-gold" onclick="confirmAddUser()"><i class="fa-solid fa-check"></i> Ongeza</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====================================================================
+        // DATA STORE
+        // ====================================================================
+        const STORAGE_KEY = 'dr_william_data_v2';
+
+        function getDefaultData() {
+            return {
+                users: [
+                    { id: '123', name: 'Admin', password: '123', role: 'admin', photo: '' },
+                    { id: 'W001', name: 'Juma Hassan', password: '123', role: 'staff', photo: '' },
+                    { id: 'W002', name: 'Aisha Mwinyi', password: '123', role: 'staff', photo: '' },
+                    { id: 'W003', name: 'Salim Juma', password: '123', role: 'staff', photo: '' },
+                    { id: 'W004', name: 'Mwanamvua Hamisi', password: '123', role: 'staff', photo: '' }
+                ],
+                tasks: [
+                    { id: 't1', userId: 'W001', name: 'Andika ripoti ya mauzo', description: 'Ripoti ya wiki hii',
+                        date: getTodayStr(), priority: 'high', done: false, reminderCount: 0 },
+                    { id: 't2', userId: 'W001', name: 'Piga simu kwa wateja', description: 'Wateja 5', date: getTodayStr(),
+                        priority: 'medium', done: false, reminderCount: 0 },
+                    { id: 't3', userId: 'W002', name: 'Safisha duka', description: 'Safisha kabla ya saa 10',
+                        date: getTodayStr(), priority: 'medium', done: false, reminderCount: 0 },
+                    { id: 't4', userId: 'W002', name: 'Andika orodha ya bidhaa', description: 'Bidhaa zilizoisha',
+                        date: getTodayStr(), priority: 'low', done: false, reminderCount: 0 },
+                    { id: 't5', userId: 'W003', name: 'Pokea bidhaa kutoka kwa mzabuni', description: 'Bidhaa 50',
+                        date: getTodayStr(), priority: 'high', done: false, reminderCount: 0 },
+                    { id: 't6', userId: 'W004', name: 'Tengeneza orodha ya wateja', description: 'Wateja wapya',
+                        date: getTodayStr(), priority: 'medium', done: false, reminderCount: 0 }
+                ],
+                attendance: [],
+                currentUser: null
+            };
+        }
+
+        function getTodayStr() {
+            const d = new Date();
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2,
+            '0');
+        }
+
+        function loadData() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return getDefaultData();
+                const data = JSON.parse(raw);
+                const def = getDefaultData();
+                for (let key in def) {
+                    if (!(key in data)) data[key] = def[key];
+                }
+                return data;
+            } catch (e) {
+                return getDefaultData();
+            }
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+            } catch (e) {
+                console.warn('Save failed', e);
+            }
+        }
+
+        let db = loadData();
+        let currentUser = null;
+        let currentPage = 'dashboard';
+        let calendarMonth = new Date().getMonth();
+        let calendarYear = new Date().getFullYear();
+        let mediaStream = null;
+        let capturedPhotoData = null;
+
+        // ====================================================================
+        // LOGIN / LOGOUT
+        // ====================================================================
+        function handleLogin() {
+            const id = document.getElementById('loginId').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+            const user = db.users.find(u => u.id === id && u.password === pass);
+
+            if (!user) {
+                document.getElementById('loginError').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('loginError').style.display = 'none';
+            currentUser = user;
+            db.currentUser = user;
+            saveData();
+
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+
+            const adminTab = document.getElementById('adminTab');
+            adminTab.style.display = (user.role === 'admin') ? 'inline-flex' : 'none';
+
+            // Update user info
+            document.getElementById('userNameDisplay').textContent = user.name;
+            document.getElementById('userIdDisplay').textContent = '(' + user.id + ')';
+            document.getElementById('userRoleDisplay').textContent = user.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi';
+
+            // Profile
+            document.getElementById('profileName').textContent = user.name;
+            document.getElementById('profileId').textContent = user.id;
+            if (user.photo) {
+                document.getElementById('profileAvatar').src = user.photo;
+                document.getElementById('profileAvatar').style.display = 'block';
+                document.getElementById('profilePlaceholder').style.display = 'none';
+                document.querySelector('.user-badge .avatar').src = user.photo;
+                document.querySelector('.user-badge .avatar').style.display = 'block';
+                document.querySelector('.user-badge .dot').style.display = 'none';
+            } else {
+                document.getElementById('profileAvatar').style.display = 'none';
+                document.getElementById('profilePlaceholder').style.display = 'flex';
+                document.querySelector('.user-badge .avatar').style.display = 'none';
+                document.querySelector('.user-badge .dot').style.display = 'block';
+            }
+
+            renderAll();
+            showToast('Karibu ' + user.name + '!', 'ok');
+
+            // Start reminder system
+            startReminderSystem();
+        }
+
+        function handleLogout() {
+            stopReminderSystem();
+            currentUser = null;
+            db.currentUser = null;
+            saveData();
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('loginId').value = '';
+            document.getElementById('loginPass').value = '';
+            showToast('Umefanikiwa kutoka!', 'ok');
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(t => t.stop());
+                mediaStream = null;
+            }
+        }
+
+        // ====================================================================
+        // REMINDER SYSTEM - AI Voice Reminder every 10 minutes
+        // ====================================================================
+        let reminderInterval = null;
+
+        function startReminderSystem() {
+            stopReminderSystem();
+            reminderInterval = setInterval(checkReminders, 60000); // Check every minute
+            // Check immediately
+            setTimeout(checkReminders, 3000);
+        }
+
+        function stopReminderSystem() {
+            if (reminderInterval) {
+                clearInterval(reminderInterval);
+                reminderInterval = null;
+            }
+        }
+
+        function checkReminders() {
+            if (!currentUser) return;
+
+            const today = getTodayStr();
+            const userTasks = db.tasks.filter(t => t.userId === currentUser.id && t.date === today && !t.done);
+
+            userTasks.forEach(task => {
+                // Count how many times we've reminded
+                const reminderKey = 'reminder_' + task.id + '_' + today;
+                let count = parseInt(localStorage.getItem(reminderKey) || '0');
+
+                // Remind every 10 minutes (if count % 10 === 0)
+                // We check every minute, so remind when count is multiple of 10
+                if (count % 10 === 0 && count > 0) {
+                    speakReminder(task);
+                }
+
+                // Also remind at specific times: 5 min before, at time, and every 10 min after
+                if (task.time) {
+                    const now = new Date();
+                    const [h, m] = task.time.split(':').map(Number);
+                    const taskTime = new Date(now);
+                    taskTime.setHours(h, m, 0, 0);
+                    const diff = Math.floor((taskTime - now) / 60000);
+
+                    if (diff === 5) {
+                        speakReminder(task, 'dakika 5');
+                    }
+                    if (diff === 0) {
+                        speakReminder(task, 'sasa hivi');
+                    }
+                }
+
+                // Increment reminder count
+                localStorage.setItem(reminderKey, String(count + 1));
+
+                // Update task reminder count in db
+                task.reminderCount = (task.reminderCount || 0) + 1;
+                saveData();
+            });
+
+            // Also remind about savings if not done
+            if (getTodaySavings() === 0) {
+                const key = 'remind_savings_' + today;
+                const last = localStorage.getItem(key);
+                const now = Date.now();
+                if (!last || now - parseInt(last) > 600000) { // Every 10 minutes
+                    speakReminder('Bwana, leo hujatiki akiba. Tafadhali weka akiba.', null, true);
+                    localStorage.setItem(key, String(now));
+                }
+            }
+        }
+
+        function speakReminder(task, timeMsg = '', isSavings = false) {
+            if (!currentUser) return;
+
+            let message = '';
+            if (isSavings) {
+                message = task;
+            } else {
+                const timeText = timeMsg ? ` (${timeMsg})` : '';
+                message = `Kumbuka: ${task.name}${timeText}. Bado hujakamilisha.`;
+                // Log reminder
+                logActivity('reminder', 'AI Inakumbusha: ' + task.name);
+            }
+
+            // Speak with voice
+            speakText(message);
+
+            // Show toast
+            showToast('🔔 ' + message, 'reminder');
+
+            // If task has time, also show as notification
+            if (task && task.time) {
+                const now = new Date();
+                const [h, m] = task.time.split(':').map(Number);
+                const taskTime = new Date(now);
+                taskTime.setHours(h, m, 0, 0);
+                const diff = Math.floor((taskTime - now) / 60000);
+
+                if (diff <= 0 && diff > -10) {
+                    showToast('⏰ Muda wa ' + task.name + ' umefika!', 'warn');
+                }
+            }
+        }
+
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) return;
+            try {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = 'sw-TZ';
+                utter.rate = 0.9;
+                // Try to find Swahili voice
+                const voices = window.speechSynthesis.getVoices();
+                const swVoice = voices.find(v => v.lang.startsWith('sw'));
+                if (swVoice) utter.voice = swVoice;
+                window.speechSynthesis.speak(utter);
+            } catch (e) {
+                console.warn('Speech failed', e);
+            }
+        }
+
+        // Load voices when available
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+
+        // ====================================================================
+        // CAMERA / PHOTO
+        // ====================================================================
+        function openCamera() {
+            const video = document.getElementById('cameraVideo');
+            const placeholder = document.getElementById('capturePlaceholder');
+            const captureBtn = document.getElementById('captureBtn');
+            const closeBtn = document.getElementById('closeCameraBtn');
+            const saveBtn = document.getElementById('savePhotoBtn');
+            const img = document.getElementById('capturedImage');
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showToast('Kamera haitumiki kwenye kivinjari hiki', 'warn');
+                return;
+            }
+
+            // Close any existing stream
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(t => t.stop());
+                mediaStream = null;
+            }
+
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 320 } } })
+                .then(stream => {
+                    mediaStream = stream;
+                    video.srcObject = stream;
+                    video.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    captureBtn.style.display = 'block';
+                    closeBtn.style.display = 'block';
+                    saveBtn.style.display = 'none';
+                    img.style.display = 'none';
+                    capturedPhotoData = null;
+                })
+                .catch(err => {
+                    showToast('Hitilafu ya kamera: ' + err.message, 'warn');
+                });
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('cameraVideo');
+            const canvas = document.getElementById('cameraCanvas');
+            const img = document.getElementById('capturedImage');
+            const captureBtn = document.getElementById('captureBtn');
+            const saveBtn = document.getElementById('savePhotoBtn');
+
+            canvas.width = video.videoWidth || 320;
+            canvas.height = video.videoHeight || 240;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            capturedPhotoData = canvas.toDataURL('image/jpeg', 0.8);
+            img.src = capturedPhotoData;
+            img.style.display = 'block';
+            video.style.display = 'none';
+            captureBtn.style.display = 'none';
+            saveBtn.style.display = 'block';
+
+            // Stop camera stream
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(t => t.stop());
+                mediaStream = null;
+            }
+        }
+
+        function savePhoto() {
+            if (!capturedPhotoData || !currentUser) return;
+
+            // Save photo to user profile
+            const user = db.users.find(u => u.id === currentUser.id);
+            if (user) {
+                user.photo = capturedPhotoData;
+                saveData();
+
+                // Update UI
+                document.getElementById('profileAvatar').src = capturedPhotoData;
+                document.getElementById('profileAvatar').style.display = 'block';
+                document.getElementById('profilePlaceholder').style.display = 'none';
+                document.querySelector('.user-badge .avatar').src = capturedPhotoData;
+                document.querySelector('.user-badge .avatar').style.display = 'block';
+                document.querySelector('.user-badge .dot').style.display = 'none';
+
+                showToast('✅ Picha imehifadhiwa!', 'ok');
+                closeModal('cameraModal');
+
+                // Reset camera UI
+                document.getElementById('cameraVideo').style.display = 'none';
+                document.getElementById('capturePlaceholder').style.display = 'block';
+                document.getElementById('captureBtn').style.display = 'none';
+                document.getElementById('closeCameraBtn').style.display = 'none';
+                document.getElementById('savePhotoBtn').style.display = 'none';
+                document.getElementById('capturedImage').style.display = 'none';
+                capturedPhotoData = null;
+
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(t => t.stop());
+                    mediaStream = null;
+                }
+            }
+        }
+
+        function closeCamera() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(t => t.stop());
+                mediaStream = null;
+            }
+            document.getElementById('cameraVideo').style.display = 'none';
+            document.getElementById('capturePlaceholder').style.display = 'block';
+            document.getElementById('captureBtn').style.display = 'none';
+            document.getElementById('closeCameraBtn').style.display = 'none';
+            document.getElementById('savePhotoBtn').style.display = 'none';
+            document.getElementById('capturedImage').style.display = 'none';
+            capturedPhotoData = null;
+        }
+
+        // ====================================================================
+        // NAVIGATION
+        // ====================================================================
+        function showPage(page) {
+            currentPage = page;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+
+            const targetPage = document.getElementById('page-' + page);
+            if (targetPage) targetPage.classList.add('active');
+
+            const tab = document.querySelector(`.nav-tab[data-page="${page}"]`);
+            if (tab) tab.classList.add('active');
+
+            renderPage(page);
+        }
+
+        function renderPage(page) {
+            switch (page) {
+                case 'dashboard':
+                    renderDashboard();
+                    break;
+                case 'tasks':
+                    renderTasks();
+                    break;
+                case 'attendance':
+                    renderAttendance();
+                    break;
+                case 'performance':
+                    renderPerformance();
+                    break;
+                case 'calendar':
+                    renderCalendar();
+                    break;
+                case 'admin':
+                    renderAdmin();
+                    break;
+            }
+        }
+
+        // ====================================================================
+        // RENDER: DASHBOARD
+        // ====================================================================
+        function renderDashboard() {
+            if (!currentUser) return;
+
+            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const today = getTodayStr();
+            const todayTasks = userTasks.filter(t => t.date === today);
+            const done = todayTasks.filter(t => t.done).length;
+            const total = todayTasks.length;
+            const pending = total - done;
+            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            document.getElementById('statTasksTotal').textContent = total;
+            document.getElementById('statTasksDone').textContent = done;
+            document.getElementById('statTasksPending').textContent = pending;
+            document.getElementById('statPerformance').textContent = pct + '%';
+
+            const greeting = document.getElementById('dashboardGreeting');
+            if (total === 0) {
+                greeting.textContent = '🎉 Hakuna majukumu leo! Pumzika au ongeza majukumu mapya.';
+            } else if (done === total) {
+                greeting.textContent = '🎉 Hongera! Umetekeleza majukumu yote ya leo! Utendaji ' + pct + '%';
+            } else {
+                const undone = todayTasks.filter(t => !t.done);
+                const nextTask = undone[0];
+                greeting.textContent = '📋 Una ' + pending + ' majukumu yaliyobaki leo. Inayofuata: ' + (nextTask ? nextTask
+                    .name : '');
+            }
+
+            // Recent tasks
+            const container = document.getElementById('dashboardTaskList');
+            if (todayTasks.length === 0) {
+                container.innerHTML = '<div class="task-list-empty">Hakuna majukumu ya leo.</div>';
+                return;
+            }
+            container.innerHTML = todayTasks.slice(0, 5).map(t => `
+                <div class="task-item ${t.done ? 'done' : ''}">
+                    <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggleTask('${t.id}')">${t.done ? '✓' : ''}</div>
+                    <div class="task-info">
+                        <div class="task-name">${escapeHtml(t.name)}</div>
+                        <div class="task-meta">${t.priority === 'high' ? '🔴' : t.priority === 'medium' ? '🟡' : '🟢'} ${t.description || ''}</div>
+                    </div>
+                    <span class="task-status ${t.done ? 'done' : 'pending'}">${t.done ? 'Imekamilika' : 'Inasubiri'}</span>
+                    ${!t.done ? '<span class="task-reminder"><i class="fa-solid fa-robot"></i> Inakumbusha</span>' : ''}
+                </div>
+            `).join('');
+        }
+
+        // ====================================================================
+        // RENDER: TASKS
+        // ====================================================================
+        function renderTasks() {
+            if (!currentUser) return;
+
+            document.getElementById('taskDateDisplay').textContent = new Date().toLocaleDateString('sw-TZ', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const today = getTodayStr();
+            const todayTasks = userTasks.filter(t => t.date === today);
+
+            const container = document.getElementById('taskListContainer');
+
+            if (todayTasks.length === 0) {
+                container.innerHTML = `
+                    <div class="task-list-empty">
+                        <i class="fa-solid fa-face-smile" style="font-size:32px;display:block;margin-bottom:10px;"></i>
+                        Hakuna majukumu ya leo!<br>
+                        <span style="font-size:12px;color:var(--text-faint);">Pumzika au ongeza majukumu mapya.</span>
+                    </div>
+                `;
+                return;
+            }
+
+            const sorted = [...todayTasks].sort((a, b) => {
+                if (a.done !== b.done) return a.done ? 1 : -1;
+                const order = { high: 0, medium: 1, low: 2 };
+                return (order[a.priority] || 1) - (order[b.priority] || 1);
+            });
+
+            container.innerHTML = sorted.map(t => `
+                <div class="task-item ${t.done ? 'done' : ''}">
+                    <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggleTask('${t.id}')">${t.done ? '✓' : ''}</div>
+                    <div class="task-info">
+                        <div class="task-name">${escapeHtml(t.name)}</div>
+                        <div class="task-meta">
+                            ${t.priority === 'high' ? '🔴 Juu' : t.priority === 'medium' ? '🟡 Kati' : '🟢 Chini'}
+                            ${t.description ? '· ' + escapeHtml(t.description) : ''}
+                            ${!t.done ? '· <span class="task-reminder"><i class="fa-solid fa-robot"></i> AI inakumbusha kila dakika 10</span>' : ''}
+                        </div>
+                    </div>
+                    <span class="task-status ${t.done ? 'done' : 'pending'}">${t.done ? '✅ Imekamilika' : '⏳ Inasubiri'}</span>
+                    <button class="btn-red btn-sm" onclick="deleteTask('${t.id}')" style="padding:4px 10px;font-size:11px;">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // ====================================================================
+        // RENDER: ATTENDANCE
+        // ====================================================================
+        function renderAttendance() {
+            if (!currentUser) return;
+
+            const today = getTodayStr();
+            const record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
+
+            const checkInTime = document.getElementById('checkInTime');
+            const checkOutTime = document.getElementById('checkOutTime');
+            const checkInStatus = document.getElementById('checkInStatus');
+            const checkOutStatus = document.getElementById('checkOutStatus');
+            const checkInBtn = document.getElementById('checkInBtn');
+            const checkOutBtn = document.getElementById('checkOutBtn');
+
+            if (record) {
+                checkInTime.textContent = record.checkIn || '--:--:--';
+                checkOutTime.textContent = record.checkOut || '--:--:--';
+                checkInStatus.textContent = record.checkIn ? '✅ Imeingia' : 'Bado';
+                checkInStatus.className = 'status-badge ' + (record.checkIn ? 'in' : 'pending');
+                checkOutStatus.textContent = record.checkOut ? '✅ Imetoka' : 'Bado';
+                checkOutStatus.className = 'status-badge ' + (record.checkOut ? 'out' : 'pending');
+                checkInBtn.disabled = !!record.checkIn;
+                checkOutBtn.disabled = !record.checkIn || !!record.checkOut;
+                checkInBtn.style.opacity = record.checkIn ? '0.5' : '1';
+                checkOutBtn.style.opacity = (!record.checkIn || record.checkOut) ? '0.5' : '1';
+            } else {
+                checkInTime.textContent = '--:--:--';
+                checkOutTime.textContent = '--:--:--';
+                checkInStatus.textContent = 'Bado';
+                checkInStatus.className = 'status-badge pending';
+                checkOutStatus.textContent = 'Bado';
+                checkOutStatus.className = 'status-badge pending';
+                checkInBtn.disabled = false;
+                checkOutBtn.disabled = true;
+                checkInBtn.style.opacity = '1';
+                checkOutBtn.style.opacity = '0.5';
+            }
+
+            // History
+            const historyContainer = document.getElementById('attendanceHistory');
+            const userRecords = db.attendance.filter(a => a.userId === currentUser.id).sort((a, b) => b.date.localeCompare(a
+            .date));
+
+            if (userRecords.length === 0) {
+                historyContainer.innerHTML = '<div class="task-list-empty">Hakuna rekodi ya mahudhurio.</div>';
+                return;
+            }
+
+            historyContainer.innerHTML = userRecords.slice(0, 14).map(a => `
+                <div class="task-item" style="margin-bottom:6px;padding:10px 14px;">
+                    <div class="task-info">
+                        <div class="task-name">${a.date}</div>
+                        <div class="task-meta">
+                            🟢 Kuingia: ${a.checkIn || '--:--'} 
+                            ${a.checkOut ? '🔴 Kutoka: ' + a.checkOut : '⚠️ Hajatoka'}
+                        </div>
+                    </div>
+                    <span class="task-status ${a.checkOut ? 'done' : 'pending'}">${a.checkOut ? 'Imekamilika' : 'Inasubiri'}</span>
+                </div>
+            `).join('');
+        }
+
+        // ====================================================================
+        // RENDER: PERFORMANCE
+        // ====================================================================
+        function renderPerformance() {
+            if (!currentUser) return;
+
+            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const today = getTodayStr();
+            const todayTasks = userTasks.filter(t => t.date === today);
+            const done = todayTasks.filter(t => t.done).length;
+            const total = todayTasks.length;
+            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            const circumference = 314.16;
+            const offset = circumference - (pct / 100) * circumference;
+            document.getElementById('performanceCircle').style.strokeDashoffset = offset;
+            document.getElementById('performanceValue').textContent = pct + '%';
+
+            const msg = document.getElementById('performanceMessage');
+            if (total === 0) {
+                msg.textContent = '📋 Hakuna majukumu ya leo. Ongeza majukumu ili kuona utendaji wako.';
+            } else if (pct === 100) {
+                msg.textContent = '🎉 Hongera! Umekamilisha majukumu yote ya leo! Utendaji bora!';
+            } else if (pct >= 50) {
+                msg.textContent = '👍 Vizuri! Umekamilisha ' + pct + '% ya majukumu yako. Endelea hivyo!';
+            } else {
+                msg.textContent = '💪 Bado una ' + (total - done) + ' majukumu. Weka nguvu!';
+            }
+
+            // Monthly performance
+            const monthlyContainer = document.getElementById('monthlyPerformance');
+            const monthStart = today.slice(0, 7);
+            const monthTasks = userTasks.filter(t => t.date.startsWith(monthStart));
+            const monthDone = monthTasks.filter(t => t.done).length;
+            const monthTotal = monthTasks.length;
+            const monthPct = monthTotal > 0 ? Math.round((monthDone / monthTotal) * 100) : 0;
+
+            if (monthTotal === 0) {
+                monthlyContainer.innerHTML = '<div class="task-list-empty">Hakuna data ya mwezi huu.</div>';
+                return;
+            }
+
+            const days = {};
+            monthTasks.forEach(t => {
+                if (!days[t.date]) days[t.date] = { total: 0, done: 0 };
+                days[t.date].total++;
+                if (t.done) days[t.date].done++;
+            });
+
+            const sortedDays = Object.keys(days).sort();
+
+            monthlyContainer.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
+                    <span style="font-size:13px;color:var(--text-dim);">
+                        Mwezi huu: <strong style="color:var(--gold);">${monthDone}/${monthTotal}</strong> majukumu yamekamilika 
+                        <strong style="color:var(--gold);">(${monthPct}%)</strong>
+                    </span>
+                </div>
+                <div style="display:flex;gap:4px;align-items:flex-end;height:70px;overflow-x:auto;padding:4px 0;">
+                    ${sortedDays.map(d => {
+                        const pct = days[d].total > 0 ? Math.round((days[d].done / days[d].total) * 100) : 0;
+                        const height = Math.max(4, (pct / 100) * 60);
+                        const isToday = d === today;
+                        return `
+                            <div style="display:flex;flex-direction:column;align-items:center;min-width:28px;">
+                                <div style="height:${height}px;width:16px;background:${pct === 100 ? 'var(--green)' : pct >= 50 ? 'var(--gold)' : 'var(--red)'};border-radius:4px 4px 0 0;transition:height 0.5s;border:${isToday ? '2px solid var(--gold)' : 'none'};"></div>
+                                <span style="font-size:7px;color:var(--text-faint);margin-top:2px;">${d.slice(5)}</span>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                <div style="display:flex;gap:10px;justify-content:center;margin-top:6px;font-size:9px;color:var(--text-faint);">
+                    <span><span style="display:inline-block;width:10px;height:10px;background:var(--green);border-radius:2px;vertical-align:middle;"></span> 100%</span>
+                    <span><span style="display:inline-block;width:10px;height:10px;background:var(--gold);border-radius:2px;vertical-align:middle;"></span> 50-99%</span>
+                    <span><span style="display:inline-block;width:10px;height:10px;background:var(--red);border-radius:2px;vertical-align:middle;"></span> &lt;50%</span>
+                </div>
+            `;
+        }
+
+        // ====================================================================
+        // RENDER: CALENDAR
+        // ====================================================================
+        function renderCalendar() {
+            if (!currentUser) return;
+
+            const monthNames = ['Januari', 'Februari', 'Machi', 'Aprili', 'Mei', 'Juni', 'Julai', 'Agosti', 'Septemba', 'Oktoba',
+                'Novemba', 'Desemba'
+            ];
+            document.getElementById('calendarMonthYear').textContent = monthNames[calendarMonth] + ' ' + calendarYear;
+
+            const firstDay = new Date(calendarYear, calendarMonth, 1).getDay();
+            const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+            const today = getTodayStr();
+
+            const grid = document.getElementById('calendarGrid');
+            let html = '';
+            const dayLabels = ['J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J1'];
+
+            dayLabels.forEach(label => {
+                html += `<div class="day" style="font-weight:600;color:var(--text-dim);font-size:9px;">${label}</div>`;
+            });
+
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="day"></div>`;
+            }
+
+            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const taskDates = new Set(userTasks.map(t => t.date));
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = calendarYear + '-' + String(calendarMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2,
+                    '0');
+                const hasTask = taskDates.has(dateStr);
+                const isToday = dateStr === today;
+
+                html += `
+                    <div class="day ${hasTask ? 'has-task' : ''} ${isToday ? 'today' : ''}" 
+                         onclick="${hasTask ? `showTasksForDate('${dateStr}')` : ''}"
+                         style="${isToday ? 'font-weight:700;' : ''}">
+                        <div class="day-num">${d}</div>
+                        ${hasTask ? '<div style="font-size:7px;color:var(--gold);">●</div>' : ''}
+                    </div>
+                `;
+            }
+
+            grid.innerHTML = html;
+            showTasksForDate(today);
+        }
+
+        function showTasksForDate(dateStr) {
+            if (!currentUser) return;
+
+            const container = document.getElementById('calendarTaskList');
+            const tasks = db.tasks.filter(t => t.userId === currentUser.id && t.date === dateStr);
+
+            if (tasks.length === 0) {
+                container.innerHTML = `<div class="task-list-empty">Hakuna majukumu kwa tarehe ${dateStr}.</div>`;
+                return;
+            }
+
+            container.innerHTML = tasks.map(t => `
+                <div class="task-item ${t.done ? 'done' : ''}" style="margin-bottom:6px;padding:10px 14px;">
+                    <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggleTask('${t.id}')">${t.done ? '✓' : ''}</div>
+                    <div class="task-info">
+                        <div class="task-name">${escapeHtml(t.name)}</div>
+                        <div class="task-meta">${t.priority === 'high' ? '🔴' : t.priority === 'medium' ? '🟡' : '🟢'} ${t.description || ''}</div>
+                    </div>
+                    <span class="task-status ${t.done ? 'done' : 'pending'}">${t.done ? '✅' : '⏳'}</span>
+                </div>
+            `).join('');
+        }
+
+        function changeMonth(delta) {
+            calendarMonth += delta;
+            if (calendarMonth < 0) { calendarMonth = 11;
+                calendarYear--; }
+            if (calendarMonth > 11) { calendarMonth = 0;
+                calendarYear++; }
+            renderCalendar();
+        }
+
+        // ====================================================================
+        // RENDER: ADMIN
+        // ====================================================================
+        function renderAdmin() {
+            if (!currentUser || currentUser.role !== 'admin') return;
+
+            const container = document.getElementById('adminUserList');
+            container.innerHTML = db.users.map(u => `
+                <div class="admin-user-card">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        ${u.photo ? `<img class="user-avatar" src="${u.photo}" alt="">` : `<div class="user-avatar" style="background:var(--panel-2);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-faint);">👤</div>`}
+                        <div class="user-info">
+                            <div class="name">${escapeHtml(u.name)}</div>
+                            <div class="role">ID: ${u.id} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="user-status ${u.id === currentUser.id ? 'active' : 'inactive'}">
+                            ${u.id === currentUser.id ? '✓ Wewe' : (u.role === 'admin' ? '👑 Admin' : '👤 Staff')}
+                        </span>
+                        ${u.id !== currentUser.id ? `<button class="btn-red btn-sm" onclick="deleteUser('${u.id}')" style="padding:4px 10px;font-size:10px;margin-left:4px;">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            const select = document.getElementById('adminTaskUser');
+            select.innerHTML = db.users.filter(u => u.id !== currentUser.id).map(u =>
+                `<option value="${u.id}">${u.name} (${u.id})</option>`
+            ).join('');
+
+            document.getElementById('adminTaskDate').value = getTodayStr();
+        }
+
+        // ====================================================================
+        // TASK OPERATIONS
+        // ====================================================================
+        function toggleTask(taskId) {
+            const task = db.tasks.find(t => t.id === taskId);
+            if (!task) return;
+            task.done = !task.done;
+            if (task.done) {
+                // Reset reminder count when done
+                const reminderKey = 'reminder_' + task.id + '_' + getTodayStr();
+                localStorage.setItem(reminderKey, '0');
+                task.reminderCount = 0;
+            }
+            saveData();
+            renderAll();
+            if (task.done) {
+                showToast('✅ ' + task.name + ' imekamilika!', 'ok');
+                speakText('Hongera! Umemaliza: ' + task.name);
+            }
+        }
+
+        function deleteTask(taskId) {
+            if (!confirm('Je, una uhakika unataka kufuta kazi hii?')) return;
+            db.tasks = db.tasks.filter(t => t.id !== taskId);
+            saveData();
+            renderAll();
+            showToast('Kazi imefutwa', 'warn');
+        }
+
+        function confirmAddTask() {
+            if (!currentUser) return;
+
+            const name = document.getElementById('taskNameInput').value.trim();
+            const desc = document.getElementById('taskDescInput').value.trim();
+            const date = document.getElementById('taskDateInput').value;
+            const priority = document.getElementById('taskPriorityInput').value;
+
+            if (!name) {
+                showToast('Tafadhali andika jina la kazi', 'warn');
+                return;
+            }
+
+            const task = {
+                id: 't' + Date.now(),
+                userId: currentUser.id,
+                name: name,
+                description: desc || '',
+                date: date || getTodayStr(),
+                priority: priority || 'medium',
+                done: false,
+                reminderCount: 0
+            };
+
+            db.tasks.push(task);
+            saveData();
+            closeModal('newTaskModal');
+            document.getElementById('taskNameInput').value = '';
+            document.getElementById('taskDescInput').value = '';
+            renderAll();
+            showToast('✅ Kazi imeongezwa! Nitakukumbusha.', 'ok');
+            speakText('Kazi mpya imeongezwa: ' + name);
+        }
+
+        function adminAssignTask() {
+            if (!currentUser || currentUser.role !== 'admin') return;
+
+            const userId = document.getElementById('adminTaskUser').value;
+            const name = document.getElementById('adminTaskName').value.trim();
+            const date = document.getElementById('adminTaskDate').value;
+
+            if (!userId || !name) {
+                showToast('Tafadhali jaza maelezo yote', 'warn');
+                return;
+            }
+
+            const task = {
+                id: 't' + Date.now(),
+                userId: userId,
+                name: name,
+                description: 'Imepewa na Admin',
+                date: date || getTodayStr(),
+                priority: 'medium',
+                done: false,
+                reminderCount: 0
+            };
+
+            db.tasks.push(task);
+            saveData();
+            document.getElementById('adminTaskName').value = '';
+            renderAll();
+            showToast('✅ Kazi imegawanywa!', 'ok');
+
+            const user = db.users.find(u => u.id === userId);
+            if (user) {
+                speakText('Kazi mpya imegawanywa kwa ' + user.name + ': ' + name);
+            }
+        }
+
+        // ====================================================================
+        // ATTENDANCE OPERATIONS
+        // ====================================================================
+        function handleCheckIn() {
+            if (!currentUser) return;
+            const today = getTodayStr();
+            const now = new Date();
+            const timeStr = now.toTimeString().slice(0, 8);
+
+            let record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
+            if (record && record.checkIn) {
+                showToast('Tayari umeingia kazini!', 'warn');
+                return;
+            }
+
+            if (!record) {
+                record = { userId: currentUser.id, date: today, checkIn: timeStr, checkOut: null };
+                db.attendance.push(record);
+            } else {
+                record.checkIn = timeStr;
+            }
+
+            saveData();
+            renderAll();
+            showToast('✅ Umeingia kazini saa ' + timeStr, 'ok');
+            speakText('Umeingia kazini saa ' + timeStr);
+        }
+
+        function handleCheckOut() {
+            if (!currentUser) return;
+            const today = getTodayStr();
+            const now = new Date();
+            const timeStr = now.toTimeString().slice(0, 8);
+
+            const record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
+            if (!record || !record.checkIn) {
+                showToast('Haujaingia kazini! Ingia kwanza.', 'warn');
+                return;
+            }
+            if (record.checkOut) {
+                showToast('Tayari umetoka kazini!', 'warn');
+                return;
+            }
+
+            record.checkOut = timeStr;
+            saveData();
+            renderAll();
+            showToast('✅ Umetoka kazini saa ' + timeStr, 'ok');
+            speakText('Umetoka kazini saa ' + timeStr);
+        }
+
+        // ====================================================================
+        // USER OPERATIONS (Admin)
+        // ====================================================================
+        function confirmAddUser() {
+            if (!currentUser || currentUser.role !== 'admin') return;
+
+            const name = document.getElementById('newUserName').value.trim();
+            const id = document.getElementById('newUserId').value.trim().toUpperCase();
+            const pass = document.getElementById('newUserPass').value.trim() || '123';
+            const role = document.getElementById('newUserRole').value;
+
+            if (!name || !id) {
+                showToast('Tafadhali jaza taarifa zote', 'warn');
+                return;
+            }
+
+            if (db.users.find(u => u.id === id)) {
+                showToast('Namba hii tayari ipo!', 'warn');
+                return;
+            }
+
+            db.users.push({ id, name, password: pass, role, photo: '' });
+            saveData();
+            closeModal('newUserModal');
+            document.getElementById('newUserName').value = '';
+            document.getElementById('newUserId').value = '';
+            renderAll();
+            showToast('✅ Mfanyakazi ' + name + ' ameongezwa!', 'ok');
+        }
+
+        function deleteUser(userId) {
+            if (!currentUser || currentUser.role !== 'admin') return;
+            if (userId === currentUser.id) {
+                showToast('Huwezi kujifuta mwenyewe!', 'warn');
+                return;
+            }
+            if (!confirm('Je, una uhakika unataka kufuta mfanyakazi huyu?')) return;
+
+            db.users = db.users.filter(u => u.id !== userId);
+            db.tasks = db.tasks.filter(t => t.userId !== userId);
+            db.attendance = db.attendance.filter(a => a.userId !== userId);
+            saveData();
+            renderAll();
+            showToast('Mfanyakazi amefutwa', 'warn');
+        }
+
+        // ====================================================================
+        // SAVINGS (for reminder)
+        // ====================================================================
+        function getTodaySavings() {
+            const entry = db.savings ? db.savings.find(s => s.date === getTodayStr()) : null;
+            return entry ? entry.amount : 0;
+        }
+
+        // ====================================================================
+        // ACTIVITY LOG
+        // ====================================================================
+        function logActivity(kind, text) {
+            if (!db.activityLog) db.activityLog = [];
+            db.activityLog.unshift({ id: Date.now(), ts: new Date().toISOString(), kind, text });
+            if (db.activityLog.length > 200) db.activityLog.length = 200;
+            saveData();
+        }
+
+        // ====================================================================
+        // MODAL HELPERS
+        // ====================================================================
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (!modal) return;
+            modal.classList.add('open');
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (!modal) return;
+            modal.classList.remove('open');
+            modal.style.display = 'none';
+            // Close camera if open
+            if (id === 'cameraModal') {
+                closeCamera();
+            }
+        }
+
+        // ====================================================================
+        // TOAST
+        // ====================================================================
+        function showToast(text, type = '') {
+            const stack = document.getElementById('toastStack');
+            const el = document.createElement('div');
+            el.className = 'toast' + (type ? ' ' + type : '');
+            el.textContent = text;
+            stack.appendChild(el);
+            setTimeout(() => {
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 0.3s';
+                setTimeout(() => el.remove(), 300);
+            }, 6000);
+        }
+
+        // ====================================================================
+        // UTILITY
+        // ====================================================================
+        function escapeHtml(str) {
+            if (!str) return '';
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        // ====================================================================
+        // DOWNLOAD APP (PWA)
+        // ====================================================================
+        function downloadApp() {
+            try {
+                const html = document.documentElement.outerHTML;
+                const blob = new Blob(['<!DOCTYPE html>\n' + html], {
+                    type: 'text/html;charset=utf-8'
+                });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'dr-william-app-' + getTodayStr() + '.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('✅ App imepakuwa! Fungua faili kwenye kivinjari.', 'ok');
+            } catch (e) {
+                showToast('❌ Hitilafu: ' + e.message, 'warn');
+            }
+        }
+
+        // ====================================================================
+        // RENDER ALL
+        // ====================================================================
+        function renderAll() {
+            renderPage(currentPage);
+            renderDashboard();
+            tickClock();
+        }
+
+        // ====================================================================
+        // CLOCK
+        // ====================================================================
+        function tickClock() {
+            document.getElementById('clockDisplay').textContent = new Date().toLocaleTimeString('en-GB');
+        }
+        setInterval(tickClock, 1000);
+        tickClock();
+
+        // ====================================================================
+        // AUTO-LOGIN
+        // ====================================================================
+        function autoLogin() {
+            if (db.currentUser) {
+                const user = db.users.find(u => u.id === db.currentUser.id);
+                if (user) {
+                    document.getElementById('loginId').value = user.id;
+                    document.getElementById('loginPass').value = user.password;
+                    handleLogin();
+                    return;
+                }
+            }
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'none';
+        }
+
+        // ====================================================================
+        // INIT
+        // ====================================================================
+        function init() {
+            autoLogin();
+
+            document.querySelectorAll('.modal-overlay').forEach(m => {
+                m.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('open');
+                        this.style.display = 'none';
+                        closeCamera();
+                    }
+                });
+            });
+
+            document.getElementById('taskDateInput').value = getTodayStr();
+
+            // Load voices
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.getVoices();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+        if (document.readyState !== 'loading') init();
+    </script>
+
+</body>
+</html>
