@@ -19,14 +19,14 @@
             --bg: #0B0F14;
             --panel: #141A21;
             --panel-2: #1B232C;
-            --line: rgba(255, 255, 255, 0.08);
+            --line: rgba(255,255,255,0.08);
             --text: #ECEFF2;
             --text-dim: #8C97A3;
             --text-faint: #5B6670;
             --green: #3DBE7A;
-            --green-soft: rgba(61, 190, 122, 0.14);
+            --green-soft: rgba(61,190,122,0.14);
             --red: #E2574C;
-            --red-soft: rgba(226, 87, 76, 0.14);
+            --red-soft: rgba(226,87,76,0.14);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -34,18 +34,18 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
+            padding: 10px;
+            padding-bottom: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
-            padding-bottom: 70px;
         }
         .app-container {
             width: 100%;
             max-width: 1400px;
             min-height: 100vh;
             padding: 15px;
-            background: radial-gradient(ellipse 1200px 600px at 50% -10%, rgba(212, 162, 78, 0.06), transparent), var(--bg);
+            background: radial-gradient(ellipse 1200px 600px at 50% -10%, rgba(212,162,78,0.06), transparent), var(--bg);
             border-radius: 20px;
         }
         .btn-gold {
@@ -61,7 +61,6 @@
             font-size: 14px;
         }
         .btn-gold:hover { transform: scale(0.97); opacity: 0.85; }
-        .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
         .btn-ghost {
             background: var(--panel-2);
             color: var(--text-dim);
@@ -78,7 +77,7 @@
         .btn-red {
             background: var(--red-soft);
             color: var(--red);
-            border: 1px solid rgba(226, 87, 76, 0.3);
+            border: 1px solid rgba(226,87,76,0.3);
             padding: 12px 24px;
             border-radius: 12px;
             font-weight: 600;
@@ -124,7 +123,7 @@
         .card:hover { border-color: var(--gold); }
         .card-gold {
             border-color: var(--gold);
-            background: linear-gradient(135deg, rgba(212, 162, 78, 0.08), transparent);
+            background: linear-gradient(135deg, rgba(212,162,78,0.08), transparent);
         }
 
         /* LOGIN */
@@ -143,7 +142,7 @@
             max-width: 420px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 0 60px rgba(212, 162, 78, 0.08);
+            box-shadow: 0 0 60px rgba(212,162,78,0.08);
         }
         .login-box .logo { font-family: 'Space Grotesk'; font-size: 32px; font-weight: 700; color: var(--gold); }
         .login-box .subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 24px; }
@@ -207,7 +206,6 @@
             align-items: center;
             gap: 6px;
         }
-        .topbar-right .user-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
         .clock-display { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim); }
 
         /* NAV */
@@ -244,7 +242,7 @@
         /* STATS */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 12px;
             margin-bottom: 16px;
         }
@@ -305,13 +303,6 @@
         }
         .task-item .task-status.pending { background: var(--red-soft); color: var(--red); }
         .task-item .task-status.done { background: var(--green-soft); color: var(--green); }
-        .task-item .task-reminder {
-            font-size: 10px;
-            color: var(--gold);
-            background: var(--gold-soft);
-            padding: 2px 10px;
-            border-radius: 999px;
-        }
 
         /* ATTENDANCE */
         .attendance-box {
@@ -376,20 +367,13 @@
         .admin-user-card:hover { border-color: var(--gold); }
         .admin-user-card .user-info .name { font-weight: 600; font-size: 14px; }
         .admin-user-card .user-info .role { font-size: 11px; color: var(--text-dim); }
-        .admin-user-card .user-status {
-            font-size: 11px;
-            padding: 4px 12px;
-            border-radius: 999px;
-        }
-        .admin-user-card .user-status.active { background: var(--green-soft); color: var(--green); }
-        .admin-user-card .user-status.inactive { background: var(--red-soft); color: var(--red); }
 
         /* MODAL */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0,0,0,0.75);
             backdrop-filter: blur(4px);
             z-index: 1000;
             align-items: center;
@@ -450,12 +434,11 @@
             border-radius: 12px;
             padding: 12px 16px;
             font-size: 13px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
             animation: toastIn 0.3s ease;
         }
         .toast.warn { border-left-color: var(--red); }
         .toast.ok { border-left-color: var(--green); }
-        .toast.reminder { border-left-color: var(--gold); background: linear-gradient(135deg, var(--gold-soft), var(--panel-2)); }
         @keyframes toastIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
 
         /* CALENDAR */
@@ -478,7 +461,6 @@
         .calendar-grid .day.has-task:hover { background: var(--gold-soft); }
         .calendar-grid .day.today { background: var(--gold-soft); border: 1px solid var(--gold); color: var(--gold); font-weight: 700; }
         .calendar-grid .day .day-num { font-size: 13px; font-weight: 600; }
-        .calendar-grid .day .day-label { font-size: 8px; text-transform: uppercase; color: var(--text-faint); }
 
         .task-list-empty { color: var(--text-faint); text-align: center; padding: 30px 0; font-size: 14px; }
         .download-btn {
@@ -497,18 +479,6 @@
             gap: 6px;
         }
         .download-btn:hover { border-color: var(--gold); color: var(--text); }
-        .ai-reminder-badge {
-            background: var(--gold-soft);
-            color: var(--gold);
-            font-size: 10px;
-            padding: 2px 12px;
-            border-radius: 999px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            animation: pulse-badge 2s infinite;
-        }
-        @keyframes pulse-badge { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
         /* RESPONSIVE */
         @media (max-width: 640px) {
@@ -534,54 +504,22 @@
             gap: 14px;
             padding: 10px 0;
         }
-        .profile-container .avatar-large {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--gold);
-            background: var(--panel-2);
-        }
         .profile-container .avatar-placeholder {
-            width: 64px;
-            height: 64px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background: var(--panel-2);
-            border: 3px dashed var(--line);
+            border: 3px solid var(--gold);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
             color: var(--text-faint);
         }
-
-        .sync-status {
-            font-size: 11px;
-            color: var(--text-faint);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .sync-status .sync-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .sync-status .sync-dot.online { background: var(--green); }
-        .sync-status .sync-dot.offline { background: var(--red); animation: blink 1s infinite; }
-        .sync-status .sync-dot.syncing { background: var(--gold); animation: blink 0.5s infinite; }
-        @keyframes blink { 50% { opacity: 0.3; } }
-
-        .cloud-badge {
-            background: var(--gold-soft);
+        .password-hidden {
+            font-size: 18px;
+            letter-spacing: 2px;
             color: var(--gold);
-            font-size: 9px;
-            padding: 2px 8px;
-            border-radius: 999px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
         }
     </style>
 </head>
@@ -609,7 +547,7 @@
             </button>
             <div style="margin-top:14px;font-size:11px;color:var(--text-faint);">
                 <p>👑 Admin: 123 / 123</p>
-                <p>👤 W001, W002, W003, W004 / 123</p>
+                <p>👤 Wafanyakazi wataingia na namba zao</p>
             </div>
         </div>
     </div>
@@ -628,12 +566,7 @@
                     </div>
                 </div>
                 <div class="topbar-right">
-                    <div class="sync-status">
-                        <span class="sync-dot online" id="syncDot"></span>
-                        <span id="syncText">Imeunganishwa</span>
-                    </div>
                     <div class="user-badge">
-                        <span class="dot" id="avatarDot"></span>
                         <span id="userNameDisplay">Mfanyakazi</span>
                         <span style="color:var(--text-faint);font-size:10px;" id="userIdDisplay">(123)</span>
                     </div>
@@ -673,7 +606,7 @@
             <div class="page active" id="page-dashboard">
                 <div class="card card-gold" style="margin-bottom:16px;">
                     <div class="profile-container">
-                        <div class="avatar-placeholder" id="profilePlaceholder">
+                        <div class="avatar-placeholder">
                             <i class="fa-solid fa-user"></i>
                         </div>
                         <div>
@@ -705,7 +638,6 @@
                 <div class="card card-gold">
                     <h4 style="font-family:'Space Grotesk';margin-bottom:10px;color:var(--gold);">
                         <i class="fa-solid fa-bullhorn"></i> Habari za Leo
-                        <span class="ai-reminder-badge"><i class="fa-solid fa-cloud"></i> Cloud Sync</span>
                     </h4>
                     <p style="color:var(--text-dim);font-size:14px;" id="dashboardGreeting">
                         Karibu! Angalia majukumu yako ya leo.
@@ -817,20 +749,14 @@
             <div class="page" id="page-admin">
                 <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
                     <i class="fa-solid fa-crown"></i> Dhibiti Wafanyakazi
-                    <span class="cloud-badge"><i class="fa-solid fa-cloud"></i> Cloud Sync</span>
                 </h3>
                 <div class="admin-grid">
                     <div class="card">
                         <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">👥 Orodha ya Wafanyakazi</h4>
                         <div id="adminUserList"></div>
                         <button class="btn-gold btn-sm" style="margin-top:10px;width:100%;" onclick="openModal('newUserModal')">
-                            <i class="fa-solid fa-user-plus"></i> Ongeza Mfanyakazi
+                            <i class="fa-solid fa-user-plus"></i> Sajili Mfanyakazi
                         </button>
-                        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-                            <button class="btn-ghost btn-sm" onclick="syncData()" id="syncBtn">
-                                <i class="fa-solid fa-rotate"></i> Sync Data
-                            </button>
-                        </div>
                     </div>
                     <div class="card">
                         <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">📋 Gawanya Majukumu</h4>
@@ -898,7 +824,7 @@
     <div class="modal-overlay" id="newUserModal">
         <div class="modal-box">
             <div class="modal-head">
-                <h3>👤 Mfanyakazi Mpya</h3>
+                <h3>👤 Sajili Mfanyakazi Mpya</h3>
                 <button class="modal-close" onclick="closeModal('newUserModal')"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="field">
@@ -912,94 +838,57 @@
                 </div>
                 <div class="field">
                     <label>Nenosiri</label>
-                    <input type="text" id="newUserPass" placeholder="Nenosiri" value="123">
+                    <input type="text" id="newUserPass" placeholder="Weka nenosiri" value="123">
                 </div>
-            </div>
-            <div class="field">
-                <label>Jukumu</label>
-                <select id="newUserRole">
-                    <option value="staff">Mfanyakazi</option>
-                    <option value="admin">Admin</option>
-                </select>
             </div>
             <div class="modal-actions">
                 <button class="btn-ghost" onclick="closeModal('newUserModal')">Ghairi</button>
-                <button class="btn-gold" onclick="confirmAddUser()"><i class="fa-solid fa-check"></i> Ongeza</button>
+                <button class="btn-gold" onclick="confirmAddUser()"><i class="fa-solid fa-check"></i> Sajili</button>
             </div>
         </div>
     </div>
 
     <script>
         // ====================================================================
-        // 🔧 SUPABASE CREDENTIALS - ZIMEWEKWA MOJA KWA MOJA
+        // DATA STORE - LocalStorage (Inafanya kazi offline)
         // ====================================================================
-        const SUPABASE_URL = 'https://bojxzkdewtwblemwrkzw.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_WWDU_VhQgF-1111lGKtJdA_fxD5Zo_w';
+        const STORAGE_KEY = 'dr_william_data_v3';
 
-        // ====================================================================
-        // SUPABASE CLIENT
-        // ====================================================================
-        const supabase = {
-            url: SUPABASE_URL,
-            key: SUPABASE_KEY,
+        function getDefaultData() {
+            return {
+                users: [
+                    { id: '123', name: 'Admin', password: '123', role: 'admin' }
+                ],
+                tasks: [],
+                attendance: [],
+                currentUser: null
+            };
+        }
 
-            async query(table, method = 'GET', data = null, id = null) {
-                const headers = {
-                    'Content-Type': 'application/json',
-                    'apikey': this.key,
-                    'Authorization': 'Bearer ' + this.key
-                };
-
-                let url = `${this.url}/rest/v1/${table}`;
-                let options = { method, headers };
-
-                if (method === 'GET') {
-                    url += '?select=*';
-                } else if (method === 'POST') {
-                    options.body = JSON.stringify(data);
-                } else if (method === 'PATCH' && id) {
-                    url += `?id=eq.${id}`;
-                    options.body = JSON.stringify(data);
-                } else if (method === 'DELETE' && id) {
-                    url += `?id=eq.${id}`;
+        function loadData() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return getDefaultData();
+                const data = JSON.parse(raw);
+                const def = getDefaultData();
+                for (let key in def) {
+                    if (!(key in data)) data[key] = def[key];
                 }
+                return data;
+            } catch (e) {
+                return getDefaultData();
+            }
+        }
 
-                try {
-                    const res = await fetch(url, options);
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                    if (method === 'GET') return await res.json();
-                    return { success: true };
-                } catch (e) {
-                    console.warn('Supabase error:', e);
-                    return { error: e.message };
-                }
-            },
+        function saveData() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+            } catch (e) {
+                console.warn('Save failed', e);
+            }
+        }
 
-            async getUsers() { return await this.query('users'); },
-            async getTasks() { return await this.query('tasks'); },
-            async getAttendance() { return await this.query('attendance'); },
-
-            async addUser(data) { return await this.query('users', 'POST', data); },
-            async addTask(data) { return await this.query('tasks', 'POST', data); },
-            async addAttendance(data) { return await this.query('attendance', 'POST', data); },
-
-            async updateTask(id, data) { return await this.query('tasks', 'PATCH', data, id); },
-            async updateUser(id, data) { return await this.query('users', 'PATCH', data, id); },
-
-            async deleteTask(id) { return await this.query('tasks', 'DELETE', null, id); },
-            async deleteUser(id) { return await this.query('users', 'DELETE', null, id); }
-        };
-
-        // ====================================================================
-        // DATA STORE (Local cache)
-        // ====================================================================
-        let db = {
-            users: [],
-            tasks: [],
-            attendance: [],
-            currentUser: null
-        };
-
+        let db = loadData();
         let currentUser = null;
         let currentPage = 'dashboard';
         let calendarMonth = new Date().getMonth();
@@ -1034,73 +923,16 @@
             }, 5000);
         }
 
-        function speakText(text) {
-            if (!('speechSynthesis' in window)) return;
-            try {
-                window.speechSynthesis.cancel();
-                const utter = new SpeechSynthesisUtterance(text);
-                utter.lang = 'sw-TZ';
-                utter.rate = 0.9;
-                const voices = window.speechSynthesis.getVoices();
-                const swVoice = voices.find(v => v.lang.startsWith('sw'));
-                if (swVoice) utter.voice = swVoice;
-                window.speechSynthesis.speak(utter);
-            } catch (e) { console.warn('Speech failed', e); }
-        }
-
-        // ====================================================================
-        // SYNC DATA WITH SUPABASE
-        // ====================================================================
-        async function syncData() {
-            const btn = document.getElementById('syncBtn');
-            const dot = document.getElementById('syncDot');
-            const text = document.getElementById('syncText');
-
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Inasawazisha...';
-            dot.className = 'sync-dot syncing';
-            text.textContent = 'Inasawazisha...';
-
-            try {
-                // Fetch all data from Supabase
-                const users = await supabase.getUsers();
-                const tasks = await supabase.getTasks();
-                const attendance = await supabase.getAttendance();
-
-                // Check if we got valid data
-                if (users && !users.error) db.users = users;
-                if (tasks && !tasks.error) db.tasks = tasks;
-                if (attendance && !attendance.error) db.attendance = attendance;
-
-                // If we have current user, update their data
-                if (currentUser) {
-                    const user = db.users.find(u => u.id === currentUser.id);
-                    if (user) currentUser = user;
-                }
-
-                dot.className = 'sync-dot online';
-                text.textContent = 'Imeunganishwa';
-                showToast('✅ Data imesawazishwa!', 'ok');
-                renderAll();
-            } catch (e) {
-                dot.className = 'sync-dot offline';
-                text.textContent = 'Hitilafu';
-                showToast('❌ Hitilafu ya kuunganisha! Angalia mtandao.', 'warn');
-            }
-
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-rotate"></i> Sync Data';
+        function getHiddenPassword(length = 8) {
+            return '•'.repeat(length);
         }
 
         // ====================================================================
         // LOGIN / LOGOUT
         // ====================================================================
-        async function handleLogin() {
+        function handleLogin() {
             const id = document.getElementById('loginId').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
-
-            // First sync from cloud
-            await syncData();
 
             const user = db.users.find(u => u.id === id && u.password === pass);
 
@@ -1112,6 +944,7 @@
             document.getElementById('loginError').style.display = 'none';
             currentUser = user;
             db.currentUser = user;
+            saveData();
 
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('mainApp').style.display = 'block';
@@ -1128,62 +961,17 @@
 
             renderAll();
             showToast('Karibu ' + user.name + '!', 'ok');
-            startReminderSystem();
-
-            // Auto sync every 30 seconds
-            setInterval(syncData, 30000);
         }
 
         function handleLogout() {
-            stopReminderSystem();
             currentUser = null;
             db.currentUser = null;
+            saveData();
             document.getElementById('mainApp').style.display = 'none';
             document.getElementById('loginPage').style.display = 'flex';
             document.getElementById('loginId').value = '';
             document.getElementById('loginPass').value = '';
             showToast('Umefanikiwa kutoka!', 'ok');
-        }
-
-        // ====================================================================
-        // REMINDER SYSTEM
-        // ====================================================================
-        let reminderInterval = null;
-
-        function startReminderSystem() {
-            stopReminderSystem();
-            reminderInterval = setInterval(checkReminders, 60000);
-            setTimeout(checkReminders, 3000);
-        }
-
-        function stopReminderSystem() {
-            if (reminderInterval) {
-                clearInterval(reminderInterval);
-                reminderInterval = null;
-            }
-        }
-
-        function checkReminders() {
-            if (!currentUser) return;
-            const today = getTodayStr();
-            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id && t.date === today && !t.done);
-
-            userTasks.forEach(task => {
-                const reminderKey = 'reminder_' + task.id + '_' + today;
-                let count = parseInt(localStorage.getItem(reminderKey) || '0');
-
-                if (count % 10 === 0 && count > 0) {
-                    speakReminder(task);
-                }
-
-                localStorage.setItem(reminderKey, String(count + 1));
-            });
-        }
-
-        function speakReminder(task) {
-            const message = `Kumbuka: ${task.name}. Bado hujakamilisha.`;
-            speakText(message);
-            showToast('🔔 ' + message, 'reminder');
         }
 
         // ====================================================================
@@ -1232,7 +1020,7 @@
         function renderDashboard() {
             if (!currentUser) return;
 
-            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
             const today = getTodayStr();
             const todayTasks = userTasks.filter(t => t.date === today);
             const done = todayTasks.filter(t => t.done).length;
@@ -1251,10 +1039,7 @@
             } else if (done === total) {
                 greeting.textContent = '🎉 Hongera! Umetekeleza majukumu yote ya leo! Utendaji ' + pct + '%';
             } else {
-                const undone = todayTasks.filter(t => !t.done);
-                const nextTask = undone[0];
-                greeting.textContent = '📋 Una ' + pending + ' majukumu yaliyobaki leo. Inayofuata: ' + (nextTask ? nextTask
-                    .name : '');
+                greeting.textContent = '📋 Una ' + pending + ' majukumu yaliyobaki leo. Endelea kuyatekeleza!';
             }
 
             const container = document.getElementById('dashboardTaskList');
@@ -1270,7 +1055,6 @@
                         <div class="task-meta">${t.priority === 'high' ? '🔴' : t.priority === 'medium' ? '🟡' : '🟢'} ${t.description || ''}</div>
                     </div>
                     <span class="task-status ${t.done ? 'done' : 'pending'}">${t.done ? 'Imekamilika' : 'Inasubiri'}</span>
-                    ${!t.done ? '<span class="task-reminder"><i class="fa-solid fa-robot"></i> Inakumbusha</span>' : ''}
                 </div>
             `).join('');
         }
@@ -1288,7 +1072,7 @@
                 year: 'numeric'
             });
 
-            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
             const today = getTodayStr();
             const todayTasks = userTasks.filter(t => t.date === today);
 
@@ -1319,7 +1103,6 @@
                         <div class="task-meta">
                             ${t.priority === 'high' ? '🔴 Juu' : t.priority === 'medium' ? '🟡 Kati' : '🟢 Chini'}
                             ${t.description ? '· ' + escapeHtml(t.description) : ''}
-                            ${!t.done ? '· <span class="task-reminder"><i class="fa-solid fa-robot"></i> AI inakumbusha</span>' : ''}
                         </div>
                     </div>
                     <span class="task-status ${t.done ? 'done' : 'pending'}">${t.done ? '✅ Imekamilika' : '⏳ Inasubiri'}</span>
@@ -1337,7 +1120,7 @@
             if (!currentUser) return;
 
             const today = getTodayStr();
-            const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
+            const record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
 
             const checkInTime = document.getElementById('checkInTime');
             const checkOutTime = document.getElementById('checkOutTime');
@@ -1347,16 +1130,16 @@
             const checkOutBtn = document.getElementById('checkOutBtn');
 
             if (record) {
-                checkInTime.textContent = record.check_in || '--:--:--';
-                checkOutTime.textContent = record.check_out || '--:--:--';
-                checkInStatus.textContent = record.check_in ? '✅ Imeingia' : 'Bado';
-                checkInStatus.className = 'status-badge ' + (record.check_in ? 'in' : 'pending');
-                checkOutStatus.textContent = record.check_out ? '✅ Imetoka' : 'Bado';
-                checkOutStatus.className = 'status-badge ' + (record.check_out ? 'out' : 'pending');
-                checkInBtn.disabled = !!record.check_in;
-                checkOutBtn.disabled = !record.check_in || !!record.check_out;
-                checkInBtn.style.opacity = record.check_in ? '0.5' : '1';
-                checkOutBtn.style.opacity = (!record.check_in || record.check_out) ? '0.5' : '1';
+                checkInTime.textContent = record.checkIn || '--:--:--';
+                checkOutTime.textContent = record.checkOut || '--:--:--';
+                checkInStatus.textContent = record.checkIn ? '✅ Imeingia' : 'Bado';
+                checkInStatus.className = 'status-badge ' + (record.checkIn ? 'in' : 'pending');
+                checkOutStatus.textContent = record.checkOut ? '✅ Imetoka' : 'Bado';
+                checkOutStatus.className = 'status-badge ' + (record.checkOut ? 'out' : 'pending');
+                checkInBtn.disabled = !!record.checkIn;
+                checkOutBtn.disabled = !record.checkIn || !!record.checkOut;
+                checkInBtn.style.opacity = record.checkIn ? '0.5' : '1';
+                checkOutBtn.style.opacity = (!record.checkIn || record.checkOut) ? '0.5' : '1';
             } else {
                 checkInTime.textContent = '--:--:--';
                 checkOutTime.textContent = '--:--:--';
@@ -1371,7 +1154,7 @@
             }
 
             const historyContainer = document.getElementById('attendanceHistory');
-            const userRecords = db.attendance.filter(a => a.user_id === currentUser.id).sort((a, b) => b.date.localeCompare(a
+            const userRecords = db.attendance.filter(a => a.userId === currentUser.id).sort((a, b) => b.date.localeCompare(a
                 .date));
 
             if (userRecords.length === 0) {
@@ -1384,11 +1167,11 @@
                     <div class="task-info">
                         <div class="task-name">${a.date}</div>
                         <div class="task-meta">
-                            🟢 Kuingia: ${a.check_in || '--:--'} 
-                            ${a.check_out ? '🔴 Kutoka: ' + a.check_out : '⚠️ Hajatoka'}
+                            🟢 Kuingia: ${a.checkIn || '--:--'} 
+                            ${a.checkOut ? '🔴 Kutoka: ' + a.checkOut : '⚠️ Hajatoka'}
                         </div>
                     </div>
-                    <span class="task-status ${a.check_out ? 'done' : 'pending'}">${a.check_out ? 'Imekamilika' : 'Inasubiri'}</span>
+                    <span class="task-status ${a.checkOut ? 'done' : 'pending'}">${a.checkOut ? 'Imekamilika' : 'Inasubiri'}</span>
                 </div>
             `).join('');
         }
@@ -1399,7 +1182,7 @@
         function renderPerformance() {
             if (!currentUser) return;
 
-            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
             const today = getTodayStr();
             const todayTasks = userTasks.filter(t => t.date === today);
             const done = todayTasks.filter(t => t.done).length;
@@ -1498,7 +1281,7 @@
                 html += `<div class="day"></div>`;
             }
 
-            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
             const taskDates = new Set(userTasks.map(t => t.date));
 
             for (let d = 1; d <= daysInMonth; d++) {
@@ -1525,7 +1308,7 @@
             if (!currentUser) return;
 
             const container = document.getElementById('calendarTaskList');
-            const tasks = db.tasks.filter(t => t.user_id === currentUser.id && t.date === dateStr);
+            const tasks = db.tasks.filter(t => t.userId === currentUser.id && t.date === dateStr);
 
             if (tasks.length === 0) {
                 container.innerHTML = `<div class="task-list-empty">Hakuna majukumu kwa tarehe ${dateStr}.</div>`;
@@ -1560,25 +1343,29 @@
             if (!currentUser || currentUser.role !== 'admin') return;
 
             const container = document.getElementById('adminUserList');
+
+            if (db.users.length === 0) {
+                container.innerHTML = '<div class="task-list-empty">Hakuna wafanyakazi bado.</div>';
+                return;
+            }
+
             container.innerHTML = db.users.map(u => `
                 <div class="admin-user-card">
                     <div class="user-info">
                         <div class="name">${escapeHtml(u.name)}</div>
-                        <div class="role">ID: ${u.id} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'}</div>
+                        <div class="role">ID: ${u.id} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'} · Nenosiri: <span class="password-hidden">${getHiddenPassword(u.password ? u.password.length : 4)}</span></div>
                     </div>
                     <div>
-                        <span class="user-status ${u.id === currentUser.id ? 'active' : 'inactive'}">
-                            ${u.id === currentUser.id ? '✓ Wewe' : (u.role === 'admin' ? '👑 Admin' : '👤 Staff')}
-                        </span>
-                        ${u.id !== currentUser.id ? `<button class="btn-red btn-sm" onclick="deleteUser('${u.id}')" style="padding:4px 10px;font-size:10px;margin-left:4px;">
+                        ${u.id !== '123' ? `<button class="btn-red btn-sm" onclick="deleteUser('${u.id}')" style="padding:4px 10px;font-size:10px;">
                             <i class="fa-solid fa-trash"></i>
-                        </button>` : ''}
+                        </button>` : '<span style="font-size:11px;color:var(--green);">👑 Admin</span>'}
                     </div>
                 </div>
             `).join('');
 
             const select = document.getElementById('adminTaskUser');
-            select.innerHTML = db.users.filter(u => u.id !== currentUser.id).map(u =>
+            const staffUsers = db.users.filter(u => u.id !== currentUser.id);
+            select.innerHTML = staffUsers.map(u =>
                 `<option value="${u.id}">${u.name} (${u.id})</option>`
             ).join('');
 
@@ -1588,35 +1375,26 @@
         // ====================================================================
         // TASK OPERATIONS
         // ====================================================================
-        async function toggleTask(taskId) {
+        function toggleTask(taskId) {
             const task = db.tasks.find(t => t.id === taskId);
             if (!task) return;
-
             task.done = !task.done;
-
-            // Update in Supabase
-            await supabase.updateTask(taskId, { done: task.done });
-
-            // Update local
-            await syncData();
+            saveData();
             renderAll();
-
             if (task.done) {
                 showToast('✅ ' + task.name + ' imekamilika!', 'ok');
-                speakText('Hongera! Umemaliza: ' + task.name);
             }
         }
 
-        async function deleteTask(taskId) {
+        function deleteTask(taskId) {
             if (!confirm('Je, una uhakika unataka kufuta kazi hii?')) return;
-
-            await supabase.deleteTask(taskId);
-            await syncData();
+            db.tasks = db.tasks.filter(t => t.id !== taskId);
+            saveData();
             renderAll();
             showToast('Kazi imefutwa', 'warn');
         }
 
-        async function confirmAddTask() {
+        function confirmAddTask() {
             if (!currentUser) return;
 
             const name = document.getElementById('taskNameInput').value.trim();
@@ -1631,26 +1409,24 @@
 
             const task = {
                 id: 't' + Date.now(),
-                user_id: currentUser.id,
+                userId: currentUser.id,
                 name: name,
                 description: desc || '',
                 date: date || getTodayStr(),
                 priority: priority || 'medium',
-                done: false,
-                reminder_count: 0
+                done: false
             };
 
-            await supabase.addTask(task);
-            await syncData();
+            db.tasks.push(task);
+            saveData();
             closeModal('newTaskModal');
             document.getElementById('taskNameInput').value = '';
             document.getElementById('taskDescInput').value = '';
             renderAll();
             showToast('✅ Kazi imeongezwa!', 'ok');
-            speakText('Kazi mpya imeongezwa: ' + name);
         }
 
-        async function adminAssignTask() {
+        function adminAssignTask() {
             if (!currentUser || currentUser.role !== 'admin') return;
 
             const userId = document.getElementById('adminTaskUser').value;
@@ -1664,98 +1440,79 @@
 
             const task = {
                 id: 't' + Date.now(),
-                user_id: userId,
+                userId: userId,
                 name: name,
                 description: 'Imepewa na Admin',
                 date: date || getTodayStr(),
                 priority: 'medium',
-                done: false,
-                reminder_count: 0
+                done: false
             };
 
-            await supabase.addTask(task);
-            await syncData();
+            db.tasks.push(task);
+            saveData();
             document.getElementById('adminTaskName').value = '';
             renderAll();
             showToast('✅ Kazi imegawanywa!', 'ok');
-
-            const user = db.users.find(u => u.id === userId);
-            if (user) {
-                speakText('Kazi mpya imegawanywa kwa ' + user.name + ': ' + name);
-            }
         }
 
         // ====================================================================
         // ATTENDANCE OPERATIONS
         // ====================================================================
-        async function handleCheckIn() {
+        function handleCheckIn() {
             if (!currentUser) return;
             const today = getTodayStr();
             const now = new Date();
             const timeStr = now.toTimeString().slice(0, 8);
 
-            let record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
-
-            if (record && record.check_in) {
+            let record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
+            if (record && record.checkIn) {
                 showToast('Tayari umeingia kazini!', 'warn');
                 return;
             }
 
-            const data = {
-                user_id: currentUser.id,
-                date: today,
-                check_in: timeStr,
-                check_out: null
-            };
-
-            if (record) {
-                // Update existing
-                await supabase.query('attendance', 'PATCH', { check_in: timeStr }, record.id);
+            if (!record) {
+                record = { userId: currentUser.id, date: today, checkIn: timeStr, checkOut: null };
+                db.attendance.push(record);
             } else {
-                // Create new
-                await supabase.addAttendance(data);
+                record.checkIn = timeStr;
             }
 
-            await syncData();
+            saveData();
             renderAll();
             showToast('✅ Umeingia kazini saa ' + timeStr, 'ok');
-            speakText('Umeingia kazini saa ' + timeStr);
         }
 
-        async function handleCheckOut() {
+        function handleCheckOut() {
             if (!currentUser) return;
             const today = getTodayStr();
             const now = new Date();
             const timeStr = now.toTimeString().slice(0, 8);
 
-            const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
-
-            if (!record || !record.check_in) {
+            const record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
+            if (!record || !record.checkIn) {
                 showToast('Haujaingia kazini! Ingia kwanza.', 'warn');
                 return;
             }
-            if (record.check_out) {
+            if (record.checkOut) {
                 showToast('Tayari umetoka kazini!', 'warn');
                 return;
             }
 
-            await supabase.query('attendance', 'PATCH', { check_out: timeStr }, record.id);
-            await syncData();
+            record.checkOut = timeStr;
+            saveData();
             renderAll();
             showToast('✅ Umetoka kazini saa ' + timeStr, 'ok');
-            speakText('Umetoka kazini saa ' + timeStr);
         }
 
         // ====================================================================
         // USER OPERATIONS (Admin)
         // ====================================================================
-        async function confirmAddUser() {
+        function confirmAddUser() {
             if (!currentUser || currentUser.role !== 'admin') return;
 
             const name = document.getElementById('newUserName').value.trim();
             const id = document.getElementById('newUserId').value.trim().toUpperCase();
             const pass = document.getElementById('newUserPass').value.trim() || '123';
-            const role = document.getElementById('newUserRole').value;
 
             if (!name || !id) {
                 showToast('Tafadhali jaza taarifa zote', 'warn');
@@ -1767,26 +1524,29 @@
                 return;
             }
 
-            const user = { id, name, password: pass, role, photo: '' };
-            await supabase.addUser(user);
-            await syncData();
+            db.users.push({ id, name, password: pass, role: 'staff' });
+            saveData();
             closeModal('newUserModal');
             document.getElementById('newUserName').value = '';
             document.getElementById('newUserId').value = '';
+            document.getElementById('newUserPass').value = '123';
             renderAll();
-            showToast('✅ Mfanyakazi ' + name + ' ameongezwa!', 'ok');
+            showToast('✅ Mfanyakazi ' + name + ' amesajiliwa!', 'ok');
+            showToast('🔑 Nenosiri lake: ' + pass + ' (Mpe mfanyakazi)', 'ok');
         }
 
-        async function deleteUser(userId) {
+        function deleteUser(userId) {
             if (!currentUser || currentUser.role !== 'admin') return;
-            if (userId === currentUser.id) {
-                showToast('Huwezi kujifuta mwenyewe!', 'warn');
+            if (userId === '123') {
+                showToast('Huwezi kumfuta Admin!', 'warn');
                 return;
             }
-            if (!confirm('Je, una uhakika unataka kufuta mfanyakazi huyu?')) return;
+            if (!confirm('Je, una uhakika unataka kumfuta mfanyakazi huyu?')) return;
 
-            await supabase.deleteUser(userId);
-            await syncData();
+            db.users = db.users.filter(u => u.id !== userId);
+            db.tasks = db.tasks.filter(t => t.userId !== userId);
+            db.attendance = db.attendance.filter(a => a.userId !== userId);
+            saveData();
             renderAll();
             showToast('Mfanyakazi amefutwa', 'warn');
         }
@@ -1869,11 +1629,6 @@
 
             // Set default date
             document.getElementById('taskDateInput').value = getTodayStr();
-
-            // Load voices
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.getVoices();
-            }
 
             // Close modals on overlay click
             document.querySelectorAll('.modal-overlay').forEach(m => {
