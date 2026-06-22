@@ -563,6 +563,34 @@
             align-items: center;
             gap: 4px;
         }
+
+        /* Staff Info Card */
+        .staff-info-card {
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .staff-info-card .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 13px;
+        }
+        .staff-info-card .row:last-child { border-bottom: none; }
+        .staff-info-card .label { color: var(--text-dim); }
+        .staff-info-card .value { color: var(--text); font-weight: 500; }
+
+        .timer-display {
+            font-family: 'Space Grotesk';
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gold);
+            text-align: center;
+            padding: 8px 0;
+        }
     </style>
 </head>
 <body>
@@ -577,19 +605,19 @@
             <div class="subtitle">Mfumo wa Usimamizi wa Majukumu</div>
             <div class="field">
                 <label>Namba ya Mfanyakazi</label>
-                <input type="text" id="loginId" placeholder="Weka namba yako" value="***">
+                <input type="text" id="loginId" placeholder="Weka namba yako" value="123">
             </div>
             <div class="field">
                 <label>Nenosiri</label>
-                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="***">
+                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="123">
             </div>
             <div class="login-error" id="loginError">Namba au nenosiri si sahihi!</div>
             <button class="btn-gold login-btn" onclick="handleLogin()">
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia
             </button>
             <div style="margin-top:14px;font-size:11px;color:var(--text-faint);">
-                <p>👑 Admin: *** / ***</p>
-                <p>☁️ ...Loading....</p>
+                <p>👑 Admin: 123 / 123</p>
+                <p>☁️ Data inasawazishwa kwenye Cloud</p>
             </div>
         </div>
     </div>
@@ -650,16 +678,14 @@
 
             <!-- PAGE: DASHBOARD -->
             <div class="page active" id="page-dashboard">
-                <div class="card card-gold" style="margin-bottom:16px;">
-                    <div class="profile-container">
-                        <div class="avatar-placeholder">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h4 style="font-family:'Space Grotesk';font-size:16px;" id="profileName">Mfanyakazi</h4>
-                            <p style="font-size:12px;color:var(--text-dim);">ID: <span id="profileId">***</span></p>
-                        </div>
-                    </div>
+                <!-- Staff Info -->
+                <div class="staff-info-card" id="staffInfoCard">
+                    <div class="row"><span class="label">Jina</span><span class="value" id="staffName">-</span></div>
+                    <div class="row"><span class="label">Namba ya Mfanyakazi</span><span class="value" id="staffId">-</span></div>
+                    <div class="row"><span class="label">Namba ya Simu</span><span class="value" id="staffPhone">-</span></div>
+                    <div class="row"><span class="label">Muda wa Kuingia</span><span class="value" id="staffCheckIn">-</span></div>
+                    <div class="row"><span class="label">Muda wa Kutoka</span><span class="value" id="staffCheckOut">-</span></div>
+                    <div class="row"><span class="label">Muda wa Kazi</span><span class="value" id="staffWorkTime">-</span></div>
                 </div>
 
                 <div class="stats-grid" id="dashboardStats">
@@ -745,6 +771,11 @@
                         </button>
                     </div>
                 </div>
+                <!-- Timer display -->
+                <div class="card" style="text-align:center;margin-bottom:16px;">
+                    <div class="label" style="font-size:12px;color:var(--text-dim);">Muda wa Kazi</div>
+                    <div class="timer-display" id="workTimerDisplay">00:00:00</div>
+                </div>
                 <div class="card">
                     <h4 style="font-family:'Space Grotesk';margin-bottom:10px;font-size:14px;">Rekodi ya Mahudhurio</h4>
                     <div id="attendanceHistory"></div>
@@ -829,8 +860,20 @@
                             <input type="text" id="adminTaskName" placeholder="K.mf. Andika ripoti">
                         </div>
                         <div class="field">
+                            <label>Maelezo</label>
+                            <input type="text" id="adminTaskDesc" placeholder="Maelezo ya ziada">
+                        </div>
+                        <div class="field">
                             <label>Tarehe</label>
                             <input type="date" id="adminTaskDate">
+                        </div>
+                        <div class="field">
+                            <label>Kipaumbele</label>
+                            <select id="adminTaskPriority">
+                                <option value="high">🔴 Juu</option>
+                                <option value="medium" selected>🟡 Kati</option>
+                                <option value="low">🟢 Chini</option>
+                            </select>
                         </div>
                         <button class="btn-gold" style="width:100%;" onclick="adminAssignTask()">
                             <i class="fa-solid fa-paper-plane"></i> Gawanya Kazi
@@ -900,11 +943,15 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label>Nenosiri</label>
-                    <input type="text" id="newUserPass" placeholder="Weka nenosiri" value="123">
-                    <div style="font-size:10px;color:var(--text-faint);margin-top:4px;">
-                        <i class="fa-solid fa-info-circle"></i> Mpe mfanyakazi nenosiri hili
-                    </div>
+                    <label>Namba ya Simu</label>
+                    <input type="text" id="newUserPhone" placeholder="K.mf. 0712345678" value="">
+                </div>
+            </div>
+            <div class="field">
+                <label>Nenosiri</label>
+                <input type="text" id="newUserPass" placeholder="Weka nenosiri" value="123">
+                <div style="font-size:10px;color:var(--text-faint);margin-top:4px;">
+                    <i class="fa-solid fa-info-circle"></i> Mpe mfanyakazi nenosiri hili
                 </div>
             </div>
             <div class="modal-actions">
@@ -978,12 +1025,12 @@
         // ====================================================================
         // DATA STORE
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v9';
+        const STORAGE_KEY = 'dr_william_data_v10';
 
         function getDefaultData() {
             return {
                 users: [
-                    { id: '123', name: 'Admin', password: '123', role: 'admin' }
+                    { id: '123', name: 'Admin', password: '123', role: 'admin', phone: '' }
                 ],
                 tasks: [],
                 attendance: [],
@@ -996,6 +1043,8 @@
         let currentPage = 'dashboard';
         let calendarMonth = new Date().getMonth();
         let calendarYear = new Date().getFullYear();
+        let workTimerInterval = null;
+        let workStartTime = null;
 
         function loadData() {
             try {
@@ -1036,7 +1085,6 @@
             text.textContent = 'Inasawazisha...';
 
             try {
-                // Fetch all data from Supabase
                 const users = await supabase.getUsers();
                 const tasks = await supabase.getTasks();
                 const attendance = await supabase.getAttendance();
@@ -1045,14 +1093,12 @@
                 if (tasks && !tasks.error) db.tasks = tasks;
                 if (attendance && !attendance.error) db.attendance = attendance;
 
-                // If we have current user, update their data
                 if (currentUser) {
                     const user = db.users.find(u => u.id === currentUser.id);
                     if (user) currentUser = user;
                 }
 
                 saveData();
-
                 dot.className = 'sync-dot online';
                 text.textContent = 'Cloud';
                 showToast('✅ Data imesawazishwa na Cloud!', 'ok');
@@ -1099,8 +1145,47 @@
             }, 5000);
         }
 
-        function getHiddenPassword() {
-            return '***';
+        function getHiddenPassword() { return '***'; }
+
+        function formatTime(seconds) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = Math.floor(seconds % 60);
+            return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+        }
+
+        // ====================================================================
+        // WORK TIMER
+        // ====================================================================
+        function startWorkTimer(checkInTime) {
+            if (workTimerInterval) {
+                clearInterval(workTimerInterval);
+                workTimerInterval = null;
+            }
+
+            if (!checkInTime) {
+                document.getElementById('workTimerDisplay').textContent = '00:00:00';
+                return;
+            }
+
+            workStartTime = new Date();
+            const [h, m, s] = checkInTime.split(':').map(Number);
+            workStartTime.setHours(h, m, s, 0);
+
+            workTimerInterval = setInterval(() => {
+                const now = new Date();
+                const diff = (now - workStartTime) / 1000;
+                if (diff > 0) {
+                    document.getElementById('workTimerDisplay').textContent = formatTime(diff);
+                }
+            }, 1000);
+        }
+
+        function stopWorkTimer() {
+            if (workTimerInterval) {
+                clearInterval(workTimerInterval);
+                workTimerInterval = null;
+            }
         }
 
         // ====================================================================
@@ -1116,7 +1201,6 @@
                 return;
             }
 
-            // First sync from cloud
             try {
                 const users = await supabase.getUsers();
                 if (users && !users.error) {
@@ -1154,10 +1238,6 @@
             document.getElementById('userIdDisplay').textContent = '(***)';
             document.getElementById('userRoleDisplay').textContent = user.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi';
 
-            document.getElementById('profileName').textContent = user.name;
-            document.getElementById('profileId').textContent = '***';
-
-            // Sync tasks and attendance
             try {
                 const tasks = await supabase.getTasks();
                 if (tasks && !tasks.error) db.tasks = tasks;
@@ -1173,6 +1253,7 @@
         }
 
         function handleLogout() {
+            stopWorkTimer();
             currentUser = null;
             db.currentUser = null;
             saveData();
@@ -1224,12 +1305,63 @@
         }
 
         // ====================================================================
+        // RENDER: STAFF INFO
+        // ====================================================================
+        function renderStaffInfo() {
+            if (!currentUser) return;
+
+            document.getElementById('staffName').textContent = currentUser.name || '-';
+            document.getElementById('staffId').textContent = currentUser.id || '-';
+            document.getElementById('staffPhone').textContent = currentUser.phone || '-';
+
+            const today = getTodayStr();
+            const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
+
+            if (record) {
+                document.getElementById('staffCheckIn').textContent = record.check_in || '-';
+                document.getElementById('staffCheckOut').textContent = record.check_out || '-';
+
+                if (record.check_in) {
+                    const [h, m, s] = record.check_in.split(':').map(Number);
+                    const start = new Date();
+                    start.setHours(h, m, s || 0, 0);
+                    const end = record.check_out ? new Date() : new Date();
+                    if (record.check_out) {
+                        const [h2, m2, s2] = record.check_out.split(':').map(Number);
+                        end.setHours(h2, m2, s2 || 0, 0);
+                    }
+                    const diff = (end - start) / 1000;
+                    if (diff > 0) {
+                        document.getElementById('staffWorkTime').textContent = formatTime(diff);
+                    } else {
+                        document.getElementById('staffWorkTime').textContent = '00:00:00';
+                    }
+                } else {
+                    document.getElementById('staffWorkTime').textContent = '-';
+                }
+
+                if (record.check_in && !record.check_out) {
+                    startWorkTimer(record.check_in);
+                } else {
+                    stopWorkTimer();
+                }
+            } else {
+                document.getElementById('staffCheckIn').textContent = '-';
+                document.getElementById('staffCheckOut').textContent = '-';
+                document.getElementById('staffWorkTime').textContent = '-';
+                stopWorkTimer();
+            }
+        }
+
+        // ====================================================================
         // RENDER: DASHBOARD
         // ====================================================================
         function renderDashboard() {
             if (!currentUser) return;
 
-            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            renderStaffInfo();
+
+            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
             const today = getTodayStr();
             const todayTasks = userTasks.filter(t => t.date === today);
             const done = todayTasks.filter(t => t.done).length;
@@ -1281,7 +1413,7 @@
                 year: 'numeric'
             });
 
-            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
             const today = getTodayStr();
             const todayTasks = userTasks.filter(t => t.date === today);
 
@@ -1328,8 +1460,10 @@
         function renderAttendance() {
             if (!currentUser) return;
 
+            renderStaffInfo();
+
             const today = getTodayStr();
-            const record = db.attendance.find(a => a.userId === currentUser.id && a.date === today);
+            const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
 
             const checkInTime = document.getElementById('checkInTime');
             const checkOutTime = document.getElementById('checkOutTime');
@@ -1339,16 +1473,22 @@
             const checkOutBtn = document.getElementById('checkOutBtn');
 
             if (record) {
-                checkInTime.textContent = record.checkIn || '--:--:--';
-                checkOutTime.textContent = record.checkOut || '--:--:--';
-                checkInStatus.textContent = record.checkIn ? '✅ Imeingia' : 'Bado';
-                checkInStatus.className = 'status-badge ' + (record.checkIn ? 'in' : 'pending');
-                checkOutStatus.textContent = record.checkOut ? '✅ Imetoka' : 'Bado';
-                checkOutStatus.className = 'status-badge ' + (record.checkOut ? 'out' : 'pending');
-                checkInBtn.disabled = !!record.checkIn;
-                checkOutBtn.disabled = !record.checkIn || !!record.checkOut;
-                checkInBtn.style.opacity = record.checkIn ? '0.5' : '1';
-                checkOutBtn.style.opacity = (!record.checkIn || record.checkOut) ? '0.5' : '1';
+                checkInTime.textContent = record.check_in || '--:--:--';
+                checkOutTime.textContent = record.check_out || '--:--:--';
+                checkInStatus.textContent = record.check_in ? '✅ Imeingia' : 'Bado';
+                checkInStatus.className = 'status-badge ' + (record.check_in ? 'in' : 'pending');
+                checkOutStatus.textContent = record.check_out ? '✅ Imetoka' : 'Bado';
+                checkOutStatus.className = 'status-badge ' + (record.check_out ? 'out' : 'pending');
+                checkInBtn.disabled = !!record.check_in;
+                checkOutBtn.disabled = !record.check_in || !!record.check_out;
+                checkInBtn.style.opacity = record.check_in ? '0.5' : '1';
+                checkOutBtn.style.opacity = (!record.check_in || record.check_out) ? '0.5' : '1';
+
+                if (record.check_in && !record.check_out) {
+                    startWorkTimer(record.check_in);
+                } else {
+                    stopWorkTimer();
+                }
             } else {
                 checkInTime.textContent = '--:--:--';
                 checkOutTime.textContent = '--:--:--';
@@ -1360,10 +1500,11 @@
                 checkOutBtn.disabled = true;
                 checkInBtn.style.opacity = '1';
                 checkOutBtn.style.opacity = '0.5';
+                stopWorkTimer();
             }
 
             const historyContainer = document.getElementById('attendanceHistory');
-            const userRecords = db.attendance.filter(a => a.userId === currentUser.id).sort((a, b) => b.date.localeCompare(a
+            const userRecords = db.attendance.filter(a => a.user_id === currentUser.id).sort((a, b) => b.date.localeCompare(a
                 .date));
 
             if (userRecords.length === 0) {
@@ -1376,11 +1517,11 @@
                     <div class="task-info">
                         <div class="task-name">${a.date}</div>
                         <div class="task-meta">
-                            🟢 Kuingia: ${a.checkIn || '--:--'} 
-                            ${a.checkOut ? '🔴 Kutoka: ' + a.checkOut : '⚠️ Hajatoka'}
+                            🟢 Kuingia: ${a.check_in || '--:--'} 
+                            ${a.check_out ? '🔴 Kutoka: ' + a.check_out : '⚠️ Hajatoka'}
                         </div>
                     </div>
-                    <span class="task-status ${a.checkOut ? 'done' : 'pending'}">${a.checkOut ? 'Imekamilika' : 'Inasubiri'}</span>
+                    <span class="task-status ${a.check_out ? 'done' : 'pending'}">${a.check_out ? 'Imekamilika' : 'Inasubiri'}</span>
                 </div>
             `).join('');
         }
@@ -1391,7 +1532,7 @@
         function renderPerformance() {
             if (!currentUser) return;
 
-            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
             const today = getTodayStr();
             const todayTasks = userTasks.filter(t => t.date === today);
             const done = todayTasks.filter(t => t.done).length;
@@ -1490,7 +1631,7 @@
                 html += `<div class="day"></div>`;
             }
 
-            const userTasks = db.tasks.filter(t => t.userId === currentUser.id);
+            const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
             const taskDates = new Set(userTasks.map(t => t.date));
 
             for (let d = 1; d <= daysInMonth; d++) {
@@ -1517,7 +1658,7 @@
             if (!currentUser) return;
 
             const container = document.getElementById('calendarTaskList');
-            const tasks = db.tasks.filter(t => t.userId === currentUser.id && t.date === dateStr);
+            const tasks = db.tasks.filter(t => t.user_id === currentUser.id && t.date === dateStr);
 
             if (tasks.length === 0) {
                 container.innerHTML = `<div class="task-list-empty">Hakuna majukumu kwa tarehe ${dateStr}.</div>`;
@@ -1581,7 +1722,7 @@
                     <div class="admin-user-card">
                         <div class="user-info">
                             <div class="name">${escapeHtml(u.name)}</div>
-                            <div class="role">ID: ${u.id} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'} · Nenosiri: <span class="password-hidden">${displayPass}</span></div>
+                            <div class="role">ID: ${u.id} · Simu: ${u.phone || '-'} · Nenosiri: <span class="password-hidden">${displayPass}</span></div>
                         </div>
                         <div>
                             ${u.id === '123' ? 
@@ -1605,18 +1746,14 @@
         }
 
         // ====================================================================
-        // TASK OPERATIONS - IMEBORESHA (Inasawazisha Cloud)
+        // TASK OPERATIONS
         // ====================================================================
         async function toggleTask(taskId) {
             const task = db.tasks.find(t => t.id === taskId);
             if (!task) return;
 
             task.done = !task.done;
-
-            // Update in Supabase
             await supabase.updateTask(taskId, { done: task.done });
-
-            // Sync data
             await syncData();
             renderAll();
 
@@ -1627,7 +1764,6 @@
 
         async function deleteTask(taskId) {
             if (!confirm('Je, una uhakika unataka kufuta kazi hii?')) return;
-
             await supabase.deleteTask(taskId);
             await syncData();
             renderAll();
@@ -1667,6 +1803,9 @@
             showToast('✅ Kazi imeongezwa!', 'ok');
         }
 
+        // ====================================================================
+        // ADMIN: ASSIGN TASK (IMEBORESHA KWA MAJUKUMU KUONEKANA)
+        // ====================================================================
         async function adminAssignTask() {
             if (!currentUser || currentUser.id !== '123') {
                 showToast('Sehemu hii ni ya Admin pekee!', 'warn');
@@ -1675,7 +1814,9 @@
 
             const userId = document.getElementById('adminTaskUser').value;
             const name = document.getElementById('adminTaskName').value.trim();
+            const desc = document.getElementById('adminTaskDesc').value.trim();
             const date = document.getElementById('adminTaskDate').value;
+            const priority = document.getElementById('adminTaskPriority').value;
 
             if (!userId || !name) {
                 showToast('Tafadhali jaza maelezo yote', 'warn');
@@ -1686,23 +1827,27 @@
                 id: 't' + Date.now(),
                 user_id: userId,
                 name: name,
-                description: 'Imepewa na Admin',
+                description: desc || 'Imepewa na Admin',
                 date: date || getTodayStr(),
-                priority: 'medium',
+                priority: priority || 'medium',
                 done: false,
                 reminder_count: 0
             };
 
             await supabase.addTask(task);
-            await syncData();
-            document.getElementById('adminTaskName').value = '';
-            renderAll();
-            showToast('✅ Kazi imegawanywa kwa ' + userId + '!', 'ok');
 
-            // Let the user know the task was assigned
+            // Force sync to get latest data
+            await syncData();
+
+            document.getElementById('adminTaskName').value = '';
+            document.getElementById('adminTaskDesc').value = '';
+            renderAll();
+
             const user = db.users.find(u => u.id === userId);
             if (user) {
-                showToast('📋 ' + name + ' imepewa ' + user.name, 'ok');
+                showToast('✅ Kazi "' + name + '" imegawanywa kwa ' + user.name + '!', 'ok');
+            } else {
+                showToast('✅ Kazi imegawanywa!', 'ok');
             }
         }
 
@@ -1738,6 +1883,7 @@
             await syncData();
             renderAll();
             showToast('✅ Umeingia kazini saa ' + timeStr, 'ok');
+            startWorkTimer(timeStr);
         }
 
         async function handleCheckOut() {
@@ -1761,10 +1907,11 @@
             await syncData();
             renderAll();
             showToast('✅ Umetoka kazini saa ' + timeStr, 'ok');
+            stopWorkTimer();
         }
 
         // ====================================================================
-        // USER OPERATIONS (Admin) - IMEBORESHA (Kufuta kunafanya kazi)
+        // USER OPERATIONS (Admin)
         // ====================================================================
         async function confirmAddUser() {
             if (!currentUser || currentUser.id !== '123') {
@@ -1774,6 +1921,7 @@
 
             const name = document.getElementById('newUserName').value.trim();
             const id = document.getElementById('newUserId').value.trim();
+            const phone = document.getElementById('newUserPhone').value.trim();
             const pass = document.getElementById('newUserPass').value.trim() || '123';
 
             if (!name || !id) {
@@ -1786,12 +1934,13 @@
                 return;
             }
 
-            const user = { id, name, password: pass, role: 'staff', photo: '' };
+            const user = { id, name, password: pass, role: 'staff', phone: phone || '' };
             await supabase.addUser(user);
             await syncData();
             closeModal('newUserModal');
             document.getElementById('newUserName').value = '';
             document.getElementById('newUserId').value = '';
+            document.getElementById('newUserPhone').value = '';
             document.getElementById('newUserPass').value = '123';
             renderAll();
             showToast('✅ Mfanyakazi ' + name + ' amesajiliwa kwenye Cloud!', 'ok');
@@ -1809,13 +1958,11 @@
             }
             if (!confirm('Je, una uhakika unataka kumfuta mfanyakazi huyu?')) return;
 
-            // First delete all tasks for this user
             const userTasks = db.tasks.filter(t => t.user_id === userId);
             for (const task of userTasks) {
                 await supabase.deleteTask(task.id);
             }
 
-            // Then delete the user
             await supabase.deleteUser(userId);
             await syncData();
             renderAll();
@@ -1884,10 +2031,8 @@
         // INIT
         // ====================================================================
         function init() {
-            // Auto sync on load
             setTimeout(syncData, 2000);
 
-            // Auto login if session exists
             if (db.currentUser) {
                 const user = db.users.find(u => u.id === db.currentUser.id);
                 if (user) {
@@ -1900,11 +2045,8 @@
 
             document.getElementById('loginPage').style.display = 'flex';
             document.getElementById('mainApp').style.display = 'none';
-
-            // Set default date
             document.getElementById('taskDateInput').value = getTodayStr();
 
-            // Close modals on overlay click
             document.querySelectorAll('.modal-overlay').forEach(m => {
                 m.addEventListener('click', function(e) {
                     if (e.target === this) {
@@ -1914,7 +2056,6 @@
                 });
             });
 
-            // Auto sync every 30 seconds
             setInterval(syncData, 30000);
         }
 
