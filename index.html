@@ -15,7 +15,7 @@
         :root {
             --gold: #D4A24E;
             --gold-dark: #8a6a2f;
-            --gold-soft: rgba(212, 162, 78, 0.15);
+            --gold-soft: rgba(212,162,78,0.15);
             --bg: #0B0F14;
             --panel: #141A21;
             --panel-2: #1B232C;
@@ -521,6 +521,19 @@
             letter-spacing: 2px;
             color: var(--gold);
         }
+
+        /* Admin Only Badge */
+        .admin-only {
+            background: var(--gold-soft);
+            color: var(--gold);
+            font-size: 10px;
+            padding: 2px 12px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
@@ -535,7 +548,7 @@
             <div class="subtitle">Mfumo wa Usimamizi wa Majukumu</div>
             <div class="field">
                 <label>Namba ya Mfanyakazi</label>
-                <input type="text" id="loginId" placeholder="******" value="123">
+                <input type="text" id="loginId" placeholder="****"value="123">
             </div>
             <div class="field">
                 <label>Nenosiri</label>
@@ -546,7 +559,7 @@
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia
             </button>
             <div style="margin-top:14px;font-size:11px;color:var(--text-faint);">
-                <p>👑 Admin: *** / ***</p>
+                <p>👑 Admin: 123 / 123</p>
                 <p>👤 Wafanyakazi wataingia na namba zao</p>
             </div>
         </div>
@@ -749,6 +762,7 @@
             <div class="page" id="page-admin">
                 <h3 style="font-family:'Space Grotesk';font-size:17px;margin-bottom:14px;">
                     <i class="fa-solid fa-crown"></i> Dhibiti Wafanyakazi
+                    <span class="admin-only"><i class="fa-solid fa-lock"></i> Admin Pekee</span>
                 </h3>
                 <div class="admin-grid">
                     <div class="card">
@@ -850,9 +864,9 @@
 
     <script>
         // ====================================================================
-        // DATA STORE - LocalStorage (Inafanya kazi offline)
+        // DATA STORE - LocalStorage
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v3';
+        const STORAGE_KEY = 'dr_william_data_v4';
 
         function getDefaultData() {
             return {
@@ -924,7 +938,7 @@
         }
 
         function getHiddenPassword(length = 8) {
-            return '•'.repeat(length);
+            return '•'.repeat(Math.min(length, 12));
         }
 
         // ====================================================================
@@ -949,8 +963,13 @@
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('mainApp').style.display = 'block';
 
+            // Show admin tab ONLY for admin (123)
             const adminTab = document.getElementById('adminTab');
-            adminTab.style.display = (user.role === 'admin') ? 'inline-flex' : 'none';
+            if (user.id === '123' && user.role === 'admin') {
+                adminTab.style.display = 'inline-flex';
+            } else {
+                adminTab.style.display = 'none';
+            }
 
             document.getElementById('userNameDisplay').textContent = user.name;
             document.getElementById('userIdDisplay').textContent = '(' + user.id + ')';
@@ -1337,15 +1356,35 @@
         }
 
         // ====================================================================
-        // RENDER: ADMIN
+        // RENDER: ADMIN - IMEBORESHA
         // ====================================================================
         function renderAdmin() {
-            if (!currentUser || currentUser.role !== 'admin') return;
+            // Hakikisha ni Admin pekee anayeona
+            if (!currentUser || currentUser.id !== '123') {
+                const container = document.getElementById('adminUserList');
+                if (container) {
+                    container.innerHTML = `
+                        <div class="task-list-empty" style="padding:20px;border:2px solid var(--red-soft);border-radius:12px;">
+                            <i class="fa-solid fa-lock" style="font-size:32px;display:block;margin-bottom:10px;color:var(--red);"></i>
+                            <strong style="color:var(--red);">Sehemu hii ni ya Admin pekee!</strong><br>
+                            <span style="font-size:12px;color:var(--text-dim);">Ingia kama Admin (123) kuona wafanyakazi.</span>
+                        </div>
+                    `;
+                }
+                // Ficha kitufe cha kusajili
+                const btn = document.querySelector('#page-admin .btn-gold');
+                if (btn) btn.style.display = 'none';
+                return;
+            }
+
+            // Onyesha kitufe
+            const btn = document.querySelector('#page-admin .btn-gold');
+            if (btn) btn.style.display = 'inline-flex';
 
             const container = document.getElementById('adminUserList');
 
             if (db.users.length === 0) {
-                container.innerHTML = '<div class="task-list-empty">Hakuna wafanyakazi bado.</div>';
+                container.innerHTML = '<div class="task-list-empty">Hakuna wafanyakazi bado. Sajili mfanyakazi wa kwanza!</div>';
                 return;
             }
 
@@ -1356,9 +1395,12 @@
                         <div class="role">ID: ${u.id} · ${u.role === 'admin' ? 'Msimamizi' : 'Mfanyakazi'} · Nenosiri: <span class="password-hidden">${getHiddenPassword(u.password ? u.password.length : 4)}</span></div>
                     </div>
                     <div>
-                        ${u.id !== '123' ? `<button class="btn-red btn-sm" onclick="deleteUser('${u.id}')" style="padding:4px 10px;font-size:10px;">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>` : '<span style="font-size:11px;color:var(--green);">👑 Admin</span>'}
+                        ${u.id === '123' ? 
+                            '<span style="font-size:11px;color:var(--gold);font-weight:600;">👑 Admin</span>' : 
+                            `<button class="btn-red btn-sm" onclick="deleteUser('${u.id}')" style="padding:4px 10px;font-size:10px;">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>`
+                        }
                     </div>
                 </div>
             `).join('');
@@ -1427,7 +1469,10 @@
         }
 
         function adminAssignTask() {
-            if (!currentUser || currentUser.role !== 'admin') return;
+            if (!currentUser || currentUser.id !== '123') {
+                showToast('Sehemu hii ni ya Admin pekee!', 'warn');
+                return;
+            }
 
             const userId = document.getElementById('adminTaskUser').value;
             const name = document.getElementById('adminTaskName').value.trim();
@@ -1508,7 +1553,10 @@
         // USER OPERATIONS (Admin)
         // ====================================================================
         function confirmAddUser() {
-            if (!currentUser || currentUser.role !== 'admin') return;
+            if (!currentUser || currentUser.id !== '123') {
+                showToast('Sehemu hii ni ya Admin pekee!', 'warn');
+                return;
+            }
 
             const name = document.getElementById('newUserName').value.trim();
             const id = document.getElementById('newUserId').value.trim().toUpperCase();
@@ -1536,7 +1584,10 @@
         }
 
         function deleteUser(userId) {
-            if (!currentUser || currentUser.role !== 'admin') return;
+            if (!currentUser || currentUser.id !== '123') {
+                showToast('Sehemu hii ni ya Admin pekee!', 'warn');
+                return;
+            }
             if (userId === '123') {
                 showToast('Huwezi kumfuta Admin!', 'warn');
                 return;
