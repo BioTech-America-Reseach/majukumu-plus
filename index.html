@@ -133,6 +133,7 @@
         .attendance-card .status-badge.in { background: var(--green-soft); color: var(--green); }
         .attendance-card .status-badge.out { background: var(--red-soft); color: var(--red); }
         .attendance-card .status-badge.pending { background: var(--gold-soft); color: var(--gold); }
+        .attendance-card .status-badge.late { background: var(--red-soft); color: var(--red); animation: blink 0.5s infinite; }
 
         .performance-ring { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; position: relative; }
         .performance-ring .value { font-family: 'Space Grotesk'; font-size: 28px; font-weight: 700; color: var(--gold); }
@@ -168,6 +169,7 @@
         .toast.warn { border-left-color: var(--red); }
         .toast.ok { border-left-color: var(--green); }
         .toast.reminder { border-left-color: var(--gold); background: linear-gradient(135deg, var(--gold-soft), var(--panel-2)); }
+        .toast.late { border-left-color: var(--red); background: linear-gradient(135deg, var(--red-soft), var(--panel-2)); animation: blink 0.5s infinite; }
         @keyframes toastIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
 
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
@@ -216,9 +218,13 @@
         .staff-info-card .label { color: var(--text-dim); }
         .staff-info-card .value { color: var(--text); font-weight: 500; }
         .timer-display { font-family: 'Space Grotesk'; font-size: 32px; font-weight: 700; color: var(--gold); text-align: center; padding: 8px 0; }
+        .timer-display .remaining { font-size: 14px; color: var(--text-faint); font-weight: 400; }
+        .timer-display .warning { color: var(--red); animation: blink 0.5s infinite; }
 
         .task-delete-btn { background: var(--red-soft); color: var(--red); border: 1px solid rgba(226,87,76,0.3); padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; font-family: 'Inter'; font-weight: 500; transition: all 0.2s; }
         .task-delete-btn:hover { opacity: 0.8; transform: scale(0.95); }
+
+        .notification-badge { background: var(--red); color: #fff; border-radius: 999px; padding: 2px 8px; font-size: 10px; font-weight: 600; animation: blink 0.5s infinite; }
     </style>
 </head>
 <body>
@@ -232,18 +238,18 @@
             <div class="subtitle">Mfumo wa Usimamizi wa Majukumu</div>
             <div class="field">
                 <label>Namba ya Mfanyakazi</label>
-                <input type="text" id="loginId" placeholder="Weka namba yako" value="***">
+                <input type="text" id="loginId" placeholder="Weka namba yako" value="123">
             </div>
             <div class="field">
                 <label>Nenosiri</label>
-                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="***">
+                <input type="password" id="loginPass" placeholder="Weka nenosiri lako" value="123">
             </div>
             <div class="login-error" id="loginError">Namba au nenosiri si sahihi!</div>
             <button class="btn-gold login-btn" onclick="handleLogin()">
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia
             </button>
             <div style="margin-top:14px;font-size:11px;color:var(--text-faint);">
-                <p>👑 Admin: *** / ***</p>
+                <p>👑 Admin: 123 / 123</p>
                 <p>☁️ Data inasawazishwa kwenye Cloud</p>
             </div>
         </div>
@@ -310,6 +316,7 @@
                     <div class="row"><span class="label">Muda wa Kuingia</span><span class="value" id="staffCheckIn">-</span></div>
                     <div class="row"><span class="label">Muda wa Kutoka</span><span class="value" id="staffCheckOut">-</span></div>
                     <div class="row"><span class="label">Muda wa Kazi</span><span class="value" id="staffWorkTime">-</span></div>
+                    <div class="row"><span class="label">Hali</span><span class="value" id="staffStatus">-</span></div>
                 </div>
 
                 <div class="stats-grid" id="dashboardStats">
@@ -560,6 +567,7 @@
             async getAttendance() { return await this.query('attendance'); },
             async addUser(data) { return await this.query('users', 'POST', data); },
             async addTask(data) { return await this.query('tasks', 'POST', data); },
+            async addAttendance(data) { return await this.query('attendance', 'POST', data); },
             async updateTask(id, data) { return await this.query('tasks', 'PATCH', data, id); },
             async updateUser(id, data) { return await this.query('users', 'PATCH', data, id); },
             async deleteTask(id) { return await this.query('tasks', 'DELETE', null, id); },
@@ -569,13 +577,16 @@
         // ====================================================================
         // DATA STORE
         // ====================================================================
-        const STORAGE_KEY = 'dr_william_data_v14';
+        const STORAGE_KEY = 'dr_william_data_v16';
         let db = loadData();
         let currentUser = null;
         let currentPage = 'dashboard';
         let calendarMonth = new Date().getMonth();
         let calendarYear = new Date().getFullYear();
         let workTimerInterval = null;
+        let lockCountdownInterval = null;
+        let taskReminderInterval = null;
+        let latePenaltyHours = 0;
 
         function loadData() {
             try {
@@ -590,6 +601,13 @@
         // ====================================================================
         // HELPERS
         // ====================================================================
+        // MDAA WA KUINGIA: SAA 1 ASUBHI (1:00 AM)
+        // MDAA WA KUTOKA: SAA 3 USIKU (3:00 AM)
+        const CHECKIN_HOUR = 1;
+        const CHECKIN_MINUTE = 0;
+        const LOCK_HOUR = 3;
+        const LOCK_MINUTE = 0;
+
         function getTodayStr() {
             const d = new Date();
             return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
@@ -603,10 +621,8 @@
             el.className = 'toast' + (type ? ' ' + type : '');
             el.textContent = text;
             stack.appendChild(el);
-            setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity 0.3s'; setTimeout(() => el.remove(), 300); }, 5000);
+            setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity 0.3s'; setTimeout(() => el.remove(), 300); }, 8000);
         }
-
-        function getHiddenPassword() { return '***'; }
 
         function formatTime(seconds) {
             const h = Math.floor(seconds / 3600);
@@ -621,7 +637,7 @@
                 window.speechSynthesis.cancel();
                 const utter = new SpeechSynthesisUtterance(text);
                 utter.lang = 'sw-TZ';
-                utter.rate = 0.9;
+                utter.rate = 0.85;
                 const voices = window.speechSynthesis.getVoices();
                 const swVoice = voices.find(v => v.lang.startsWith('sw'));
                 if (swVoice) utter.voice = swVoice;
@@ -629,8 +645,80 @@
             } catch (e) { console.warn('Speech failed', e); }
         }
 
+        function isPastLockTime() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            if (currentHour > LOCK_HOUR) return true;
+            if (currentHour === LOCK_HOUR && currentMinute >= LOCK_MINUTE) return true;
+            return false;
+        }
+
+        function isBeforeCheckinTime() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            if (currentHour < CHECKIN_HOUR) return true;
+            if (currentHour === CHECKIN_HOUR && currentMinute < CHECKIN_MINUTE) return true;
+            return false;
+        }
+
+        function getLockMessage() {
+            return "⚠️ UMECHELEWA KUSIGN OFISINI! Muda wa kuingia ulifunga saa 3:00 AM. Tafadhali wasiliana na Msimamizi wako.";
+        }
+
+        function getCheckinNotStartedMessage() {
+            return "⏳ Muda wa kuingia bado haujaanza. Kuingia kunaanza saa 1:00 AM asubuhi.";
+        }
+
+        function getTimeUntilLock() {
+            const now = new Date();
+            const lockTime = new Date(now);
+            lockTime.setHours(LOCK_HOUR, LOCK_MINUTE, 0, 0);
+            if (now > lockTime) {
+                lockTime.setDate(lockTime.getDate() + 1);
+            }
+            const diff = Math.floor((lockTime - now) / 1000);
+            if (diff <= 0) return "Muda umekwisha";
+            const hours = Math.floor(diff / 3600);
+            const minutes = Math.floor((diff % 3600) / 60);
+            const seconds = Math.floor(diff % 60);
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function getTimeUntilCheckin() {
+            const now = new Date();
+            const checkinTime = new Date(now);
+            checkinTime.setHours(CHECKIN_HOUR, CHECKIN_MINUTE, 0, 0);
+            if (now > checkinTime) {
+                checkinTime.setDate(checkinTime.getDate() + 1);
+            }
+            const diff = Math.floor((checkinTime - now) / 1000);
+            if (diff <= 0) return "Saa imefika";
+            const hours = Math.floor(diff / 3600);
+            const minutes = Math.floor((diff % 3600) / 60);
+            const seconds = Math.floor(diff % 60);
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function calculateLatePenalty(checkInTime) {
+            if (!checkInTime) return 0;
+            const [h, m] = checkInTime.split(':').map(Number);
+            // If check-in is after 1:40 AM, calculate penalty
+            if (h > 1 || (h === 1 && m >= 40)) {
+                const baseTime = new Date();
+                baseTime.setHours(1, 40, 0, 0);
+                const checkTime = new Date();
+                checkTime.setHours(h, m, 0, 0);
+                const diffMinutes = Math.floor((checkTime - baseTime) / 60000);
+                // Each minute late adds 1 minute penalty (max 80 minutes = until 4:20 AM)
+                return Math.min(diffMinutes, 80);
+            }
+            return 0;
+        }
+
         // ====================================================================
-        // FORCE SYNC - IMEBORESHA KABISA
+        // SYNC DATA
         // ====================================================================
         async function syncData() {
             const btn = document.getElementById('syncBtn');
@@ -642,14 +730,12 @@
             text.textContent = 'Inasawazisha...';
 
             try {
-                // Fetch fresh data
                 const users = await supabase.getUsers();
                 const tasks = await supabase.getTasks();
                 const attendance = await supabase.getAttendance();
 
                 if (users && !users.error) {
                     db.users = users;
-                    // Ensure admin exists
                     if (!db.users.find(u => u.id === '123')) {
                         await supabase.addUser({ id: '123', name: 'Admin', password: '123', role: 'admin' });
                         const users2 = await supabase.getUsers();
@@ -730,10 +816,12 @@
 
             renderAll();
             showToast('Karibu ' + user.name + '!', 'ok');
+            speakText('Karibu ' + user.name);
+            startTaskReminders();
         }
 
         function handleLogout() {
-            stopWorkTimer();
+            stopAllTimers();
             currentUser = null;
             db.currentUser = null;
             saveData();
@@ -804,17 +892,34 @@
                     document.getElementById('staffWorkTime').textContent = '-';
                 }
 
-                if (record.check_in && !record.check_out) { startWorkTimer(record.check_in); } else { stopWorkTimer(); }
+                let status = '⚪ Hajajihusisha';
+                if (record.check_in && !record.check_out) {
+                    status = '🟢 Kajihusisha';
+                    if (isPastLockTime()) status = '🔴 Umechelewa - Toka sasa!';
+                } else if (record.check_in && record.check_out) {
+                    status = '✅ Amemaliza';
+                }
+                document.getElementById('staffStatus').textContent = status;
+
+                if (record.check_in && !record.check_out) { 
+                    startWorkTimer(record.check_in); 
+                    startLockCountdown();
+                } else { 
+                    stopWorkTimer(); 
+                    stopLockCountdown();
+                }
             } else {
                 document.getElementById('staffCheckIn').textContent = '-';
                 document.getElementById('staffCheckOut').textContent = '-';
                 document.getElementById('staffWorkTime').textContent = '-';
+                document.getElementById('staffStatus').textContent = '⚪ Hajajihusisha';
                 stopWorkTimer();
+                stopLockCountdown();
             }
         }
 
         // ====================================================================
-        // WORK TIMER
+        // TIMERS
         // ====================================================================
         function startWorkTimer(checkInTime) {
             if (workTimerInterval) { clearInterval(workTimerInterval); workTimerInterval = null; }
@@ -826,11 +931,135 @@
             workTimerInterval = setInterval(() => {
                 const current = new Date();
                 const diff = (current - start) / 1000;
-                if (diff > 0) { document.getElementById('workTimerDisplay').textContent = formatTime(diff); }
+                if (diff > 0) { 
+                    const timerDisplay = document.getElementById('workTimerDisplay');
+                    timerDisplay.textContent = formatTime(diff);
+                }
             }, 1000);
         }
 
         function stopWorkTimer() { if (workTimerInterval) { clearInterval(workTimerInterval); workTimerInterval = null; } }
+
+        function startLockCountdown() {
+            if (lockCountdownInterval) { clearInterval(lockCountdownInterval); lockCountdownInterval = null; }
+            
+            lockCountdownInterval = setInterval(() => {
+                if (!currentUser) {
+                    clearInterval(lockCountdownInterval);
+                    lockCountdownInterval = null;
+                    return;
+                }
+                
+                const remaining = getTimeUntilLock();
+                const timerDisplay = document.getElementById('workTimerDisplay');
+                const workTime = timerDisplay ? timerDisplay.textContent : '00:00:00';
+                
+                if (timerDisplay && !isPastLockTime()) {
+                    timerDisplay.innerHTML = `${workTime} <span class="remaining">| ⏳ ${remaining}</span>`;
+                }
+                
+                const now = new Date();
+                const lockTime = new Date(now);
+                lockTime.setHours(LOCK_HOUR, LOCK_MINUTE, 0, 0);
+                if (now > lockTime) lockTime.setDate(lockTime.getDate() + 1);
+                const diff = Math.floor((lockTime - now) / 1000);
+                
+                if (diff <= 300 && diff > 0 && diff % 60 === 0) {
+                    const minutesLeft = Math.floor(diff / 60);
+                    if (minutesLeft === 5) {
+                        const msg = '⚠️ Muda wa kazi unakaribia kwisha! Dakika 5 zimesalia. Toka kabla ya 3:00 AM.';
+                        showToast(msg, 'reminder');
+                        speakText('Tahadhari! Muda wa kazi unakaribia kwisha. Dakika tano zimesalia.');
+                    } else if (minutesLeft === 1) {
+                        const msg = '⚠️ Muda wa kazi unakwisha! Dakika 1 imesalia. Toka sasa!';
+                        showToast(msg, 'warn');
+                        speakText('Tahadhari! Muda wa kazi unakwisha. Toka sasa!');
+                        if (timerDisplay) {
+                            timerDisplay.style.color = 'var(--red)';
+                        }
+                    }
+                }
+                
+                if (isPastLockTime()) {
+                    clearInterval(lockCountdownInterval);
+                    lockCountdownInterval = null;
+                    
+                    const checkInBtn = document.getElementById('checkInBtn');
+                    if (checkInBtn) {
+                        checkInBtn.disabled = true;
+                        checkInBtn.style.opacity = '0.5';
+                        checkInBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Imefungwa (3:00 AM)';
+                    }
+                    
+                    if (timerDisplay) {
+                        timerDisplay.innerHTML = `⛔ ${getLockMessage()}`;
+                        timerDisplay.style.color = 'var(--red)';
+                        timerDisplay.style.fontSize = '18px';
+                    }
+                    
+                    const greeting = document.getElementById('dashboardGreeting');
+                    if (greeting) {
+                        greeting.innerHTML = `
+                            <span style="color:var(--red);font-weight:600;">
+                                <i class="fa-solid fa-circle-exclamation"></i> ${getLockMessage()}
+                            </span>
+                        `;
+                    }
+                    
+                    const today = getTodayStr();
+                    const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
+                    if (record && !record.check_out) {
+                        const msg = '⚠️ Muda wa kazi umekwisha! Tafadhali toka kazini.';
+                        showToast(msg, 'warn');
+                        speakText('Muda wa kazi umekwisha. Tafadhali toka kazini.');
+                    }
+                    
+                    renderAll();
+                }
+            }, 1000);
+        }
+
+        function stopLockCountdown() { if (lockCountdownInterval) { clearInterval(lockCountdownInterval); lockCountdownInterval = null; } }
+
+        function stopAllTimers() {
+            stopWorkTimer();
+            stopLockCountdown();
+            if (taskReminderInterval) {
+                clearInterval(taskReminderInterval);
+                taskReminderInterval = null;
+            }
+        }
+
+        // ====================================================================
+        // TASK REMINDERS - Kila Dakika 5
+        // ====================================================================
+        function startTaskReminders() {
+            if (taskReminderInterval) { clearInterval(taskReminderInterval); taskReminderInterval = null; }
+            
+            taskReminderInterval = setInterval(() => {
+                if (!currentUser) return;
+                
+                const today = getTodayStr();
+                const userTasks = db.tasks.filter(t => t.user_id === currentUser.id && t.date === today && !t.done);
+                
+                if (userTasks.length > 0) {
+                    const taskNames = userTasks.map(t => t.name).join(', ');
+                    const msg = `📋 Kumbuka: Una ${userTasks.length} majukumu yaliyobaki leo: ${taskNames}`;
+                    showToast(msg, 'reminder');
+                    speakText(`Kumbuka! Una majukumu yaliyobaki leo: ${taskNames}`);
+                    
+                    const greeting = document.getElementById('dashboardGreeting');
+                    if (greeting) {
+                        greeting.innerHTML = `
+                            <span style="color:var(--gold);">
+                                <i class="fa-solid fa-bell"></i> 
+                                KUMBUKA: Una ${userTasks.length} majukumu yaliyobaki: ${taskNames}
+                            </span>
+                        `;
+                    }
+                }
+            }, 300000);
+        }
 
         // ====================================================================
         // RENDER: DASHBOARD
@@ -938,18 +1167,49 @@
             const checkInBtn = document.getElementById('checkInBtn');
             const checkOutBtn = document.getElementById('checkOutBtn');
 
+            const isLocked = isPastLockTime();
+            const isBeforeCheckin = isBeforeCheckinTime();
+
+            if (isLocked) {
+                checkInBtn.disabled = true;
+                checkInBtn.style.opacity = '0.5';
+                checkInBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Imefungwa (3:00 AM)';
+            } else if (isBeforeCheckin) {
+                checkInBtn.disabled = true;
+                checkInBtn.style.opacity = '0.5';
+                checkInBtn.innerHTML = '<i class="fa-solid fa-clock"></i> Saa 1:00 AM ndiyo inaanza';
+                // Show countdown to check-in time
+                const countdown = getTimeUntilCheckin();
+                checkInBtn.innerHTML = `<i class="fa-solid fa-clock"></i> Inaanza ${countdown}`;
+            } else {
+                checkInBtn.disabled = false;
+                checkInBtn.style.opacity = '1';
+                checkInBtn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia Kazini';
+            }
+
             if (record) {
                 checkInTime.textContent = record.check_in || '--:--:--';
                 checkOutTime.textContent = record.check_out || '--:--:--';
-                checkInStatus.textContent = record.check_in ? '✅ Imeingia' : 'Bado';
-                checkInStatus.className = 'status-badge ' + (record.check_in ? 'in' : 'pending');
+                
+                const isLate = record.check_in && calculateLatePenalty(record.check_in) > 0;
+                checkInStatus.textContent = record.check_in ? (isLate ? '⚠️ Umechelewa' : '✅ Imeingia') : 'Bado';
+                checkInStatus.className = 'status-badge ' + (record.check_in ? (isLate ? 'late' : 'in') : 'pending');
+                
                 checkOutStatus.textContent = record.check_out ? '✅ Imetoka' : 'Bado';
                 checkOutStatus.className = 'status-badge ' + (record.check_out ? 'out' : 'pending');
-                checkInBtn.disabled = !!record.check_in;
+                
+                checkInBtn.disabled = !!record.check_in || isLocked;
                 checkOutBtn.disabled = !record.check_in || !!record.check_out;
-                checkInBtn.style.opacity = record.check_in ? '0.5' : '1';
+                checkInBtn.style.opacity = (record.check_in || isLocked) ? '0.5' : '1';
                 checkOutBtn.style.opacity = (!record.check_in || record.check_out) ? '0.5' : '1';
-                if (record.check_in && !record.check_out) { startWorkTimer(record.check_in); } else { stopWorkTimer(); }
+                
+                if (record.check_in && !record.check_out) { 
+                    startWorkTimer(record.check_in); 
+                    startLockCountdown();
+                } else { 
+                    stopWorkTimer(); 
+                    stopLockCountdown();
+                }
             } else {
                 checkInTime.textContent = '--:--:--';
                 checkOutTime.textContent = '--:--:--';
@@ -957,11 +1217,10 @@
                 checkInStatus.className = 'status-badge pending';
                 checkOutStatus.textContent = 'Bado';
                 checkOutStatus.className = 'status-badge pending';
-                checkInBtn.disabled = false;
                 checkOutBtn.disabled = true;
-                checkInBtn.style.opacity = '1';
                 checkOutBtn.style.opacity = '0.5';
                 stopWorkTimer();
+                stopLockCountdown();
             }
 
             const historyContainer = document.getElementById('attendanceHistory');
@@ -969,18 +1228,22 @@
 
             if (userRecords.length === 0) { historyContainer.innerHTML = '<div class="task-list-empty">Hakuna rekodi ya mahudhurio.</div>'; return; }
 
-            historyContainer.innerHTML = userRecords.slice(0, 14).map(a => `
-                <div class="task-item" style="margin-bottom:6px;padding:10px 14px;">
-                    <div class="task-info">
-                        <div class="task-name">${a.date}</div>
-                        <div class="task-meta">
-                            🟢 Kuingia: ${a.check_in || '--:--'} 
-                            ${a.check_out ? '🔴 Kutoka: ' + a.check_out : '⚠️ Hajatoka'}
+            historyContainer.innerHTML = userRecords.slice(0, 14).map(a => {
+                const isLate = a.check_in && calculateLatePenalty(a.check_in) > 0;
+                return `
+                    <div class="task-item" style="margin-bottom:6px;padding:10px 14px;">
+                        <div class="task-info">
+                            <div class="task-name">${a.date}</div>
+                            <div class="task-meta">
+                                🟢 Kuingia: ${a.check_in || '--:--'} 
+                                ${a.check_out ? '🔴 Kutoka: ' + a.check_out : '⚠️ Hajatoka'}
+                                ${isLate ? ' ⚠️ Umechelewa' : ''}
+                            </div>
                         </div>
+                        <span class="task-status ${a.check_out ? 'done' : 'pending'}">${a.check_out ? 'Imekamilika' : 'Inasubiri'}</span>
                     </div>
-                    <span class="task-status ${a.check_out ? 'done' : 'pending'}">${a.check_out ? 'Imekamilika' : 'Inasubiri'}</span>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // ====================================================================
@@ -1127,7 +1390,7 @@
         }
 
         // ====================================================================
-        // RENDER: ADMIN - IMEBORESHA KABISA
+        // RENDER: ADMIN
         // ====================================================================
         function renderAdmin() {
             if (!currentUser || currentUser.id !== '123') {
@@ -1141,13 +1404,8 @@
                         </div>
                     `;
                 }
-                const btn = document.querySelector('#page-admin .btn-gold');
-                if (btn) btn.style.display = 'none';
                 return;
             }
-
-            const btn = document.querySelector('#page-admin .btn-gold');
-            if (btn) btn.style.display = 'inline-flex';
 
             const container = document.getElementById('adminUserList');
 
@@ -1287,6 +1545,7 @@
             document.getElementById('taskDescInput').value = '';
             renderAll();
             showToast('✅ Kazi imeongezwa!', 'ok');
+            speakText('Kazi imeongezwa');
         }
 
         // ====================================================================
@@ -1337,49 +1596,121 @@
         }
 
         // ====================================================================
-        // ATTENDANCE OPERATIONS
+        // ATTENDANCE OPERATIONS - TUMEBOA KABISA
         // ====================================================================
         async function handleCheckIn() {
             if (!currentUser) return;
+            
             const today = getTodayStr();
             const now = new Date();
             const timeStr = now.toTimeString().slice(0, 8);
-
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            
+            // KAGUA KAMA MUDA WA KUINGIA BADO HAJAANZA (SAA 1:00 AM)
+            if (isBeforeCheckinTime()) {
+                const msg = getCheckinNotStartedMessage();
+                showToast(msg, 'warn');
+                speakText(msg);
+                return;
+            }
+            
+            // KAGUA KAMA MUDA UMEFIKA 3:00 AM - LOCK
+            if (isPastLockTime()) {
+                const lockMsg = getLockMessage();
+                showToast(lockMsg, 'warn');
+                speakText(lockMsg);
+                
+                const checkInBtn = document.getElementById('checkInBtn');
+                if (checkInBtn) {
+                    checkInBtn.disabled = true;
+                    checkInBtn.style.opacity = '0.5';
+                    checkInBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Imefungwa';
+                }
+                
+                const greeting = document.getElementById('dashboardGreeting');
+                if (greeting) {
+                    greeting.innerHTML = `
+                        <span style="color:var(--red);font-weight:600;">
+                            <i class="fa-solid fa-circle-exclamation"></i> ${lockMsg}
+                        </span>
+                    `;
+                }
+                return;
+            }
+            
+            // KAGUA KAMA NI BAADA YA SAA 1:40 AM (WARNING)
+            if (hour === 1 && minute >= 40) {
+                const remaining = getTimeUntilLock();
+                showToast(`⚠️ Umechelewa kidogo! Saa 1:40 AM. Bado una muda hadi 3:00 AM. Muda uliobaki: ${remaining}`, 'reminder');
+                speakText('Tahadhari! Umechelewa kidogo. Una muda hadi saa tatu asubuhi.');
+            }
+            
+            // CHECK IF ALREADY CHECKED IN
             let record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
-
+            
             if (record && record.check_in) {
                 showToast('Tayari umeingia kazini!', 'warn');
                 return;
             }
-
+            
+            // HESABU ADHABU YA KUONDOKA (Late Penalty)
+            latePenaltyHours = calculateLatePenalty(timeStr);
+            let penaltyMsg = '';
+            if (latePenaltyHours > 0) {
+                const extraMinutes = latePenaltyHours;
+                const extraHours = Math.floor(extraMinutes / 60);
+                const extraMins = extraMinutes % 60;
+                if (extraHours > 0) {
+                    penaltyMsg = ` LEO UMECHELEWA KUSIGN HIVYO HUTATOKA SAA 3, UTAONDOKA SAA ${LOCK_HOUR + extraHours}:${String(LOCK_MINUTE + extraMins).padStart(2, '0')} USIKU.`;
+                } else {
+                    penaltyMsg = ` LEO UMECHELEWA KUSIGN HIVYO HUTATOKA SAA 3, UTAONDOKA SAA 3:${String(LOCK_MINUTE + extraMins).padStart(2, '0')} USIKU.`;
+                }
+                showToast(`⚠️ ${penaltyMsg}`, 'late');
+                speakText(`Tahadhari! Umechelewa kusign. Utatoka saa ${LOCK_HOUR + extraHours}:${String(LOCK_MINUTE + extraMins).padStart(2, '0')} usiku.`);
+            }
+            
+            // SAVE CHECK-IN
             const data = {
                 user_id: currentUser.id,
                 date: today,
                 check_in: timeStr,
-                check_out: null
+                check_out: null,
+                late_penalty: latePenaltyHours
             };
-
+            
             if (record) {
-                await supabase.query('attendance', 'PATCH', { check_in: timeStr }, record.id);
+                await supabase.query('attendance', 'PATCH', { check_in: timeStr, late_penalty: latePenaltyHours }, record.id);
             } else {
                 await supabase.addAttendance(data);
             }
-
+            
             await syncData();
             renderAll();
-            showToast('✅ Umeingia kazini saa ' + timeStr, 'ok');
-            speakText('Umeingia kazini saa ' + timeStr);
+            
+            const remaining = getTimeUntilLock();
+            const baseMsg = `✅ Umeingia kazini saa ${timeStr}.`;
+            const penaltyMsgDisplay = latePenaltyHours > 0 ? ` ⚠️ Umechelewa! Utatoka saa ${LOCK_HOUR + Math.floor(latePenaltyHours/60)}:${String(LOCK_MINUTE + (latePenaltyHours%60)).padStart(2, '0')} AM.` : ` Una muda hadi saa 3:00 AM.`;
+            showToast(baseMsg + penaltyMsgDisplay, latePenaltyHours > 0 ? 'late' : 'ok');
+            
+            speakText(`Umeingia kazini saa ${timeStr}`);
+            if (latePenaltyHours > 0) {
+                speakText(`Umechelewa. Utatoka saa ${LOCK_HOUR + Math.floor(latePenaltyHours/60)}:${String(LOCK_MINUTE + (latePenaltyHours%60)).padStart(2, '0')} usiku.`);
+            }
+            
             startWorkTimer(timeStr);
+            startLockCountdown();
         }
 
         async function handleCheckOut() {
             if (!currentUser) return;
+            
             const today = getTodayStr();
             const now = new Date();
             const timeStr = now.toTimeString().slice(0, 8);
-
+            
             const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
-
+            
             if (!record || !record.check_in) {
                 showToast('Haujaingia kazini! Ingia kwanza.', 'warn');
                 return;
@@ -1388,13 +1719,59 @@
                 showToast('Tayari umetoka kazini!', 'warn');
                 return;
             }
-
+            
+            // KAGUA KAMA NI BAADA YA 3:00 AM - RUHUSU KUTOKA TU
+            const isLate = isPastLockTime();
+            let checkoutMsg = '';
+            
+            if (isLate) {
+                const penalty = record.late_penalty || 0;
+                const allowedHour = LOCK_HOUR + Math.floor(penalty / 60);
+                const allowedMinute = LOCK_MINUTE + (penalty % 60);
+                const nowHour = now.getHours();
+                const nowMinute = now.getMinutes();
+                
+                if (nowHour < allowedHour || (nowHour === allowedHour && nowMinute < allowedMinute)) {
+                    checkoutMsg = `⚠️ Bado haujafikia muda wa kuondoka. Muda wako wa kuondoka ni saa ${allowedHour}:${String(allowedMinute).padStart(2, '0')} AM.`;
+                    showToast(checkoutMsg, 'warn');
+                    speakText(checkoutMsg);
+                    return;
+                }
+                
+                checkoutMsg = `✅ Umetoka kazini saa ${timeStr} (Umechelewa)`;
+                showToast(checkoutMsg, 'warn');
+                speakText(`Umetoka kazini saa ${timeStr}. Umechelewa.`);
+            } else {
+                const penalty = record.late_penalty || 0;
+                const allowedHour = LOCK_HOUR + Math.floor(penalty / 60);
+                const allowedMinute = LOCK_MINUTE + (penalty % 60);
+                const nowHour = now.getHours();
+                const nowMinute = now.getMinutes();
+                
+                if (nowHour < allowedHour || (nowHour === allowedHour && nowMinute < allowedMinute)) {
+                    checkoutMsg = `⚠️ Bado haujafikia muda wa kuondoka. Muda wako wa kuondoka ni saa ${allowedHour}:${String(allowedMinute).padStart(2, '0')} AM.`;
+                    showToast(checkoutMsg, 'warn');
+                    speakText(checkoutMsg);
+                    return;
+                }
+                
+                showToast(`✅ Umetoka kazini saa ${timeStr}`, 'ok');
+                speakText(`Umetoka kazini saa ${timeStr}`);
+            }
+            
             await supabase.query('attendance', 'PATCH', { check_out: timeStr }, record.id);
             await syncData();
             renderAll();
-            showToast('✅ Umetoka kazini saa ' + timeStr, 'ok');
-            speakText('Umetoka kazini saa ' + timeStr);
+            
             stopWorkTimer();
+            stopLockCountdown();
+            
+            const timerDisplay = document.getElementById('workTimerDisplay');
+            if (timerDisplay) {
+                timerDisplay.style.color = 'var(--gold)';
+                timerDisplay.style.fontSize = '32px';
+                timerDisplay.innerHTML = '00:00:00';
+            }
         }
 
         // ====================================================================
@@ -1448,17 +1825,12 @@
             }
             if (!confirm('Je, una uhakika unataka kumfuta mfanyakazi huyu?')) return;
 
-            // Delete all tasks for this user
             const userTasks = db.tasks ? db.tasks.filter(t => t.user_id === userId) : [];
             for (const task of userTasks) {
                 await supabase.deleteTask(task.id);
             }
 
-            // Delete the user from Supabase
-            const result = await supabase.deleteUser(userId);
-            console.log('Delete user result:', result);
-
-            // Force sync to get fresh data
+            await supabase.deleteUser(userId);
             await syncData();
             renderAll();
             showToast('✅ Mfanyakazi amefutwa!', 'ok');
@@ -1523,7 +1895,9 @@
         // INIT
         // ====================================================================
         function init() {
-            // Force sync on load
+            document.getElementById('loginId').value = '123';
+            document.getElementById('loginPass').value = '123';
+            
             setTimeout(syncData, 1000);
 
             if (db.currentUser) {
@@ -1549,8 +1923,7 @@
                 });
             });
 
-            // Auto sync every 15 seconds
-            setInterval(syncData, 15000);
+            setInterval(syncData, 30000);
 
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.getVoices();
@@ -1558,7 +1931,12 @@
 
             console.log('✅ Dr. William App imeanza!');
             console.log('👑 Admin: 123 / 123');
-            console.log('📋 Admin ndiye pekee anayeweza kufuta majukumu na wafanyakazi');
+            console.log('⏰ Mfumo wa Mahudhurio:');
+            console.log('   - Muda wa Kuingia: SAA 1:00 AM');
+            console.log('   - Muda wa Kufunga: SAA 3:00 AM');
+            console.log('   - Onyo la 1:40 AM');
+            console.log('   - Adhabu ya Kuchelewa: Kuongezewa muda wa kuondoka');
+            console.log('   - Kila Dakika 5: Kukumbushwa majukumu');
         }
 
         document.addEventListener('DOMContentLoaded', init);
