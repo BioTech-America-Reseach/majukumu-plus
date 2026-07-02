@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>CLINIC YA DR WILLIAM MFUMO WA  KAZI UNASIMAMIWA NA AI MALIPO YOTE</title>
+    <title>Dr. William - Mfumo Kamili v2</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -26,6 +26,8 @@
             --orange: #F5A623;
             --orange-soft: rgba(245,166,35,0.14);
             --purple: #8B5CF6;
+            --pink: #EC4899;
+            --teal: #14B8A6;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -50,12 +52,16 @@
         .btn-green { background: var(--green); color: #0a2818; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; }
         .btn-purple { background: var(--purple); color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; }
         .btn-orange { background: var(--orange); color: #1a1305; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+        .btn-pink { background: var(--pink); color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; }
+        .btn-teal { background: var(--teal); color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; }
 
         .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
         .card-gold { border-color: var(--gold); background: rgba(212,162,78,0.06); }
         .card-green { border-color: var(--green); background: rgba(61,190,122,0.06); }
         .card-red { border-color: var(--red); background: rgba(226,87,76,0.06); }
         .card-blue { border-color: var(--blue); background: rgba(74,155,232,0.06); }
+        .card-pink { border-color: var(--pink); background: rgba(236,72,153,0.06); }
+        .card-teal { border-color: var(--teal); background: rgba(20,184,166,0.06); }
 
         input, select, textarea {
             background: var(--panel-2);
@@ -193,8 +199,8 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(6px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -210,7 +216,9 @@
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
+            animation: modalIn 0.3s ease;
         }
+        @keyframes modalIn { from { opacity:0; transform:scale(0.95) translateY(20px); } to { opacity:1; transform:scale(1) translateY(0); } }
         .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
         .modal-head h3 { font-size: 18px; font-weight: 700; }
         .modal-close {
@@ -246,7 +254,9 @@
             padding: 10px 14px;
             font-size: 13px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            animation: toastIn 0.3s ease;
         }
+        @keyframes toastIn { from { opacity:0; transform:translateX(30px); } to { opacity:1; transform:translateX(0); } }
         .toast.warn { border-left-color: var(--red); }
         .toast.ok { border-left-color: var(--green); }
         .toast.reminder { border-left-color: var(--gold); background: rgba(212,162,78,0.1); }
@@ -344,11 +354,14 @@
             font-size: 12px;
             color: var(--text-dim);
             transition: all 0.2s;
+            cursor: default;
         }
         .calendar-grid .day.has-task { border: 1px solid var(--gold); color: var(--gold); cursor: pointer; }
         .calendar-grid .day.has-task:hover { background: rgba(212,162,78,0.15); }
-        .calendar-grid .day.today { background: rgba(212,162,78,0.2); border: 1px solid var(--gold); color: var(--gold); font-weight: 700; }
+        .calendar-grid .day.today { background: rgba(212,162,78,0.2); border: 2px solid var(--gold); color: var(--gold); font-weight: 700; }
         .calendar-grid .day .day-num { font-size: 13px; font-weight: 600; }
+        .calendar-grid .day .day-badge { font-size: 8px; }
+        .calendar-grid .day.has-event { border: 1px solid var(--red); color: var(--red); }
 
         .report-item {
             background: var(--panel-2);
@@ -417,21 +430,63 @@
         .rule-item .rule-title { font-weight: 600; font-size: 14px; color: var(--gold); }
         .rule-item .rule-content { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
 
-        /* Patient Items */
-        .patient-item {
-            background: var(--panel-2);
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            padding: 10px 14px;
-            margin-bottom: 6px;
+        /* Patient Items - Excel Style */
+        .patient-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
         }
-        .patient-item .p-name { font-weight: 600; font-size: 14px; }
-        .patient-item .p-detail { font-size: 12px; color: var(--text-dim); }
-        .patient-item .p-status { font-size: 11px; padding: 2px 10px; border-radius: 999px; display: inline-block; }
-        .patient-item .p-status.taken { background: var(--green-soft); color: var(--green); }
-        .patient-item .p-status.not-taken { background: var(--red-soft); color: var(--red); }
+        .patient-table th {
+            background: var(--panel-2);
+            color: var(--gold);
+            padding: 10px 8px;
+            text-align: left;
+            border: 1px solid var(--line);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .patient-table td {
+            padding: 8px;
+            border: 1px solid var(--line);
+            vertical-align: middle;
+        }
+        .patient-table tr:hover td {
+            background: rgba(212,162,78,0.05);
+        }
+        .patient-table .status-taken { color: var(--green); font-weight: 600; }
+        .patient-table .status-not-taken { color: var(--red); font-weight: 600; }
+        .patient-table .action-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+        .patient-table .action-btns .btn-sm { padding: 3px 10px; font-size: 11px; }
+        .patient-count { font-size: 13px; color: var(--text-dim); margin-bottom: 10px; }
+        .patient-count strong { color: var(--gold); }
+        .table-responsive { overflow-x: auto; }
 
-        /* Sale Items */
+        /* Attendance Staff List */
+        .attendance-staff-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        @media (max-width: 600px) { .attendance-staff-list { grid-template-columns: 1fr; } }
+        .attendance-staff-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--panel-2);
+            border-radius: 8px;
+            border: 1px solid var(--line);
+        }
+        .attendance-staff-item .staff-name { font-weight: 500; font-size: 13px; }
+        .attendance-staff-item .staff-status { font-size: 12px; padding: 2px 12px; border-radius: 999px; font-weight: 600; }
+        .attendance-staff-item .staff-status.present { background: var(--green-soft); color: var(--green); }
+        .attendance-staff-item .staff-status.absent { background: var(--red-soft); color: var(--red); }
+        .attendance-staff-item .staff-status.late { background: var(--orange-soft); color: var(--orange); }
+
+        /* Sale/Receipt Items */
         .sale-item {
             background: var(--panel-2);
             border: 1px solid var(--line);
@@ -443,6 +498,9 @@
         .sale-item .sale-product { font-weight: 600; font-size: 14px; }
         .sale-item .sale-detail { font-size: 12px; color: var(--text-dim); }
         .sale-item .sale-amount { color: var(--green); font-weight: 700; }
+        .sale-item .sale-status { font-size: 11px; padding: 2px 10px; border-radius: 999px; display: inline-block; }
+        .sale-item .sale-status.paid { background: var(--green-soft); color: var(--green); }
+        .sale-item .sale-status.unpaid { background: var(--red-soft); color: var(--red); }
 
         /* Bonus 3D */
         .bonus-3d {
@@ -461,33 +519,89 @@
             50% { box-shadow: 0 8px 48px rgba(212,162,78,0.6), 0 0 60px rgba(212,162,78,0.2); }
             100% { box-shadow: 0 8px 32px rgba(212,162,78,0.3); }
         }
-        .bonus-3d .amount {
-            font-size: 48px;
-            font-weight: 800;
-            color: #1a1305;
-            text-shadow: 0 2px 4px rgba(255,255,255,0.3);
+        .bonus-3d .amount { font-size: 48px; font-weight: 800; color: #1a1305; text-shadow: 0 2px 4px rgba(255,255,255,0.3); }
+        .bonus-3d .label { font-size: 14px; color: #1a1305; opacity: 0.8; }
+        .bonus-3d .winner { font-size: 18px; font-weight: 700; color: #1a1305; margin-top: 8px; }
+
+        /* Jackpot Styles */
+        .jackpot-container { margin-bottom: 16px; }
+        .jackpot-display { text-align: center; padding: 15px; background: var(--panel-2); border-radius: 12px; border: 2px solid rgba(212,162,78,0.2); }
+        .jackpot-slot { background: var(--bg); border-radius: 12px; padding: 15px 20px; border: 2px solid var(--gold); min-height: 60px; display: flex; align-items: center; justify-content: center; }
+        .jackpot-name { font-size: 28px; font-weight: 800; color: var(--gold); transition: all 0.3s; }
+        .jackpot-name.spinning { animation: slotSpin 0.08s steps(1) infinite; color: #f7d875; }
+        .jackpot-name.winner { color: #ffd700; font-size: 32px; text-shadow: 0 0 30px rgba(255,215,0,0.5); animation: winCelebration 0.8s cubic-bezier(0.34,1.56,0.64,1); }
+        .jackpot-amount { font-size: 28px; font-weight: 700; color: var(--gold); margin-top: 8px; transition: all 0.3s; }
+        .jackpot-amount.pulse { animation: amountPulse 0.5s ease-in-out 3; }
+        .jackpot-status { font-size: 13px; font-weight: 600; margin-top: 6px; padding: 4px 16px; border-radius: 999px; display: inline-block; background: rgba(212,162,78,0.1); color: var(--gold); }
+        .jackpot-status.spinning { background: rgba(245,166,35,0.2); color: #F5A623; animation: statusPulse 0.3s ease-in-out infinite; }
+        .jackpot-status.winner { background: rgba(61,190,122,0.2); color: #3DBE7A; animation: statusPulse 0.8s ease-in-out infinite; }
+
+        @keyframes slotSpin { 0% { transform: scale(1) rotate(0deg); } 25% { transform: scale(1.02) rotate(1deg); } 50% { transform: scale(1) rotate(0deg); } 75% { transform: scale(1.02) rotate(-1deg); } 100% { transform: scale(1) rotate(0deg); } }
+        @keyframes winCelebration { 0% { transform: scale(0.5) rotate(-10deg); opacity: 0; } 30% { transform: scale(1.3) rotate(5deg); opacity: 1; } 60% { transform: scale(0.9) rotate(-3deg); } 80% { transform: scale(1.1) rotate(2deg); } 100% { transform: scale(1) rotate(0deg); } }
+        @keyframes amountPulse { 0% { transform: scale(1); color: var(--gold); } 50% { transform: scale(1.1); color: #ffd700; } 100% { transform: scale(1); color: var(--gold); } }
+        @keyframes statusPulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
+        .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden; }
+        .confetti { position: absolute; opacity: 0; animation: confettiFall var(--duration, 3s) ease-in forwards; }
+        @keyframes confettiFall { 0% { transform: translateY(-20px) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translateY(calc(100vh + 50px)) rotate(720deg) scale(0.3); opacity: 0; } }
+
+        .voice-reminder-badge { background: var(--red-soft); color: var(--red); padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; animation: blink 1s infinite; }
+
+        /* Tasks for all staff */
+        .all-tasks-container { margin-top: 12px; }
+        .all-tasks-container .task-group { margin-bottom: 10px; }
+        .all-tasks-container .task-group .group-title { font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: 4px; }
+
+        /* Receipt/Invoice Styles */
+        .receipt-container {
+            background: #fff;
+            color: #1a1a2e;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 400px;
+            margin: 0 auto;
+            font-size: 13px;
+            position: relative;
+            overflow: hidden;
         }
-        .bonus-3d .label {
-            font-size: 14px;
-            color: #1a1305;
-            opacity: 0.8;
+        .receipt-container .receipt-header {
+            text-align: center;
+            border-bottom: 2px dashed #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
         }
-        .bonus-3d .winner {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a1305;
-            margin-top: 8px;
+        .receipt-container .receipt-header h2 { font-size: 18px; color: var(--gold); }
+        .receipt-container .receipt-header .sub { font-size: 11px; color: #666; }
+        .receipt-container .receipt-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #f0f0f0; }
+        .receipt-container .receipt-row.total { font-weight: 700; font-size: 16px; border-top: 2px solid #333; border-bottom: none; padding-top: 10px; }
+        .receipt-container .receipt-footer { text-align: center; margin-top: 10px; font-size: 11px; color: #888; border-top: 2px dashed #ddd; padding-top: 10px; }
+        .receipt-container .status-paid { color: var(--green); font-weight: 700; }
+        .receipt-container .status-unpaid { color: var(--red); font-weight: 700; }
+        .receipt-container .gradient-bg {
+            background: linear-gradient(135deg, #f5f0e8, #e8e0d5);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 5px 0;
         }
 
-        .voice-reminder-badge {
-            background: var(--red-soft);
-            color: var(--red);
-            padding: 4px 12px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 600;
-            animation: blink 1s infinite;
-        }
+        /* Drug with image */
+        .drug-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--panel-2); border-radius: 10px; margin-bottom: 6px; border: 1px solid var(--line); }
+        .drug-item .drug-img { width: 50px; height: 50px; border-radius: 8px; background: var(--panel); display: flex; align-items: center; justify-content: center; font-size: 24px; border: 1px solid var(--line); overflow: hidden; }
+        .drug-item .drug-img img { width: 100%; height: 100%; object-fit: cover; }
+        .drug-item .drug-info { flex: 1; }
+        .drug-item .drug-info .name { font-weight: 600; font-size: 14px; }
+        .drug-item .drug-info .meta { font-size: 11px; color: var(--text-dim); }
+
+        /* Voice Settings */
+        .voice-settings { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .voice-settings select, .voice-settings input { width: auto; min-width: 120px; padding: 6px 10px; font-size: 12px; }
+
+        /* Calendar Event */
+        .calendar-event { background: var(--panel-2); border-radius: 8px; padding: 8px 12px; margin-bottom: 4px; border-left: 3px solid var(--red); }
+        .calendar-event .event-title { font-weight: 600; font-size: 13px; }
+        .calendar-event .event-detail { font-size: 11px; color: var(--text-dim); }
+
+        .all-tasks-container .task-group { margin-bottom: 10px; }
+        .all-tasks-container .task-group .group-title { font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: 4px; }
 
         @media (max-width: 640px) {
             .app-container { padding: 4px; }
@@ -502,6 +616,14 @@
             .stock-item { flex-wrap: wrap; }
             .stock-item .stock-qty { min-width: 30px; font-size: 16px; }
             .stock-item .stock-price { min-width: 60px; font-size: 12px; }
+            .jackpot-name { font-size: 22px; }
+            .jackpot-amount { font-size: 22px; }
+            .jackpot-slot { padding: 10px 15px; min-height: 50px; }
+            .patient-table th, .patient-table td { padding: 6px 4px; font-size: 11px; }
+            .attendance-staff-list { grid-template-columns: 1fr; }
+            .receipt-container { padding: 15px; font-size: 12px; }
+            .voice-settings { flex-direction: column; }
+            .voice-settings select, .voice-settings input { width: 100%; }
         }
     </style>
 </head>
@@ -513,7 +635,7 @@
 <div id="loginPage" style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px;">
     <div class="login-box">
         <div class="logo">🩺 Dr. William</div>
-        <div class="subtitle">Mfumo Kamili wa Ofisi</div>
+        <div class="subtitle">Mfumo Kamili wa Ofisi v2.0</div>
         <div class="field">
             <label>Namba ya Mfanyakazi</label>
             <input type="text" id="loginId" placeholder="Weka namba yako" value="">
@@ -531,8 +653,9 @@
         </button>
         <div style="margin-top:12px;font-size:11px;color:var(--text-faint);">
             <p>👑 Admin: <strong>***</strong> / <strong>***</strong></p>
-            <p>☁️ Data zote zimehifadhiwa <strong>Cloud</strong> (Supabase)</p>
+            <p>☁️ Offline & Online (Supabase)</p>
             <p>🔊 Voice Reminders zimewashwa</p>
+            <p>🎰 Jackpot System imewashwa</p>
         </div>
     </div>
 </div>
@@ -578,6 +701,7 @@
             <div class="nav-tab" onclick="showPage('stock')">📦 Stock</div>
             <div class="nav-tab" onclick="showPage('sales')">💰 Mauzo</div>
             <div class="nav-tab" onclick="showPage('patients')">🧑‍⚕️ Wagonjwa</div>
+            <div class="nav-tab" onclick="showPage('expenses')">💸 Matumizi</div>
             <div class="nav-tab" id="adminTab" onclick="showPage('admin')" style="display:none;">👑 Admin</div>
         </div>
 
@@ -590,6 +714,9 @@
                 <div class="amount" id="bonusAmount">TSh 0</div>
                 <div class="label">Bonus ya Mwezi</div>
             </div>
+
+            <!-- Jackpot Container -->
+            <div id="jackpotContainer"></div>
 
             <!-- Voice Reminder Badge -->
             <div id="voiceReminderBadge" style="display:none;margin-bottom:12px;">
@@ -647,6 +774,12 @@
                 </div>
             </div>
             <div id="taskListContainer"></div>
+
+            <!-- All Tasks for Admin -->
+            <div id="allTasksContainer" class="all-tasks-container" style="display:none;">
+                <h4 style="font-size:14px;margin-bottom:8px;color:var(--gold);">📋 Majukumu ya Wafanyakazi Wote</h4>
+                <div id="allTasksList"></div>
+            </div>
         </div>
 
         <!-- PAGE: ATTENDANCE -->
@@ -658,13 +791,13 @@
             </div>
             <div class="attendance-box">
                 <div class="attendance-card">
-                    <div class="label">🕐 Kuingia</div>
+                    <div class="label">🕐 Kuingia (Asubuhi Saa 1:40)</div>
                     <div class="time" id="checkInTime">--:--:--</div>
                     <div><span class="status-badge pending" id="checkInStatus">Bado</span></div>
                     <button class="btn-gold" style="margin-top:8px;width:100%;" onclick="handleCheckIn()" id="checkInBtn"><i class="fa-solid fa-arrow-right-to-bracket"></i> Ingia</button>
                 </div>
                 <div class="attendance-card">
-                    <div class="label">🕐 Kutoka</div>
+                    <div class="label">🕐 Kutoka (Usiku Saa 2:40)</div>
                     <div class="time" id="checkOutTime">--:--:--</div>
                     <div><span class="status-badge pending" id="checkOutStatus">Bado</span></div>
                     <button class="btn-red" style="margin-top:8px;width:100%;" onclick="handleCheckOut()" id="checkOutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Toka</button>
@@ -676,8 +809,14 @@
                 <div style="font-size:12px;color:var(--text-faint);margin-top:4px;" id="workStatusDisplay">⏳ Subiri kuingia</div>
             </div>
             <div class="card">
-                <h4 style="font-size:14px;margin-bottom:8px;">📋 Rekodi ya Mahudhurio</h4>
+                <h4 style="font-size:14px;margin-bottom:8px;">📋 Rekodi yangu</h4>
                 <div id="attendanceHistory"></div>
+            </div>
+
+            <!-- All Staff Attendance -->
+            <div class="card card-gold">
+                <h4 style="font-size:14px;color:var(--gold);margin-bottom:8px;">👥 Mahudhurio ya Wafanyakazi Wote</h4>
+                <div id="allStaffAttendance"></div>
             </div>
         </div>
 
@@ -699,6 +838,16 @@
                 <h4 style="font-size:14px;margin-bottom:8px;">🏆 Bonus Zilizopatikana</h4>
                 <div id="bonusDisplay"></div>
             </div>
+            <!-- AI Daily Report -->
+            <div class="card card-blue">
+                <h4 style="font-size:14px;color:var(--blue);margin-bottom:8px;">🤖 AI Daily Report</h4>
+                <div id="aiDailyReport"></div>
+            </div>
+            <!-- AI Suggestions -->
+            <div class="card card-purple">
+                <h4 style="font-size:14px;color:var(--purple);margin-bottom:8px;">💡 AI Maoni na Ushauri</h4>
+                <div id="aiSuggestions"></div>
+            </div>
         </div>
 
         <!-- PAGE: CALENDAR -->
@@ -709,11 +858,12 @@
                     <button class="btn-ghost btn-sm" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                     <span style="font-weight:600;font-size:15px;" id="calendarMonthYear"></span>
                     <button class="btn-ghost btn-sm" onclick="changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="btn-gold btn-sm" onclick="openModal('newEventModal')"><i class="fa-solid fa-plus"></i> Ongeza Tukio</button>
                 </div>
                 <div class="calendar-grid" id="calendarGrid"></div>
             </div>
             <div style="margin-top:10px;">
-                <h4 style="font-size:13px;margin-bottom:6px;">Majukumu ya Tarehe</h4>
+                <h4 style="font-size:13px;margin-bottom:6px;">📌 Majukumu na Matukio ya Tarehe</h4>
                 <div id="calendarTaskList"></div>
             </div>
         </div>
@@ -728,11 +878,11 @@
         <!-- PAGE: DRUGS -->
         <div class="page" id="page-drugs">
             <h3 style="font-size:17px;margin-bottom:12px;"><i class="fa-solid fa-prescription-bottle"></i> Orodha ya Dawa</h3>
+            <button class="btn-gold btn-sm" onclick="openModal('newDrugModal')" id="addDrugBtn" style="display:none;margin-bottom:12px;"><i class="fa-solid fa-plus"></i> Ongeza Dawa</button>
             <div id="drugsContainer"></div>
-            <button class="btn-gold btn-sm" onclick="openModal('newDrugModal')" id="addDrugBtn" style="display:none;"><i class="fa-solid fa-plus"></i> Ongeza Dawa</button>
         </div>
 
-        <!-- PAGE: STOCK -->
+        <!-- PAGE: STOCK - Excel Style -->
         <div class="page" id="page-stock">
             <h3 style="font-size:17px;margin-bottom:12px;"><i class="fa-solid fa-warehouse"></i> Stock ya Dawa/Bidhaa</h3>
             
@@ -741,8 +891,7 @@
                 <h4 style="font-size:14px;color:var(--gold);margin-bottom:8px;">📦 Ongeza au Badilisha Stock</h4>
                 <div class="field"><label>Aina ya Dawa/Bidhaa</label>
                     <select id="stockProductSelect">
-                        <option value="new">🔵 Dawa Mpya</option>
-                        ${db.drugs ? db.drugs.map(d => `<option value="${d.id}">${d.name}</option>`).join('') : ''}
+                        <option value="new">🔵 Dawa/Bidhaa Mpya</option>
                     </select>
                 </div>
                 <div id="newProductFields">
@@ -756,8 +905,34 @@
                 <button class="btn-gold" onclick="adminUpdateStock()"><i class="fa-solid fa-check"></i> Hifadhi Stock</button>
             </div>
 
-            <!-- Stock Display -->
-            <div id="stockContainer"></div>
+            <!-- Stock Display - Excel Style -->
+            <div class="card" style="padding:0;overflow:hidden;">
+                <div class="table-responsive">
+                    <table class="patient-table" id="stockTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Bidhaa</th>
+                                <th>Maelezo</th>
+                                <th>Idadi</th>
+                                <th>Bei (TSh)</th>
+                                <th>Jumla</th>
+                                <th>Vitendo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stockTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align:center;padding:30px;color:var(--text-faint);">
+                                    <i class="fa-solid fa-box" style="font-size:24px;display:block;margin-bottom:10px;"></i>
+                                    Hakuna bidhaa kwenye stock.<br>
+                                    Admin anaweza kuongeza.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button class="btn-ghost btn-sm" onclick="printStock()" style="margin-top:8px;"><i class="fa-solid fa-print"></i> Print Stock (A4)</button>
         </div>
 
         <!-- PAGE: SALES -->
@@ -774,7 +949,10 @@
                 <div class="field"><label>Maelezo (hiari)</label>
                     <input type="text" id="saleDesc" placeholder="Maelezo ya mauzo">
                 </div>
-                <button class="btn-gold" onclick="recordSale()"><i class="fa-solid fa-check"></i> Rekodi Mauzo</button>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+                    <button class="btn-gold" onclick="recordSale()"><i class="fa-solid fa-check"></i> Rekodi Mauzo</button>
+                    <button class="btn-teal" onclick="openModal('saleReceiptModal')"><i class="fa-solid fa-receipt"></i> Fungua Stakabadhi</button>
+                </div>
             </div>
             <div class="card">
                 <h4 style="font-size:14px;margin-bottom:8px;">📊 Historia ya Mauzo</h4>
@@ -782,2499 +960,33 @@
             </div>
         </div>
 
-        <!-- PAGE: PATIENTS -->
+        <!-- PAGE: PATIENTS - EXCEL STYLE -->
         <div class="page" id="page-patients">
             <h3 style="font-size:17px;margin-bottom:12px;"><i class="fa-solid fa-users"></i> Wagonjwa / Wageni</h3>
-            <button class="btn-gold btn-sm" onclick="openModal('newPatientModal')" style="margin-bottom:12px;"><i class="fa-solid fa-user-plus"></i> Sajili Mgonjwa</button>
-            <div id="patientsContainer"></div>
-        </div>
-
-        <!-- PAGE: ADMIN -->
-        <div class="page" id="page-admin">
-            <h3 style="font-size:17px;margin-bottom:12px;">
-                <i class="fa-solid fa-crown"></i> Dhibiti Wafanyakazi
-                <span class="admin-only"><i class="fa-solid fa-lock"></i> Admin</span>
-                <span class="cloud-badge"><i class="fa-solid fa-cloud"></i> Cloud</span>
-            </h3>
-
-            <!-- AI Reports -->
-            <div class="card card-gold">
-                <h4 style="font-size:14px;color:var(--gold);margin-bottom:8px;"><i class="fa-solid fa-robot"></i> AI - Ushauri wa Wafanyakazi</h4>
-                <div id="aiReportContainer"></div>
-            </div>
-
-            <div class="admin-grid">
-                <div class="card">
-                    <h4 style="font-size:14px;margin-bottom:8px;">👥 Wafanyakazi</h4>
-                    <div id="adminUserList"></div>
-                    <button class="btn-gold btn-sm" style="width:100%;margin-top:8px;" onclick="openModal('newUserModal')">
-                        <i class="fa-solid fa-user-plus"></i> Sajili
-                    </button>
-                    <button class="btn-ghost btn-sm" style="width:100%;margin-top:4px;" onclick="syncData()">
-                        <i class="fa-solid fa-cloud"></i> Sawazisha Cloud
-                    </button>
-                </div>
-                <div class="card">
-                    <h4 style="font-size:14px;margin-bottom:8px;">📋 Gawanya Majukumu</h4>
-                    <div class="field"><label>Mfanyakazi</label><select id="adminTaskUser"></select></div>
-                    <div class="field"><label>Jina la Kazi</label><input type="text" id="adminTaskName" placeholder="K.mf. Andika ripoti"></div>
-                    <div class="field"><label>Maelezo</label><input type="text" id="adminTaskDesc" placeholder="Maelezo"></div>
-                    <div class="field"><label>Tarehe</label><input type="date" id="adminTaskDate"></div>
-                    <div class="field"><label>Kipaumbele</label>
-                        <select id="adminTaskPriority">
-                            <option value="high">🔴 Juu</option>
-                            <option value="medium" selected>🟡 Kati</option>
-                            <option value="low">🟢 Chini</option>
-                        </select>
-                    </div>
-                    <button class="btn-gold" style="width:100%;" onclick="adminAssignTask()"><i class="fa-solid fa-paper-plane"></i> Gawanya</button>
-                </div>
-            </div>
-
-            <!-- Approve Tasks -->
-            <div class="card card-blue">
-                <h4 style="font-size:14px;color:var(--blue);margin-bottom:8px;">✅ Thibitisha Majukumu ya Wafanyakazi</h4>
-                <div id="adminApproveTasks"></div>
-            </div>
-
-            <!-- Bonus Management -->
-            <div class="card card-green">
-                <h4 style="font-size:14px;margin-bottom:8px;">🏆 Dhibiti Bonus</h4>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                    <div class="field"><label>Mfanyakazi</label><select id="adminBonusUser"></select></div>
-                    <div class="field"><label>Kiasi (TSh)</label><input type="number" id="adminBonusAmount" placeholder="K.mf. 50000"></div>
-                </div>
-                <div class="field"><label>Sababu</label><input type="text" id="adminBonusReason" placeholder="K.mf. Utendaji bora"></div>
-                <button class="btn-gold" onclick="adminAddBonus()"><i class="fa-solid fa-gift"></i> Toa Bonus</button>
-            </div>
-
-            <!-- Bonus Winner -->
-            <div class="card card-gold">
-                <h4 style="font-size:14px;color:var(--gold);margin-bottom:8px;">🏆 Teua Mshindi wa Bonus (3D)</h4>
-                <div class="field"><label>Mfanyakazi Bora</label><select id="adminWinnerUser"></select></div>
-                <div class="field"><label>Kiasi cha Bonus</label><input type="number" id="adminWinnerAmount" placeholder="K.mf. 100000"></div>
-                <button class="btn-orange" onclick="setBonusWinner()"><i class="fa-solid fa-trophy"></i> Weka Mshindi</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- MODALS -->
-<div class="modal-overlay" id="newTaskModal">
-    <div class="modal-box">
-        <div class="modal-head">
-            <h3>📋 Kazi Mpya</h3>
-            <button class="modal-close" onclick="closeModal('newTaskModal')"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="field"><label>Jina la Kazi</label><input type="text" id="taskNameInput" placeholder="K.mf. Andika ripoti"></div>
-        <div class="field"><label>Maelezo</label><textarea id="taskDescInput" rows="2" placeholder="Maelezo..."></textarea></div>
-        <div class="field-row">
-            <div class="field"><label>Tarehe</label><input type="date" id="taskDateInput"></div>
-            <div class="field"><label>Kipaumbele</label>
-                <select id="taskPriorityInput">
-                    <option value="high">🔴 Juu</option>
-                    <option value="medium" selected>🟡 Kati</option>
-                    <option value="low">🟢 Chini</option>
-                </select>
-            </div>
-        </div>
-        <div class="modal-actions">
-            <button class="btn-ghost" onclick="closeModal('newTaskModal')">Ghairi</button>
-            <button class="btn-gold" onclick="confirmAddTask()"><i class="fa-solid fa-check"></i> Ongeza</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal-overlay" id="newUserModal">
-    <div class="modal-box">
-        <div class="modal-head">
-            <h3>👤 Sajili Mfanyakazi</h3>
-            <button class="modal-close" onclick="closeModal('newUserModal')"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="field"><label>Jina Kamili</label><input type="text" id="newUserName" placeholder="K.mf. Juma Hassan"></div>
-        <div class="field-row">
-            <div class="field"><label>Namba</label><input type="text" id="newUserId" placeholder="K.mf. 001"></div>
-            <div class="field"><label>Simu</label><input type="text" id="newUserPhone" placeholder="0712345678"></div>
-        </div>
-        <div class="field"><label>Nenosiri</label><input type="text" id="newUserPass" placeholder="Nenosiri" value="123"></div>
-        <div class="modal-actions">
-            <button class="btn-ghost" onclick="closeModal('newUserModal')">Ghairi</button>
-            <button class="btn-gold" onclick="confirmAddUser()"><i class="fa-solid fa-check"></i> Sajili</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal-overlay" id="editUserModal">
-    <div class="modal-box">
-        <div class="modal-head">
-            <h3>✏️ Badilisha Mfanyakazi</h3>
-            <button class="modal-close" onclick="closeModal('editUserModal')"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <input type="hidden" id="editUserId">
-        <div class="field"><label>Jina</label><input type="text" id="editUserName"></div>
-        <div class="field"><label>Simu</label><input type="text" id="editUserPhone"></div>
-        <div class="field"><label>Nenosiri</label><input type="text" id="editUserPass" placeholder="Nenosiri jipya"></div>
-        <div class="modal-actions">
-            <button class="btn-ghost" onclick="closeModal('editUserModal')">Ghairi</button>
-            <button class="btn-gold" onclick="confirmEditUser()"><i class="fa-solid fa-check"></i> Hifadhi</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal-overlay" id="newRuleModal">
-    <div class="modal-box">
-        <div class="modal-head">
-            <h3>📜 Sheria Mpya</h3>
-            <button class="modal-close" onclick="closeModal('newRuleModal')"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="field"><label>Jina la Sheria</label><input type="text" id="ruleTitle" placeholder="K.mf. Sheria ya Uendeshaji"></div>
-        <div class="field"><label>Maelezo ya Sheria</label><textarea id="ruleContent" rows="4" placeholder="Andika sheria kwa kina..."></textarea></div>
-        <div class="modal-actions">
-            <button class="btn-ghost" onclick="closeModal('newRuleModal')">Ghairi</button>
-            <button class="btn-gold" onclick="confirmAddRule()"><i class="fa-solid fa-check"></i> Hifadhi</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal-overlay" id="newDrugModal">
-    <div class="modal-box">
-        <div class="modal-head">
-            <h3>💊 Ongeza Dawa</h3>
-            <button class="modal-close" onclick="closeModal('newDrugModal')"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="field"><label>Jina la Dawa</label><input type="text" id="drugName" placeholder="K.mf. Panadol"></div>
-        <div class="field"><label>Kazi ya Dawa</label><input type="text" id="drugUse" placeholder="K.mf. Kupunguza maumivu"></div>
-        <div class="field"><label>Gharama (TSh)</label><input type="number" id="drugPrice" placeholder="K.mf. 5000"></div>
-        <div class="field"><label>Matumizi</label><textarea id="drugUsage" rows="2" placeholder="Maelekezo ya matumizi..."></textarea></div>
-        <div class="modal-actions">
-            <button class="btn-ghost" onclick="closeModal('newDrugModal')">Ghairi</button>
-            <button class="btn-gold" onclick="confirmAddDrug()"><i class="fa-solid fa-check"></i> Hifadhi</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal-overlay" id="newPatientModal">
-    <div class="modal-box">
-        <div class="modal-head">
-            <h3>🧑‍⚕️ Sajili Mgonjwa/Mgeni</h3>
-            <button class="modal-close" onclick="closeModal('newPatientModal')"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="field"><label>Jina Kamili</label><input type="text" id="patientName" placeholder="K.mf. Amina Juma"></div>
-        <div class="field"><label>Namba ya Simu</label><input type="text" id="patientPhone" placeholder="K.mf. 0712345678"></div>
-        <div class="field"><label>Mahali Wanapoishi</label><input type="text" id="patientAddress" placeholder="K.mf. Tandale, Dar es Salaam"></div>
-        <div class="field"><label>Maelezo (hiari)</label><textarea id="patientNotes" rows="2" placeholder="Maelezo ya ziada..."></textarea></div>
-        <div class="modal-actions">
-            <button class="btn-ghost" onclick="closeModal('newPatientModal')">Ghairi</button>
-            <button class="btn-gold" onclick="confirmAddPatient()"><i class="fa-solid fa-check"></i> Sajili</button>
-        </div>
-    </div>
-</div>
-
-<script>
-// ====================================================================
-// SUPABASE CREDENTIALS
-// ====================================================================
-const SUPABASE_URL = 'https://bojxzkdewtwblemwrkzw.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_WWDU_VhQgF-1111lGKtJdA_fxD5Zo_w';
-
-// ====================================================================
-// SUPABASE CLIENT
-// ====================================================================
-const supabase = {
-    url: SUPABASE_URL,
-    key: SUPABASE_KEY,
-    async query(table, method = 'GET', data = null, id = null) {
-        const headers = {
-            'Content-Type': 'application/json',
-            'apikey': this.key,
-            'Authorization': 'Bearer ' + this.key
-        };
-        let url = `${this.url}/rest/v1/${table}`;
-        let options = { method, headers };
-        if (method === 'GET') url += '?select=*';
-        else if (method === 'POST') options.body = JSON.stringify(data);
-        else if (method === 'PATCH' && id) { url += `?id=eq.${id}`; options.body = JSON.stringify(data); }
-        else if (method === 'DELETE' && id) { url += `?id=eq.${id}`; }
-        try {
-            const res = await fetch(url, options);
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            if (method === 'GET') return await res.json();
-            return { success: true, data: data };
-        } catch (e) {
-            console.warn('Supabase error:', e);
-            return { error: e.message };
-        }
-    },
-    async getUsers() { return await this.query('users'); },
-    async getTasks() { return await this.query('tasks'); },
-    async getAttendance() { return await this.query('attendance'); },
-    async getRules() { return await this.query('rules'); },
-    async getDrugs() { return await this.query('drugs'); },
-    async getSales() { return await this.query('sales'); },
-    async getPatients() { return await this.query('patients'); },
-    async getBonuses() { return await this.query('bonuses'); },
-    async getWinner() { return await this.query('winner'); },
-    async getStock() { return await this.query('stock'); },
-    async addUser(data) { return await this.query('users', 'POST', data); },
-    async addTask(data) { return await this.query('tasks', 'POST', data); },
-    async addAttendance(data) { return await this.query('attendance', 'POST', data); },
-    async addRule(data) { return await this.query('rules', 'POST', data); },
-    async addDrug(data) { return await this.query('drugs', 'POST', data); },
-    async addSale(data) { return await this.query('sales', 'POST', data); },
-    async addPatient(data) { return await this.query('patients', 'POST', data); },
-    async addBonus(data) { return await this.query('bonuses', 'POST', data); },
-    async addStock(data) { return await this.query('stock', 'POST', data); },
-    async updateTask(id, data) { return await this.query('tasks', 'PATCH', data, id); },
-    async updateUser(id, data) { return await this.query('users', 'PATCH', data, id); },
-    async updateDrug(id, data) { return await this.query('drugs', 'PATCH', data, id); },
-    async updateStock(id, data) { return await this.query('stock', 'PATCH', data, id); },
-    async updateWinner(id, data) { return await this.query('winner', 'PATCH', data, id); },
-    async deleteTask(id) { return await this.query('tasks', 'DELETE', null, id); },
-    async deleteUser(id) { return await this.query('users', 'DELETE', null, id); },
-    async deleteRule(id) { return await this.query('rules', 'DELETE', null, id); },
-    async deleteDrug(id) { return await this.query('drugs', 'DELETE', null, id); },
-    async deletePatient(id) { return await this.query('patients', 'DELETE', null, id); }
-};
-
-// ====================================================================
-// DATA STORE
-// ====================================================================
-const ADMIN_ID = '1616';
-const ADMIN_PASS = '1616';
-const STORAGE_KEY = 'dr_william_data_v35';
-
-let db = loadData();
-let currentUser = null;
-let currentPage = 'dashboard';
-let calendarMonth = new Date().getMonth();
-let calendarYear = new Date().getFullYear();
-let workTimerInterval = null;
-let voiceReminderInterval = null;
-
-const REQUIRED_HOURS = 10;
-const MIN_WORK_HOURS = 1.67;
-
-function loadData() {
-    try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) {
-            return {
-                users: [{ id: ADMIN_ID, name: 'Admin', password: ADMIN_PASS, role: 'admin', phone: '0712345678' }],
-                tasks: [],
-                attendance: [],
-                rules: [],
-                drugs: [],
-                sales: [],
-                patients: [],
-                bonuses: [],
-                stock: [],
-                winner: { user_id: null, amount: 0, name: 'Hakuna' },
-                currentUser: null
-            };
-        }
-        return JSON.parse(raw);
-    } catch (e) {
-        return {
-            users: [{ id: ADMIN_ID, name: 'Admin', password: ADMIN_PASS, role: 'admin', phone: '0712345678' }],
-            tasks: [],
-            attendance: [],
-            rules: [],
-            drugs: [],
-            sales: [],
-            patients: [],
-            bonuses: [],
-            stock: [],
-            winner: { user_id: null, amount: 0, name: 'Hakuna' },
-            currentUser: null
-        };
-    }
-}
-
-function saveData() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); } catch (e) {}
-}
-
-// ====================================================================
-// HELPERS
-// ====================================================================
-function getTodayStr() {
-    const d = new Date();
-    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-}
-
-function escapeHtml(str) {
-    if (!str) return '';
-    const d = document.createElement('div');
-    d.textContent = str;
-    return d.innerHTML;
-}
-
-function showToast(text, type = '') {
-    const stack = document.getElementById('toastStack');
-    const el = document.createElement('div');
-    el.className = 'toast' + (type ? ' ' + type : '');
-    el.textContent = text;
-    stack.appendChild(el);
-    setTimeout(() => {
-        el.style.opacity = '0';
-        el.style.transition = 'opacity 0.3s';
-        setTimeout(() => el.remove(), 300);
-    }, 8000);
-}
-
-function formatTime(seconds) {
-    const h = Math.floor(seconds / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    const s = Math.floor(seconds % 60);
-    return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-}
-
-function speakText(text) {
-    if (!('speechSynthesis' in window)) return;
-    try {
-        window.speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = 'sw-TZ';
-        utter.rate = 0.85;
-        const voices = window.speechSynthesis.getVoices();
-        const swVoice = voices.find(v => v.lang.startsWith('sw'));
-        if (swVoice) utter.voice = swVoice;
-        window.speechSynthesis.speak(utter);
-    } catch (e) { console.warn('Speech failed', e); }
-}
-
-function getWorkHoursForDay(userId, date) {
-    const record = db.attendance.find(a => a.user_id === userId && a.date === date);
-    if (!record || !record.check_in) return 0;
-    const [h, m, s] = record.check_in.split(':').map(Number);
-    const start = new Date();
-    start.setHours(h, m, s || 0, 0);
-    const end = record.check_out ? new Date() : new Date();
-    if (record.check_out) {
-        const [h2, m2, s2] = record.check_out.split(':').map(Number);
-        end.setHours(h2, m2, s2 || 0, 0);
-    }
-    return (end - start) / 3600000;
-}
-
-// ====================================================================
-// SYNC DATA
-// ====================================================================
-async function syncData() {
-    const dot = document.getElementById('syncDot');
-    const text = document.getElementById('syncText');
-    dot.className = 'sync-dot syncing';
-    text.textContent = 'Inasawazisha...';
-
-    try {
-        const users = await supabase.getUsers();
-        const tasks = await supabase.getTasks();
-        const attendance = await supabase.getAttendance();
-        const rules = await supabase.getRules();
-        const drugs = await supabase.getDrugs();
-        const sales = await supabase.getSales();
-        const patients = await supabase.getPatients();
-        const bonuses = await supabase.getBonuses();
-        const stock = await supabase.getStock();
-        const winner = await supabase.getWinner();
-
-        if (users && !users.error) db.users = users;
-        if (tasks && !tasks.error) db.tasks = tasks;
-        if (attendance && !attendance.error) db.attendance = attendance;
-        if (rules && !rules.error) db.rules = rules;
-        if (drugs && !drugs.error) db.drugs = drugs;
-        if (sales && !sales.error) db.sales = sales;
-        if (patients && !patients.error) db.patients = patients;
-        if (bonuses && !bonuses.error) db.bonuses = bonuses;
-        if (stock && !stock.error) db.stock = stock;
-        if (winner && !winner.error && winner.length > 0) db.winner = winner[0];
-
-        if (!db.users.find(u => u.id === ADMIN_ID)) {
-            await supabase.addUser({ id: ADMIN_ID, name: 'Admin', password: ADMIN_PASS, role: 'admin', phone: '0712345678' });
-            const users2 = await supabase.getUsers();
-            if (users2 && !users2.error) db.users = users2;
-        }
-
-        if (currentUser) {
-            const user = db.users.find(u => u.id === currentUser.id);
-            if (user) currentUser = user;
-        }
-
-        saveData();
-        dot.className = 'sync-dot online';
-        text.textContent = 'Cloud';
-        showToast('✅ Data imesawazishwa!', 'ok');
-        renderAll();
-        generateAIReport();
-        startVoiceReminders();
-    } catch (e) {
-        dot.className = 'sync-dot offline';
-        text.textContent = 'Offline';
-        showToast('⚠️ Offline mode - data zimehifadhiwa ndani', 'warn');
-        console.warn('Sync error:', e);
-        // Still render with local data
-        renderAll();
-        startVoiceReminders();
-    }
-}
-
-// ====================================================================
-// VOICE REMINDERS - Inatoa sauti hata offline
-// ====================================================================
-function startVoiceReminders() {
-    if (voiceReminderInterval) { clearInterval(voiceReminderInterval); voiceReminderInterval = null; }
-    
-    voiceReminderInterval = setInterval(() => {
-        if (!currentUser) return;
-        
-        const today = getTodayStr();
-        const userTasks = db.tasks.filter(t => 
-            t.user_id === currentUser.id && 
-            t.date === today && 
-            !t.done && 
-            !t.approved
-        );
-        
-        const badge = document.getElementById('voiceReminderBadge');
-        const text = document.getElementById('voiceReminderText');
-        
-        if (userTasks.length > 0) {
-            const taskNames = userTasks.map(t => t.name).join(', ');
-            const msg = `Kumbuka! Bado una majukumu ${userTasks.length} yaliyobaki leo: ${taskNames}`;
             
-            // Show badge
-            if (badge) {
-                badge.style.display = 'block';
-                if (text) text.textContent = '🔊 ' + msg;
-            }
-            
-            // Speak
-            speakText(msg);
-            showToast('🔊 ' + msg, 'reminder');
-            
-            // Update greeting
-            const greeting = document.getElementById('dashboardGreeting');
-            if (greeting) {
-                greeting.innerHTML = `
-                    <span style="color:var(--red);">
-                        <i class="fa-solid fa-bell"></i> 
-                        KUMBUKA: Una ${userTasks.length} majukumu yaliyobaki: ${taskNames}
-                    </span>
-                `;
-            }
-        } else {
-            if (badge) badge.style.display = 'none';
-            
-            // Check if all tasks are done but not approved
-            const pendingApproval = db.tasks.filter(t => 
-                t.user_id === currentUser.id && 
-                t.date === today && 
-                t.done && 
-                !t.approved
-            );
-            
-            if (pendingApproval.length > 0) {
-                const msg = `Una majukumu ${pendingApproval.length} yamekamilika lakini yanasubiri kuthibitishwa na Admin.`;
-                speakText(msg);
-                showToast('📌 ' + msg, 'reminder');
-                if (text) text.textContent = '📌 ' + msg;
-                if (badge) badge.style.display = 'block';
-            }
-        }
-    }, 300000); // Kila dakika 5
-}
-
-// ====================================================================
-// LOGIN / LOGOUT
-// ====================================================================
-async function handleLogin() {
-    const id = document.getElementById('loginId').value.trim();
-    const pass = document.getElementById('loginPass').value.trim();
-
-    if (!id || !pass) {
-        document.getElementById('loginError').textContent = 'Tafadhali jaza namba na nenosiri!';
-        document.getElementById('loginError').style.display = 'block';
-        return;
-    }
-
-    try {
-        const users = await supabase.getUsers();
-        if (users && !users.error) { db.users = users; saveData(); }
-    } catch (e) {}
-
-    if (id === ADMIN_ID && pass === ADMIN_PASS) {
-        let admin = db.users.find(u => u.id === ADMIN_ID);
-        if (!admin) {
-            admin = { id: ADMIN_ID, name: 'Admin', password: ADMIN_PASS, role: 'admin', phone: '0712345678' };
-            db.users.push(admin);
-            saveData();
-        }
-        currentUser = admin;
-    } else {
-        const user = db.users.find(u => u.id === id && u.password === pass);
-        if (!user) {
-            document.getElementById('loginError').textContent = 'Namba au nenosiri si sahihi!';
-            document.getElementById('loginError').style.display = 'block';
-            return;
-        }
-        currentUser = user;
-    }
-
-    document.getElementById('loginError').style.display = 'none';
-    db.currentUser = currentUser;
-    saveData();
-
-    document.getElementById('loginPage').style.display = 'none';
-    document.getElementById('mainApp').style.display = 'block';
-
-    const adminTab = document.getElementById('adminTab');
-    const isAdmin = currentUser && currentUser.id === ADMIN_ID;
-    
-    if (isAdmin) {
-        adminTab.style.display = 'inline-flex';
-        document.getElementById('addRuleBtn').style.display = 'inline-block';
-        document.getElementById('addDrugBtn').style.display = 'inline-block';
-        document.getElementById('adminStockForm').style.display = 'block';
-    } else {
-        adminTab.style.display = 'none';
-        document.getElementById('addRuleBtn').style.display = 'none';
-        document.getElementById('addDrugBtn').style.display = 'none';
-        document.getElementById('adminStockForm').style.display = 'none';
-    }
-
-    document.getElementById('userNameDisplay').textContent = currentUser.name;
-    document.getElementById('userIdDisplay').textContent = '(***)';
-    document.getElementById('userRoleDisplay').textContent = isAdmin ? 'Msimamizi' : 'Mfanyakazi';
-
-    try {
-        const tasks = await supabase.getTasks();
-        if (tasks && !tasks.error) db.tasks = tasks;
-        const attendance = await supabase.getAttendance();
-        if (attendance && !attendance.error) db.attendance = attendance;
-        const rules = await supabase.getRules();
-        if (rules && !rules.error) db.rules = rules;
-        const drugs = await supabase.getDrugs();
-        if (drugs && !drugs.error) db.drugs = drugs;
-        const sales = await supabase.getSales();
-        if (sales && !sales.error) db.sales = sales;
-        const patients = await supabase.getPatients();
-        if (patients && !patients.error) db.patients = patients;
-        const bonuses = await supabase.getBonuses();
-        if (bonuses && !bonuses.error) db.bonuses = bonuses;
-        const stock = await supabase.getStock();
-        if (stock && !stock.error) db.stock = stock;
-        const winner = await supabase.getWinner();
-        if (winner && !winner.error && winner.length > 0) db.winner = winner[0];
-        saveData();
-    } catch (e) {}
-
-    renderAll();
-    showToast('Karibu ' + currentUser.name + '!', 'ok');
-    speakText('Karibu ' + currentUser.name);
-    generateAIReport();
-    updateBonus3D();
-    startVoiceReminders();
-}
-
-function handleLogout() {
-    stopWorkTimer();
-    if (voiceReminderInterval) { clearInterval(voiceReminderInterval); voiceReminderInterval = null; }
-    currentUser = null;
-    db.currentUser = null;
-    saveData();
-    document.getElementById('mainApp').style.display = 'none';
-    document.getElementById('loginPage').style.display = 'flex';
-    document.getElementById('loginId').value = '';
-    document.getElementById('loginPass').value = '';
-    showToast('Umefanikiwa kutoka!', 'ok');
-}
-
-function toggleLoginPass() {
-    const input = document.getElementById('loginPass');
-    const icon = document.querySelector('.password-toggle i');
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.className = 'fa-regular fa-eye-slash';
-    } else {
-        input.type = 'password';
-        icon.className = 'fa-regular fa-eye';
-    }
-}
-
-// ====================================================================
-// NAVIGATION
-// ====================================================================
-function showPage(page) {
-    currentPage = page;
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-
-    const target = document.getElementById('page-' + page);
-    if (target) target.classList.add('active');
-
-    const tabs = document.querySelectorAll('.nav-tab');
-    const pages = ['dashboard', 'tasks', 'attendance', 'performance', 'calendar', 'rules', 'drugs', 'stock', 'sales', 'patients', 'admin'];
-    const index = pages.indexOf(page);
-    if (tabs[index]) tabs[index].classList.add('active');
-
-    renderPage(page);
-    if (page === 'admin' && currentUser && currentUser.role === 'admin') {
-        generateAIReport();
-        populateAdminSelects();
-        renderApproveTasks();
-    }
-    if (page === 'sales') populateSaleSelects();
-    if (page === 'stock') populateStockSelects();
-}
-
-function renderPage(page) {
-    switch (page) {
-        case 'dashboard': renderDashboard(); break;
-        case 'tasks': renderTasks(); break;
-        case 'attendance': renderAttendance(); break;
-        case 'performance': renderPerformance(); break;
-        case 'calendar': renderCalendar(); break;
-        case 'rules': renderRules(); break;
-        case 'drugs': renderDrugs(); break;
-        case 'stock': renderStock(); break;
-        case 'sales': renderSales(); break;
-        case 'patients': renderPatients(); break;
-        case 'admin': renderAdmin(); break;
-    }
-}
-
-// ====================================================================
-// RENDER: STAFF INFO
-// ====================================================================
-function renderStaffInfo() {
-    if (!currentUser) return;
-
-    document.getElementById('staffName').textContent = currentUser.name || '-';
-    document.getElementById('staffId').textContent = currentUser.id || '-';
-    document.getElementById('staffPhone').textContent = currentUser.phone || '-';
-
-    const today = getTodayStr();
-    const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === today);
-
-    if (record) {
-        document.getElementById('staffCheckIn').textContent = record.check_in || '-';
-        document.getElementById('staffCheckOut').textContent = record.check_out || '-';
-
-        if (record.check_in) {
-            const [h, m, s] = record.check_in.split(':').map(Number);
-            const start = new Date();
-            start.setHours(h, m, s || 0, 0);
-            const end = record.check_out ? new Date() : new Date();
-            if (record.check_out) {
-                const [h2, m2, s2] = record.check_out.split(':').map(Number);
-                end.setHours(h2, m2, s2 || 0, 0);
-            }
-            const diff = (end - start) / 1000;
-            document.getElementById('staffWorkTime').textContent = diff > 0 ? formatTime(diff) : '00:00:00';
-            const hours = diff / 3600;
-            document.getElementById('staffHoursToday').textContent = hours.toFixed(1) + ' / ' + REQUIRED_HOURS + ' saa';
-        } else {
-            document.getElementById('staffWorkTime').textContent = '-';
-            document.getElementById('staffHoursToday').textContent = '0 / ' + REQUIRED_HOURS + ' saa';
-        }
-
-        let status = '⚪ Hajajihusisha';
-        if (record.check_in && !record.check_out) {
-            const hours = getWorkHoursForDay(currentUser.id, today);
-            if (hours >= REQUIRED_HOURS) status = '✅ Saa 10 zimekamilika!';
-            else status = '🟢 Kajihusisha - Saa ' + hours.toFixed(1) + '/' + REQUIRED_HOURS;
-        } else if (record.check_in && record.check_out) {
-            const hours = getWorkHoursForDay(currentUser.id, today);
-            if (hours >= REQUIRED_HOURS) status = '✅ Amemaliza - Saa 10 zimekamilika';
-            else status = '⚠️ Amemaliza - Saa ' + hours.toFixed(1) + '/' + REQUIRED_HOURS + ' (Haijakamilika)';
-        }
-        document.getElementById('staffStatus').textContent = status;
-
-        if (record.check_in && !record.check_out) {
-            startWorkTimer(record.check_in);
-        } else {
-            stopWorkTimer();
-        }
-    } else {
-        document.getElementById('staffCheckIn').textContent = '-';
-        document.getElementById('staffCheckOut').textContent = '-';
-        document.getElementById('staffWorkTime').textContent = '-';
-        document.getElementById('staffStatus').textContent = '⚪ Hajajihusisha';
-        document.getElementById('staffHoursToday').textContent = '0 / ' + REQUIRED_HOURS + ' saa';
-        stopWorkTimer();
-    }
-}
-
-// ====================================================================
-// TIMERS
-// ====================================================================
-function startWorkTimer(checkInTime) {
-    if (workTimerInterval) { clearInterval(workTimerInterval); workTimerInterval = null; }
-    if (!checkInTime) { document.getElementById('workTimerDisplay').textContent = '00:00:00'; return; }
-    const now = new Date();
-    const [h, m, s] = checkInTime.split(':').map(Number);
-    const start = new Date(now);
-    start.setHours(h, m, s || 0, 0);
-
-    workTimerInterval = setInterval(() => {
-        const current = new Date();
-        const diff = (current - start) / 1000;
-        if (diff > 0) {
-            const timerDisplay = document.getElementById('workTimerDisplay');
-            const hours = diff / 3600;
-            let status = '';
-            const statusEl = document.getElementById('workStatusDisplay');
-
-            if (hours >= REQUIRED_HOURS) {
-                status = ' ✅ Saa 10 zimekamilika!';
-                timerDisplay.style.color = 'var(--green)';
-                if (statusEl) statusEl.textContent = '✅ Saa 10 zimekamilika! Hongera!';
-                if (statusEl) statusEl.style.color = 'var(--green)';
-            } else if (hours >= REQUIRED_HOURS - 1) {
-                status = ' ⚠️ Karibu kumaliza!';
-                timerDisplay.style.color = 'var(--orange)';
-                if (statusEl) statusEl.textContent = '⚠️ Karibu kumaliza! Saa ' + hours.toFixed(1) + '/' + REQUIRED_HOURS;
-                if (statusEl) statusEl.style.color = 'var(--orange)';
-            } else {
-                timerDisplay.style.color = 'var(--gold)';
-                if (statusEl) statusEl.textContent = '⏳ Kazi inaendelea... Saa ' + hours.toFixed(1) + '/' + REQUIRED_HOURS;
-                if (statusEl) statusEl.style.color = 'var(--gold)';
-            }
-            timerDisplay.textContent = formatTime(diff) + status;
-        }
-    }, 1000);
-}
-
-function stopWorkTimer() {
-    if (workTimerInterval) { clearInterval(workTimerInterval); workTimerInterval = null; }
-    const timerDisplay = document.getElementById('workTimerDisplay');
-    if (timerDisplay) timerDisplay.textContent = '00:00:00';
-    const statusEl = document.getElementById('workStatusDisplay');
-    if (statusEl) statusEl.textContent = '⏳ Subiri kuingia';
-}
-
-// ====================================================================
-// RENDER: DASHBOARD
-// ====================================================================
-function renderDashboard() {
-    if (!currentUser) return;
-    renderStaffInfo();
-
-    const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
-    const today = getTodayStr();
-    const todayTasks = userTasks.filter(t => t.date === today);
-    const done = todayTasks.filter(t => t.done).length;
-    const approved = todayTasks.filter(t => t.approved).length;
-    const total = todayTasks.length;
-    const pending = total - done;
-    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-
-    document.getElementById('statTasksTotal').textContent = total;
-    document.getElementById('statTasksDone').textContent = done;
-    document.getElementById('statTasksPending').textContent = pending;
-    document.getElementById('statPerformance').textContent = pct + '%';
-
-    const greeting = document.getElementById('dashboardGreeting');
-    if (total === 0) greeting.textContent = '🎉 Hakuna majukumu leo! Pumzika au ongeza majukumu mapya.';
-    else if (done === total && approved === total) greeting.textContent = '🎉 Hongera! Majukumu yote yamekamilika na kuthibitishwa! Utendaji ' + pct + '%';
-    else if (done === total) greeting.textContent = '✅ Majukumu yote yamekamilika! Yanasubiri kuthibitishwa na Admin.';
-    else greeting.textContent = '📋 Una ' + pending + ' majukumu yaliyobaki leo. Endelea kuyatekeleza!';
-
-    const container = document.getElementById('dashboardTaskList');
-    if (todayTasks.length === 0) {
-        container.innerHTML = '<div class="task-list-empty">Hakuna majukumu ya leo.</div>';
-        return;
-    }
-    container.innerHTML = todayTasks.slice(0, 5).map(t => `
-        <div class="task-item ${t.done ? 'done' : ''}">
-            <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggleTask('${t.id}')">${t.done ? '✓' : ''}</div>
-            <div class="task-info">
-                <div class="task-name">${escapeHtml(t.name)}</div>
-                <div class="task-meta">${t.priority === 'high' ? '🔴' : t.priority === 'medium' ? '🟡' : '🟢'} ${t.description || ''}</div>
-            </div>
-            <span class="task-status ${t.approved ? 'approved' : (t.done ? 'done' : 'pending')}">
-                ${t.approved ? '✅ Imethibitishwa' : (t.done ? '⏳ Inasubiri' : '⏳ Inasubiri')}
-            </span>
-        </div>
-    `).join('');
-
-    updateBonus3D();
-}
-
-// ====================================================================
-// RENDER: TASKS
-// ====================================================================
-function renderTasks() {
-    if (!currentUser) return;
-
-    document.getElementById('taskDateDisplay').textContent = new Date().toLocaleDateString('sw-TZ', {
-        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-    });
-
-    const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
-    const today = getTodayStr();
-    const todayTasks = userTasks.filter(t => t.date === today);
-    const container = document.getElementById('taskListContainer');
-
-    if (todayTasks.length === 0) {
-        container.innerHTML = `
-            <div class="task-list-empty">
-                <i class="fa-solid fa-face-smile" style="font-size:32px;display:block;margin-bottom:10px;"></i>
-                Hakuna majukumu ya leo!
-            </div>
-        `;
-        return;
-    }
-
-    const sorted = [...todayTasks].sort((a, b) => {
-        if (a.done !== b.done) return a.done ? 1 : -1;
-        if (a.approved !== b.approved) return a.approved ? 1 : -1;
-        const order = { high: 0, medium: 1, low: 2 };
-        return (order[a.priority] || 1) - (order[b.priority] || 1);
-    });
-
-    container.innerHTML = sorted.map(t => `
-        <div class="task-item ${t.done ? 'done' : ''}">
-            <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggleTask('${t.id}')">${t.done ? '✓' : ''}</div>
-            <div class="task-info">
-                <div class="task-name">${escapeHtml(t.name)}</div>
-                <div class="task-meta">
-                    ${t.priority === 'high' ? '🔴 Juu' : t.priority === 'medium' ? '🟡 Kati' : '🟢 Chini'}
-                    ${t.description ? '· ' + escapeHtml(t.description) : ''}
-                    ${t.approved ? '· ✅ Imethibitishwa' : (t.done ? '· ⏳ Inasubiri uthibitisho' : '')}
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                <div class="patient-count">
+                    Jumla: <strong id="patientTotalCount">0</strong> · 
+                    Wamechukua Dawa: <strong style="color:var(--green);" id="patientTakenCount">0</strong> · 
+                    Hawajachukua: <strong style="color:var(--red);" id="patientNotTakenCount">0</strong>
                 </div>
-            </div>
-            <span class="task-status ${t.approved ? 'approved' : (t.done ? 'done' : 'pending')}">
-                ${t.approved ? '✅ Imethibitishwa' : (t.done ? '⏳ Inasubiri' : '⏳ Inasubiri')}
-            </span>
-            ${currentUser.role === 'admin' && !t.approved && t.done ? 
-                `<button class="btn-edit btn-sm" onclick="approveTask('${t.id}')"><i class="fa-solid fa-check-double"></i> Thibitisha</button>` : ''}
-            ${currentUser.role === 'admin' ? 
-                `<button class="btn-danger btn-sm" onclick="deleteTask('${t.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
-        </div>
-    `).join('');
-}
-
-// ====================================================================
-// RENDER: ATTENDANCE
-// ====================================================================
-function loadAttendanceForDate() {
-    renderAttendance();
-}
-
-function renderAttendance() {
-    if (!currentUser) return;
-    renderStaffInfo();
-
-    const picker = document.getElementById('attendanceDatePicker');
-    const today = getTodayStr();
-    if (!picker.value) picker.value = today;
-    const selectedDate = picker.value || today;
-
-    const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === selectedDate);
-
-    const checkInTime = document.getElementById('checkInTime');
-    const checkOutTime = document.getElementById('checkOutTime');
-    const checkInStatus = document.getElementById('checkInStatus');
-    const checkOutStatus = document.getElementById('checkOutStatus');
-    const checkInBtn = document.getElementById('checkInBtn');
-    const checkOutBtn = document.getElementById('checkOutBtn');
-
-    if (record) {
-        checkInTime.textContent = record.check_in || '--:--:--';
-        checkOutTime.textContent = record.check_out || '--:--:--';
-        
-        const hours = getWorkHoursForDay(currentUser.id, selectedDate);
-        const isComplete = hours >= REQUIRED_HOURS;
-        const isLate = record.check_in && hours < MIN_WORK_HOURS && record.check_out;
-        
-        checkInStatus.textContent = record.check_in ? (isLate ? '⚠️ Imechelewa' : (isComplete ? '✅ Kamili' : '🟡 Imeingia')) : 'Bado';
-        checkInStatus.className = 'status-badge ' + (record.check_in ? (isLate ? 'late' : (isComplete ? 'in' : 'pending')) : 'pending');
-        
-        checkOutStatus.textContent = record.check_out ? (isLate ? '⚠️ Imechelewa' : '✅ Imetoka') : 'Bado';
-        checkOutStatus.className = 'status-badge ' + (record.check_out ? (isLate ? 'late' : 'out') : 'pending');
-        
-        checkInBtn.disabled = !!record.check_in;
-        checkOutBtn.disabled = !record.check_in || !!record.check_out;
-        checkInBtn.style.opacity = record.check_in ? '0.5' : '1';
-        checkOutBtn.style.opacity = (!record.check_in || record.check_out) ? '0.5' : '1';
-        
-        if (selectedDate === today && record.check_in && !record.check_out) {
-            startWorkTimer(record.check_in);
-        } else {
-            stopWorkTimer();
-        }
-        
-        const statusEl = document.getElementById('workStatusDisplay');
-        if (record.check_in && record.check_out) {
-            if (isLate) {
-                statusEl.textContent = '⚠️ Umechelewa! Muda wa kazi ni chini ya saa 1:40';
-                statusEl.style.color = 'var(--red)';
-            } else if (isComplete) {
-                statusEl.textContent = '✅ Saa 10 zimekamilika! Hongera!';
-                statusEl.style.color = 'var(--green)';
-            } else {
-                statusEl.textContent = '⚠️ Haijakamilika: ' + hours.toFixed(1) + '/' + REQUIRED_HOURS + ' saa';
-                statusEl.style.color = 'var(--orange)';
-            }
-        } else if (record.check_in && !record.check_out) {
-            statusEl.textContent = '⏳ Kazi inaendelea...';
-            statusEl.style.color = 'var(--gold)';
-        }
-    } else {
-        checkInTime.textContent = '--:--:--';
-        checkOutTime.textContent = '--:--:--';
-        checkInStatus.textContent = 'Bado';
-        checkInStatus.className = 'status-badge pending';
-        checkOutStatus.textContent = 'Bado';
-        checkOutStatus.className = 'status-badge pending';
-        checkInBtn.disabled = false;
-        checkOutBtn.disabled = true;
-        checkInBtn.style.opacity = '1';
-        checkOutBtn.style.opacity = '0.5';
-        stopWorkTimer();
-        const statusEl = document.getElementById('workStatusDisplay');
-        statusEl.textContent = '⏳ Subiri kuingia';
-        statusEl.style.color = 'var(--text-faint)';
-    }
-
-    const historyContainer = document.getElementById('attendanceHistory');
-    const userRecords = db.attendance.filter(a => a.user_id === currentUser.id).sort((a, b) => b.date.localeCompare(a.date));
-
-    if (userRecords.length === 0) {
-        historyContainer.innerHTML = '<div class="task-list-empty">Hakuna rekodi ya mahudhurio.</div>';
-        return;
-    }
-
-    historyContainer.innerHTML = userRecords.slice(0, 20).map(a => {
-        const hours = getWorkHoursForDay(currentUser.id, a.date);
-        const isComplete = hours >= REQUIRED_HOURS;
-        const isLate = a.check_in && hours < MIN_WORK_HOURS && a.check_out;
-        return `
-            <div class="task-item" style="margin-bottom:4px;padding:8px 12px;">
-                <div class="task-info">
-                    <div class="task-name">${a.date}</div>
-                    <div class="task-meta">
-                        🟢 Kuingia: ${a.check_in || '--:--'} 
-                        ${a.check_out ? '🔴 Kutoka: ' + a.check_out : '⚠️ Hajatoka'}
-                        ${a.check_in ? ' · Saa: ' + hours.toFixed(1) + '/' + REQUIRED_HOURS : ''}
-                        ${isLate ? ' ⚠️ Imechelewa (<1:40)' : ''}
-                        ${a.check_in && isComplete ? ' ✅ Kamili' : ''}
-                    </div>
-                </div>
-                <span class="task-status ${a.check_out ? (isComplete ? 'done' : (isLate ? 'late' : 'pending')) : 'pending'}">
-                    ${a.check_out ? (isComplete ? '✅ Kamili' : (isLate ? '⚠️ Imechelewa' : '⚠️ Haijakamilika')) : '⏳ Inasubiri'}
-                </span>
-            </div>
-        `;
-    }).join('');
-}
-
-// ====================================================================
-// RENDER: PERFORMANCE
-// ====================================================================
-function renderPerformance() {
-    if (!currentUser) return;
-
-    const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
-    const today = getTodayStr();
-    const todayTasks = userTasks.filter(t => t.date === today);
-    const done = todayTasks.filter(t => t.done).length;
-    const approved = todayTasks.filter(t => t.approved).length;
-    const total = todayTasks.length;
-    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-
-    document.getElementById('performanceValue').textContent = pct + '%';
-
-    const msg = document.getElementById('performanceMessage');
-    if (total === 0) msg.textContent = '📋 Hakuna majukumu ya leo. Ongeza majukumu ili kuona utendaji wako.';
-    else if (done === total && approved === total) msg.textContent = '🎉 Hongera! Majukumu yote yamekamilika na kuthibitishwa! Utendaji bora!';
-    else if (done === total) msg.textContent = '✅ Majukumu yote yamekamilika! Yanasubiri kuthibitishwa na Admin.';
-    else if (pct >= 50) msg.textContent = '👍 Vizuri! Umekamilisha ' + pct + '% ya majukumu yako.';
-    else msg.textContent = '💪 Bado una ' + (total - done) + ' majukumu. Weka nguvu!';
-
-    const monthlyContainer = document.getElementById('monthlyPerformance');
-    const monthStart = today.slice(0, 7);
-    const monthTasks = userTasks.filter(t => t.date.startsWith(monthStart));
-    const monthDone = monthTasks.filter(t => t.done).length;
-    const monthTotal = monthTasks.length;
-    const monthPct = monthTotal > 0 ? Math.round((monthDone / monthTotal) * 100) : 0;
-
-    if (monthTotal === 0) {
-        monthlyContainer.innerHTML = '<div class="task-list-empty">Hakuna data ya mwezi huu.</div>';
-    } else {
-        const days = {};
-        monthTasks.forEach(t => {
-            if (!days[t.date]) days[t.date] = { total: 0, done: 0 };
-            days[t.date].total++;
-            if (t.done) days[t.date].done++;
-        });
-        const sortedDays = Object.keys(days).sort();
-
-        monthlyContainer.innerHTML = `
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
-                <span style="font-size:13px;color:var(--text-dim);">
-                    Mwezi huu: <strong style="color:var(--gold);">${monthDone}/${monthTotal}</strong> 
-                    (<strong style="color:var(--gold);">${monthPct}%</strong>)
-                </span>
-            </div>
-            <div style="display:flex;gap:4px;align-items:flex-end;height:60px;overflow-x:auto;padding:4px 0;">
-                ${sortedDays.map(d => {
-                    const pct = days[d].total > 0 ? Math.round((days[d].done / days[d].total) * 100) : 0;
-                    const height = Math.max(4, (pct / 100) * 50);
-                    const isToday = d === today;
-                    return `
-                        <div style="display:flex;flex-direction:column;align-items:center;min-width:24px;">
-                            <div style="height:${height}px;width:14px;background:${pct === 100 ? 'var(--green)' : pct >= 50 ? 'var(--gold)' : 'var(--red)'};border-radius:4px 4px 0 0;border:${isToday ? '2px solid var(--gold)' : 'none'};"></div>
-                            <span style="font-size:7px;color:var(--text-faint);margin-top:2px;">${d.slice(5)}</span>
-                        </div>
-                    `;
-                }).join('')}
-            </div>
-        `;
-    }
-
-    // Bonus display
-    const bonusContainer = document.getElementById('bonusDisplay');
-    const userBonuses = db.bonuses ? db.bonuses.filter(b => b.user_id === currentUser.id) : [];
-    if (userBonuses.length === 0) {
-        bonusContainer.innerHTML = '<div class="task-list-empty">Hakuna bonus bado.</div>';
-    } else {
-        const totalBonus = userBonuses.reduce((sum, b) => sum + (b.amount || 0), 0);
-        bonusContainer.innerHTML = `
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-                <span style="color:var(--gold);font-weight:600;">🏆 Jumla ya Bonus: TSh ${totalBonus.toLocaleString()}</span>
-            </div>
-            ${userBonuses.slice(0, 10).map(b => `
-                <div class="task-item" style="margin-top:4px;padding:6px 10px;">
-                    <div class="task-info">
-                        <div class="task-name" style="font-size:13px;">${escapeHtml(b.reason || 'Bonus')}</div>
-                        <div class="task-meta">${b.date || ''}</div>
-                    </div>
-                    <span style="color:var(--gold);font-weight:600;">TSh ${(b.amount || 0).toLocaleString()}</span>
-                </div>
-            `).join('')}
-        `;
-    }
-}
-
-// ====================================================================
-// RENDER: CALENDAR
-// ====================================================================
-function renderCalendar() {
-    if (!currentUser) return;
-
-    const monthNames = ['Januari', 'Februari', 'Machi', 'Aprili', 'Mei', 'Juni', 'Juli', 'Agosti', 'Septemba', 'Oktoba', 'Novemba', 'Desemba'];
-    document.getElementById('calendarMonthYear').textContent = monthNames[calendarMonth] + ' ' + calendarYear;
-
-    const firstDay = new Date(calendarYear, calendarMonth, 1).getDay();
-    const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
-    const today = getTodayStr();
-
-    const grid = document.getElementById('calendarGrid');
-    let html = '';
-    const dayLabels = ['J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J1'];
-    dayLabels.forEach(label => {
-        html += `<div class="day" style="font-weight:600;color:var(--text-dim);font-size:9px;">${label}</div>`;
-    });
-
-    for (let i = 0; i < firstDay; i++) { html += `<div class="day"></div>`; }
-
-    const userTasks = db.tasks.filter(t => t.user_id === currentUser.id);
-    const taskDates = new Set(userTasks.map(t => t.date));
-
-    const attendanceDates = new Set();
-    db.attendance.filter(a => a.user_id === currentUser.id && a.check_in).forEach(a => {
-        attendanceDates.add(a.date);
-    });
-
-    for (let d = 1; d <= daysInMonth; d++) {
-        const dateStr = calendarYear + '-' + String(calendarMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
-        const hasTask = taskDates.has(dateStr);
-        const hasAttendance = attendanceDates.has(dateStr);
-        const isToday = dateStr === today;
-
-        let badges = '';
-        if (hasTask) badges += '<div style="font-size:7px;color:var(--gold);">●</div>';
-        if (hasAttendance) badges += '<div style="font-size:7px;color:var(--green);">✓</div>';
-
-        html += `
-            <div class="day ${(hasTask || hasAttendance) ? 'has-task' : ''} ${isToday ? 'today' : ''}" 
-                 onclick="${(hasTask || hasAttendance) ? `showDayDetails('${dateStr}')` : ''}"
-                 style="${isToday ? 'font-weight:700;' : ''}">
-                <div class="day-num">${d}</div>
-                ${badges}
-            </div>
-        `;
-    }
-
-    grid.innerHTML = html;
-    showDayDetails(today);
-}
-
-function showDayDetails(dateStr) {
-    const container = document.getElementById('calendarTaskList');
-    const tasks = db.tasks.filter(t => t.user_id === currentUser.id && t.date === dateStr);
-    const attendance = db.attendance.find(a => a.user_id === currentUser.id && a.date === dateStr);
-
-    let html = '';
-    if (attendance && attendance.check_in) {
-        const hours = getWorkHoursForDay(currentUser.id, dateStr);
-        html += `
-            <div class="card" style="padding:10px;margin-bottom:8px;border-color:var(--green);">
-                <div style="font-size:13px;color:var(--green);">
-                    <i class="fa-solid fa-check-circle"></i> Umeingia: ${attendance.check_in || '--:--'}
-                    ${attendance.check_out ? '· Umetoka: ' + attendance.check_out : ''}
-                    · Saa: ${hours.toFixed(1)}
-                </div>
-            </div>
-        `;
-    }
-
-    if (tasks.length === 0) {
-        html += `<div class="task-list-empty">Hakuna majukumu kwa tarehe ${dateStr}.</div>`;
-    } else {
-        html += tasks.map(t => `
-            <div class="task-item ${t.done ? 'done' : ''}" style="margin-bottom:4px;padding:8px 12px;">
-                <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggleTask('${t.id}')">${t.done ? '✓' : ''}</div>
-                <div class="task-info">
-                    <div class="task-name" style="font-size:13px;">${escapeHtml(t.name)}</div>
-                    <div class="task-meta">${t.priority === 'high' ? '🔴' : t.priority === 'medium' ? '🟡' : '🟢'} ${t.description || ''}</div>
-                </div>
-                <span class="task-status ${t.approved ? 'approved' : (t.done ? 'done' : 'pending')}">
-                    ${t.approved ? '✅' : (t.done ? '⏳' : '⏳')}
-                </span>
-            </div>
-        `).join('');
-    }
-
-    container.innerHTML = html;
-}
-
-function changeMonth(delta) {
-    calendarMonth += delta;
-    if (calendarMonth < 0) { calendarMonth = 11; calendarYear--; }
-    if (calendarMonth > 11) { calendarMonth = 0; calendarYear++; }
-    renderCalendar();
-}
-
-// ====================================================================
-// RENDER: RULES
-// ====================================================================
-function renderRules() {
-    const container = document.getElementById('rulesContainer');
-    if (!db.rules || db.rules.length === 0) {
-        container.innerHTML = '<div class="task-list-empty">Hakuna sheria bado.</div>';
-        return;
-    }
-
-    container.innerHTML = db.rules.map(r => `
-        <div class="rule-item">
-            <div class="rule-title">📜 ${escapeHtml(r.title || 'Sheria')}</div>
-            <div class="rule-content">${escapeHtml(r.content || '')}</div>
-            ${currentUser && currentUser.role === 'admin' ? 
-                `<button class="btn-danger btn-sm" style="margin-top:6px;" onclick="deleteRule('${r.id}')"><i class="fa-solid fa-trash"></i> Futa</button>` : ''}
-        </div>
-    `).join('');
-}
-
-async function confirmAddRule() {
-    if (!currentUser || currentUser.role !== 'admin') {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-
-    const title = document.getElementById('ruleTitle').value.trim();
-    const content = document.getElementById('ruleContent').value.trim();
-
-    if (!title || !content) {
-        showToast('Tafadhali jaza maelezo yote', 'warn');
-        return;
-    }
-
-    const rule = {
-        id: 'r' + Date.now() + Math.random().toString(36).substr(2, 4),
-        title: title,
-        content: content
-    };
-
-    await supabase.addRule(rule);
-    await syncData();
-    closeModal('newRuleModal');
-    document.getElementById('ruleTitle').value = '';
-    document.getElementById('ruleContent').value = '';
-    renderRules();
-    showToast('✅ Sheria imeongezwa!', 'ok');
-}
-
-async function deleteRule(ruleId) {
-    if (!currentUser || currentUser.role !== 'admin') {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-    if (!confirm('Je, una uhakika unataka kufuta sheria hii?')) return;
-    await supabase.deleteRule(ruleId);
-    await syncData();
-    renderRules();
-    showToast('Sheria imefutwa', 'warn');
-}
-
-// ====================================================================
-// RENDER: DRUGS
-// ====================================================================
-function renderDrugs() {
-    const container = document.getElementById('drugsContainer');
-    if (!db.drugs || db.drugs.length === 0) {
-        container.innerHTML = '<div class="task-list-empty">Hakuna dawa bado.</div>';
-        return;
-    }
-
-    container.innerHTML = db.drugs.map(d => `
-        <div class="stock-item">
-            <div class="stock-img">💊</div>
-            <div class="stock-info">
-                <div class="name">${escapeHtml(d.name)}</div>
-                <div class="meta">${escapeHtml(d.use || '')} · TSh ${(d.price || 0).toLocaleString()}</div>
-                <div class="meta" style="color:var(--text-faint);">Matumizi: ${escapeHtml(d.usage || '')}</div>
-            </div>
-            ${currentUser && currentUser.role === 'admin' ? 
-                `<button class="btn-danger btn-sm" onclick="deleteDrug('${d.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
-        </div>
-    `).join('');
-}
-
-async function confirmAddDrug() {
-    if (!currentUser || currentUser.role !== 'admin') {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-
-    const name = document.getElementById('drugName').value.trim();
-    const use = document.getElementById('drugUse').value.trim();
-    const price = parseInt(document.getElementById('drugPrice').value) || 0;
-    const usage = document.getElementById('drugUsage').value.trim();
-
-    if (!name) {
-        showToast('Tafadhali andika jina la dawa', 'warn');
-        return;
-    }
-
-    const drug = {
-        id: 'd' + Date.now() + Math.random().toString(36).substr(2, 4),
-        name: name,
-        use: use || '',
-        price: price,
-        usage: usage || ''
-    };
-
-    await supabase.addDrug(drug);
-    await syncData();
-    closeModal('newDrugModal');
-    document.getElementById('drugName').value = '';
-    document.getElementById('drugUse').value = '';
-    document.getElementById('drugPrice').value = '';
-    document.getElementById('drugUsage').value = '';
-    renderDrugs();
-    populateSaleSelects();
-    populateStockSelects();
-    showToast('✅ Dawa imeongezwa!', 'ok');
-}
-
-async function deleteDrug(drugId) {
-    if (!currentUser || currentUser.role !== 'admin') {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-    if (!confirm('Je, una uhakika unataka kufuta dawa hii?')) return;
-    await supabase.deleteDrug(drugId);
-    await syncData();
-    renderDrugs();
-    populateSaleSelects();
-    populateStockSelects();
-    showToast('Dawa imefutwa', 'warn');
-}
-
-// ====================================================================
-// RENDER: STOCK (Admin anaweza kuandika, wafanyakazi wanaona tu)
-// ====================================================================
-function populateStockSelects() {
-    const select = document.getElementById('stockProductSelect');
-    if (!select) return;
-    const options = '<option value="new">🔵 Dawa/Bidhaa Mpya</option>' + 
-        db.stock.map(s => `<option value="${s.id}">${escapeHtml(s.name)} (Ziko: ${s.qty || 0})</option>`).join('');
-    select.innerHTML = options;
-}
-
-function renderStock() {
-    const container = document.getElementById('stockContainer');
-    
-    // Use stock data (if exists) or drugs data as fallback
-    let stockItems = db.stock || [];
-    if (stockItems.length === 0 && db.drugs && db.drugs.length > 0) {
-        // Convert drugs to stock format for display
-        stockItems = db.drugs.map(d => ({
-            id: d.id,
-            name: d.name,
-            qty: d.qty || 0,
-            price: d.price || 0,
-            description: d.use || '',
-            is_drug: true
-        }));
-    }
-    
-    if (stockItems.length === 0) {
-        container.innerHTML = '<div class="task-list-empty">Hakuna bidhaa kwenye stock. Admin anaweza kuongeza.</div>';
-        return;
-    }
-
-    container.innerHTML = stockItems.map(item => `
-        <div class="stock-item">
-            <div class="stock-img">📦</div>
-            <div class="stock-info">
-                <div class="name">${escapeHtml(item.name)}</div>
-                <div class="meta">${escapeHtml(item.description || '')} · TSh ${(item.price || 0).toLocaleString()}</div>
-            </div>
-            <div class="stock-qty">${item.qty || 0}</div>
-            <div class="stock-price">TSh ${(item.price || 0).toLocaleString()}</div>
-        </div>
-    `).join('');
-}
-
-async function adminUpdateStock() {
-    if (!currentUser || currentUser.role !== 'admin') {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-
-    const select = document.getElementById('stockProductSelect');
-    const selectedValue = select.value;
-    const name = document.getElementById('stockProductName').value.trim();
-    const desc = document.getElementById('stockProductDesc').value.trim();
-    const qty = parseInt(document.getElementById('stockQty').value) || 0;
-    const price = parseInt(document.getElementById('stockPrice').value) || 0;
-
-    if (selectedValue === 'new') {
-        // Add new stock item
-        if (!name) {
-            showToast('Tafadhali andika jina la bidhaa', 'warn');
-            return;
-        }
-        if (qty < 0) {
-            showToast('Idadi haiwezi kuwa chini ya 0', 'warn');
-            return;
-        }
-
-        const stockItem = {
-            id: 'st' + Date.now() + Math.random().toString(36).substr(2, 4),
-            name: name,
-            description: desc || '',
-            qty: qty,
-            price: price,
-            date: getTodayStr()
-        };
-
-        await supabase.addStock(stockItem);
-        await syncData();
-        showToast('✅ Bidhaa imeongezwa kwenye stock!', 'ok');
-    } else {
-        // Update existing stock
-        const stockItem = db.stock.find(s => s.id === selectedValue);
-        if (!stockItem) {
-            showToast('Bidhaa haipatikani!', 'warn');
-            return;
-        }
-
-        if (qty < 0) {
-            showToast('Idadi haiwezi kuwa chini ya 0', 'warn');
-            return;
-        }
-
-        const updates = { qty: qty };
-        if (price > 0) updates.price = price;
-        if (name) updates.name = name;
-        if (desc) updates.description = desc;
-
-        await supabase.updateStock(selectedValue, updates);
-        await syncData();
-        showToast('✅ Stock imebadilishwa!', 'ok');
-    }
-
-    document.getElementById('stockProductName').value = '';
-    document.getElementById('stockProductDesc').value = '';
-    document.getElementById('stockQty').value = '';
-    document.getElementById('stockPrice').value = '';
-    renderStock();
-    populateStockSelects();
-    populateSaleSelects();
-}
-
-// ====================================================================
-// RENDER: SALES
-// ====================================================================
-function populateSaleSelects() {
-    const select = document.getElementById('saleDrugSelect');
-    if (!select) return;
-    // Use stock items for sales
-    const stockItems = db.stock || db.drugs || [];
-    select.innerHTML = stockItems.map(item =>
-        `<option value="${item.id}">${escapeHtml(item.name)} (Ziko: ${item.qty || 0}) - TSh ${(item.price || 0).toLocaleString()}</option>`
-    ).join('') || '<option value="">Hakuna bidhaa</option>';
-}
-
-function renderSales() {
-    const container = document.getElementById('salesHistory');
-    const sales = db.sales ? db.sales.sort((a, b) => b.date.localeCompare(a.date)) : [];
-
-    if (sales.length === 0) {
-        container.innerHTML = '<div class="task-list-empty">Hakuna mauzo bado.</div>';
-        return;
-    }
-
-    const stockItems = db.stock || db.drugs || [];
-    
-    container.innerHTML = sales.slice(0, 30).map(s => {
-        const item = stockItems.find(d => d.id === s.drug_id);
-        return `
-            <div class="sale-item">
-                <div class="sale-product">${item ? escapeHtml(item.name) : 'Bidhaa iliyofutwa'}</div>
-                <div class="sale-detail">
-                    Idadi: ${s.qty || 0} · 
-                    Bei: TSh ${(s.price || 0).toLocaleString()} · 
-                    Jumla: TSh ${((s.qty || 0) * (s.price || 0)).toLocaleString()}
-                    ${s.description ? '· ' + escapeHtml(s.description) : ''}
-                </div>
-                <div style="font-size:11px;color:var(--text-faint);">${s.date || ''} · ${s.user_id ? 'Mfanyakazi: ' + escapeHtml(s.user_id) : ''}</div>
-            </div>
-        `;
-    }).join('');
-}
-
-async function recordSale() {
-    if (!currentUser) return;
-
-    const drugId = document.getElementById('saleDrugSelect').value;
-    const qty = parseInt(document.getElementById('saleQty').value) || 1;
-    const desc = document.getElementById('saleDesc').value.trim();
-
-    if (!drugId) {
-        showToast('Chagua bidhaa', 'warn');
-        return;
-    }
-    if (qty < 1) {
-        showToast('Idadi lazima iwe angalau 1', 'warn');
-        return;
-    }
-
-    // Check stock
-    const stockItems = db.stock || [];
-    const drug = stockItems.find(d => d.id === drugId);
-    if (!drug) {
-        showToast('Bidhaa haipo!', 'warn');
-        return;
-    }
-
-    if (drug.qty < qty) {
-        showToast('Stock haitoshi! Ziko ' + drug.qty + ' tu.', 'warn');
-        return;
-    }
-
-    // Update stock
-    drug.qty -= qty;
-    await supabase.updateStock(drugId, { qty: drug.qty });
-
-    // Record sale
-    const sale = {
-        id: 's' + Date.now() + Math.random().toString(36).substr(2, 4),
-        drug_id: drugId,
-        user_id: currentUser.id,
-        user_name: currentUser.name,
-        qty: qty,
-        price: drug.price || 0,
-        total: qty * (drug.price || 0),
-        description: desc || '',
-        date: getTodayStr()
-    };
-
-    await supabase.addSale(sale);
-    await syncData();
-
-    document.getElementById('saleQty').value = '1';
-    document.getElementById('saleDesc').value = '';
-
-    renderSales();
-    renderStock();
-    populateSaleSelects();
-    populateStockSelects();
-    showToast('✅ Mauzo yamerekodiwa!', 'ok');
-    speakText('Mauzo yamerekodiwa');
-}
-
-// ====================================================================
-// RENDER: PATIENTS
-// ====================================================================
-function renderPatients() {
-    const container = document.getElementById('patientsContainer');
-    const patients = db.patients ? db.patients.sort((a, b) => b.date.localeCompare(a.date)) : [];
-
-    if (patients.length === 0) {
-        container.innerHTML = '<div class="task-list-empty">Hakuna wagonjwa wamesajiliwa.</div>';
-        return;
-    }
-
-    container.innerHTML = patients.map(p => `
-        <div class="patient-item">
-            <div class="p-name">${escapeHtml(p.name || '')}</div>
-            <div class="p-detail">
-                📞 ${escapeHtml(p.phone || '')} · 
-                📍 ${escapeHtml(p.address || '')}
-            </div>
-            <div class="p-detail" style="color:var(--text-faint);">${escapeHtml(p.notes || '')}</div>
-            <div style="margin-top:4px;">
-                <span class="p-status ${p.taken ? 'taken' : 'not-taken'}">
-                    ${p.taken ? '✅ Amechukua dawa' : '❌ Hajachukua dawa'}
-                </span>
-                ${currentUser ? `<button class="btn-edit btn-sm" onclick="togglePatientTaken('${p.id}')">${p.taken ? '❌' : '✅'}</button>` : ''}
-                ${currentUser && currentUser.role === 'admin' ? 
-                    `<button class="btn-danger btn-sm" onclick="deletePatient('${p.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
-            </div>
-            <div style="font-size:11px;color:var(--text-faint);margin-top:4px;">${p.date || ''}</div>
-        </div>
-    `).join('');
-}
-
-async function confirmAddPatient() {
-    if (!currentUser) return;
-
-    const name = document.getElementById('patientName').value.trim();
-    const phone = document.getElementById('patientPhone').value.trim();
-    const address = document.getElementById('patientAddress').value.trim();
-    const notes = document.getElementById('patientNotes').value.trim();
-
-    if (!name) {
-        showToast('Tafadhali andika jina la mgonjwa', 'warn');
-        return;
-    }
-
-    const patient = {
-        id: 'p' + Date.now() + Math.random().toString(36).substr(2, 4),
-        name: name,
-        phone: phone || '',
-        address: address || '',
-        notes: notes || '',
-        taken: false,
-        date: getTodayStr()
-    };
-
-    await supabase.addPatient(patient);
-    await syncData();
-    closeModal('newPatientModal');
-    document.getElementById('patientName').value = '';
-    document.getElementById('patientPhone').value = '';
-    document.getElementById('patientAddress').value = '';
-    document.getElementById('patientNotes').value = '';
-    renderPatients();
-    showToast('✅ Mgonjwa amesajiliwa!', 'ok');
-}
-
-async function togglePatientTaken(patientId) {
-    const patient = db.patients.find(p => p.id === patientId);
-    if (!patient) return;
-    patient.taken = !patient.taken;
-    await supabase.query('patients', 'PATCH', { taken: patient.taken }, patientId);
-    await syncData();
-    renderPatients();
-    showToast(patient.taken ? '✅ Mgonjwa amechukua dawa' : '❌ Mgonjwa hajachukua dawa', patient.taken ? 'ok' : 'warn');
-}
-
-async function deletePatient(patientId) {
-    if (!currentUser || currentUser.role !== 'admin') {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-    if (!confirm('Je, una uhakika unataka kumfuta mgonjwa huyu?')) return;
-    await supabase.deletePatient(patientId);
-    await syncData();
-    renderPatients();
-    showToast('Mgonjwa amefutwa', 'warn');
-}
-
-// ====================================================================
-// RENDER: ADMIN
-// ====================================================================
-function populateAdminSelects() {
-    if (!currentUser || currentUser.id !== ADMIN_ID) return;
-
-    const users = db.users.filter(u => u.id !== ADMIN_ID);
-    
-    const selects = ['adminTaskUser', 'adminBonusUser', 'adminWinnerUser'];
-    selects.forEach(id => {
-        const select = document.getElementById(id);
-        if (!select) return;
-        select.innerHTML = users.map(u =>
-            `<option value="${u.id}">${u.name || u.id} (${u.id})</option>`
-        ).join('') || '<option value="">Hakuna wafanyakazi</option>';
-    });
-
-    document.getElementById('adminTaskDate').value = getTodayStr();
-}
-
-function renderAdmin() {
-    if (!currentUser || currentUser.id !== ADMIN_ID) {
-        const container = document.getElementById('adminUserList');
-        if (container) {
-            container.innerHTML = `
-                <div class="task-list-empty" style="padding:20px;border:2px solid var(--red-soft);border-radius:12px;">
-                    <i class="fa-solid fa-lock" style="font-size:32px;display:block;margin-bottom:10px;color:var(--red);"></i>
-                    <strong style="color:var(--red);">Sehemu hii ni ya Admin pekee!</strong>
-                </div>
-            `;
-        }
-        return;
-    }
-
-    const container = document.getElementById('adminUserList');
-    if (!db.users || db.users.length === 0) {
-        container.innerHTML = '<div class="task-list-empty">Hakuna wafanyakazi.</div>';
-        return;
-    }
-
-    container.innerHTML = db.users.filter(u => u.id !== ADMIN_ID).map(u => {
-        const today = getTodayStr();
-        const hours = getWorkHoursForDay(u.id, today);
-        const isComplete = hours >= REQUIRED_HOURS;
-        const attendance = db.attendance.find(a => a.user_id === u.id && a.date === today);
-        
-        let statusIcon = '⚪';
-        let statusText = 'Hajaingia';
-        let statusColor = 'var(--text-faint)';
-        if (attendance && attendance.check_in) {
-            if (isComplete) {
-                statusIcon = '✅';
-                statusText = 'Saa 10 Kamili';
-                statusColor = 'var(--green)';
-            } else {
-                statusIcon = '🟢';
-                statusText = `Saa ${hours.toFixed(1)}/${REQUIRED_HOURS}`;
-                statusColor = 'var(--orange)';
-            }
-        }
-
-        const userBonuses = db.bonuses ? db.bonuses.filter(b => b.user_id === u.id) : [];
-        const totalBonus = userBonuses.reduce((sum, b) => sum + (b.amount || 0), 0);
-        
-        return `
-            <div class="admin-user-card">
-                <div class="user-info">
-                    <div class="name">${escapeHtml(u.name || '')} 
-                        <span style="font-size:11px;color:${statusColor};">${statusIcon} ${statusText}</span>
-                        ${totalBonus > 0 ? `<span style="font-size:11px;color:var(--gold);">🏆 TSh ${totalBonus.toLocaleString()}</span>` : ''}
-                    </div>
-                    <div class="role">ID: ${u.id || ''} · Simu: ${u.phone || '-'}</div>
-                </div>
-                <div class="user-actions">
-                    <button class="btn-edit btn-sm" onclick="openEditUser('${u.id}')"><i class="fa-solid fa-pen"></i></button>
-                    <button class="btn-danger btn-sm" onclick="deleteUser('${u.id}')"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            </div>
-        `;
-    }).join('');
-
-    populateAdminSelects();
-    renderApproveTasks();
-    generateAIReport();
-}
-
-// ====================================================================
-// APPROVE TASKS (Admin only)
-// ====================================================================
-function renderApproveTasks() {
-    if (!currentUser || currentUser.id !== ADMIN_ID) return;
-    
-    const container = document.getElementById('adminApproveTasks');
-    if (!container) return;
-    
-    const pendingTasks = db.tasks.filter(t => t.done && !t.approved);
-    
-    if (pendingTasks.length === 0) {
-        container.innerHTML = '<div class="task-list-empty">✅ Hakuna majukumu yanayosubiri kuthibitishwa.</div>';
-        return;
-    }
-    
-    container.innerHTML = pendingTasks.map(t => {
-        const user = db.users.find(u => u.id === t.user_id);
-        return `
-            <div class="task-item" style="border-left: 3px solid var(--gold);">
-                <div class="task-info">
-                    <div class="task-name">${escapeHtml(t.name)}</div>
-                    <div class="task-meta">
-                        👤 ${user ? escapeHtml(user.name) : t.user_id} · 
-                        📅 ${t.date} · 
-                        ${t.priority === 'high' ? '🔴 Juu' : t.priority === 'medium' ? '🟡 Kati' : '🟢 Chini'}
-                        ${t.description ? '· ' + escapeHtml(t.description) : ''}
-                    </div>
-                </div>
-                <button class="btn-edit btn-sm" onclick="approveTask('${t.id}')">
-                    <i class="fa-solid fa-check-double"></i> Thibitisha
-                </button>
-                <button class="btn-danger btn-sm" onclick="deleteTask('${t.id}')">
-                    <i class="fa-solid fa-trash"></i>
+                <button class="btn-gold btn-sm" onclick="openModal('newPatientModal')">
+                    <i class="fa-solid fa-user-plus"></i> Sajili Mgonjwa
                 </button>
             </div>
-        `;
-    }).join('');
-}
 
-async function approveTask(taskId) {
-    if (!currentUser || currentUser.id !== ADMIN_ID) {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-    
-    const task = db.tasks.find(t => t.id === taskId);
-    if (!task) return;
-    
-    if (!task.done) {
-        showToast('Kazi haijakamilika bado!', 'warn');
-        return;
-    }
-    
-    task.approved = true;
-    await supabase.updateTask(taskId, { approved: true });
-    await syncData();
-    renderAll();
-    showToast('✅ Kazi "' + task.name + '" imethibitishwa!', 'ok');
-    speakText('Kazi imethibitishwa na Admin');
-}
-
-// ====================================================================
-// TASK OPERATIONS
-// ====================================================================
-async function toggleTask(taskId) {
-    const task = db.tasks.find(t => t.id === taskId);
-    if (!task) return;
-
-    task.done = !task.done;
-    if (!task.done) {
-        task.approved = false; // Reset approval if undone
-    }
-    await supabase.updateTask(taskId, { done: task.done, approved: task.approved });
-    await syncData();
-    renderAll();
-
-    if (task.done) {
-        showToast('✅ ' + task.name + ' imekamilika! Yanasubiri kuthibitishwa na Admin.', 'ok');
-        speakText('Hongera! Umemaliza: ' + task.name + '. Yanasubiri kuthibitishwa na Admin.');
-    }
-}
-
-async function deleteTask(taskId) {
-    if (!currentUser || currentUser.id !== ADMIN_ID) {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-    if (!confirm('Je, una uhakika unataka kufuta kazi hii?')) return;
-    await supabase.deleteTask(taskId);
-    await syncData();
-    renderAll();
-    showToast('Kazi imefutwa', 'warn');
-}
-
-async function confirmAddTask() {
-    if (!currentUser) return;
-
-    const name = document.getElementById('taskNameInput').value.trim();
-    const desc = document.getElementById('taskDescInput').value.trim();
-    const date = document.getElementById('taskDateInput').value;
-    const priority = document.getElementById('taskPriorityInput').value;
-
-    if (!name) {
-        showToast('Tafadhali andika jina la kazi', 'warn');
-        return;
-    }
-
-    const task = {
-        id: 't' + Date.now() + Math.random().toString(36).substr(2, 4),
-        user_id: currentUser.id,
-        name: name,
-        description: desc || '',
-        date: date || getTodayStr(),
-        priority: priority || 'medium',
-        done: false,
-        approved: false
-    };
-
-    await supabase.addTask(task);
-    await syncData();
-    closeModal('newTaskModal');
-    document.getElementById('taskNameInput').value = '';
-    document.getElementById('taskDescInput').value = '';
-    renderAll();
-    showToast('✅ Kazi imeongezwa!', 'ok');
-    speakText('Kazi imeongezwa');
-}
-
-// ====================================================================
-// ADMIN: ASSIGN TASK
-// ====================================================================
-async function adminAssignTask() {
-    if (!currentUser || currentUser.id !== ADMIN_ID) {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-
-    const userId = document.getElementById('adminTaskUser').value;
-    const name = document.getElementById('adminTaskName').value.trim();
-    const desc = document.getElementById('adminTaskDesc').value.trim();
-    const date = document.getElementById('adminTaskDate').value;
-    const priority = document.getElementById('adminTaskPriority').value;
-
-    if (!userId || !name) {
-        showToast('Tafadhali jaza maelezo yote', 'warn');
-        return;
-    }
-
-    const task = {
-        id: 't' + Date.now() + Math.random().toString(36).substr(2, 4),
-        user_id: userId,
-        name: name,
-        description: desc || 'Imepewa na Admin',
-        date: date || getTodayStr(),
-        priority: priority || 'medium',
-        done: false,
-        approved: false
-    };
-
-    await supabase.addTask(task);
-    await syncData();
-
-    document.getElementById('adminTaskName').value = '';
-    document.getElementById('adminTaskDesc').value = '';
-    renderAll();
-
-    const user = db.users.find(u => u.id === userId);
-    if (user) {
-        showToast('✅ Kazi "' + name + '" imegawanywa kwa ' + user.name + '!', 'ok');
-        speakText('Kazi mpya imegawanywa kwa ' + user.name + ': ' + name);
-    }
-}
-
-// ====================================================================
-// ADMIN: BONUS MANAGEMENT
-// ====================================================================
-async function adminAddBonus() {
-    if (!currentUser || currentUser.id !== ADMIN_ID) {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-
-    const userId = document.getElementById('adminBonusUser').value;
-    const amount = parseInt(document.getElementById('adminBonusAmount').value);
-    const reason = document.getElementById('adminBonusReason').value.trim();
-
-    if (!userId || isNaN(amount) || amount <= 0) {
-        showToast('Tafadhali jaza taarifa sahihi', 'warn');
-        return;
-    }
-
-    const bonus = {
-        id: 'b' + Date.now() + Math.random().toString(36).substr(2, 4),
-        user_id: userId,
-        amount: amount,
-        reason: reason || 'Bonus',
-        date: getTodayStr()
-    };
-
-    await supabase.addBonus(bonus);
-    await syncData();
-
-    document.getElementById('adminBonusAmount').value = '';
-    document.getElementById('adminBonusReason').value = '';
-    renderAll();
-    showToast('✅ Bonus ya TSh ' + amount.toLocaleString() + ' imetolewa!', 'ok');
-    speakText('Bonus imetolewa');
-}
-
-// ====================================================================
-// BONUS WINNER (3D)
-// ====================================================================
-async function setBonusWinner() {
-    if (!currentUser || currentUser.id !== ADMIN_ID) {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-
-    const userId = document.getElementById('adminWinnerUser').value;
-    const amount = parseInt(document.getElementById('adminWinnerAmount').value);
-
-    if (!userId || isNaN(amount) || amount <= 0) {
-        showToast('Tafadhali jaza taarifa sahihi', 'warn');
-        return;
-    }
-
-    const user = db.users.find(u => u.id === userId);
-    if (!user) {
-        showToast('Mfanyakazi hapatikani!', 'warn');
-        return;
-    }
-
-    db.winner = { user_id: userId, amount: amount, name: user.name };
-    await supabase.updateWinner('winner', { user_id: userId, amount: amount, name: user.name });
-    saveData();
-
-    document.getElementById('adminWinnerAmount').value = '';
-    updateBonus3D();
-    showToast('🏆 ' + user.name + ' ameteuliwa kuwa mshindi wa bonus TSh ' + amount.toLocaleString() + '!', 'ok');
-    speakText(user.name + ' ameteuliwa kuwa mshindi wa bonus');
-}
-
-function updateBonus3D() {
-    const container = document.getElementById('bonus3dContainer');
-    if (!container) return;
-
-    const winner = db.winner || { name: 'Hakuna', amount: 0 };
-    const user = db.users.find(u => u.id === winner.user_id);
-    const name = user ? user.name : (winner.name || 'Hakuna');
-
-    container.innerHTML = `
-        <div class="label">🏆 MFANYAKAZI BORA WA MWEZI</div>
-        <div class="winner">${escapeHtml(name)}</div>
-        <div class="amount">TSh ${(winner.amount || 0).toLocaleString()}</div>
-        <div class="label">Bonus ya Mwezi</div>
-    `;
-}
-
-// ====================================================================
-// ATTENDANCE OPERATIONS
-// ====================================================================
-async function handleCheckIn() {
-    if (!currentUser) return;
-    
-    const picker = document.getElementById('attendanceDatePicker');
-    const today = getTodayStr();
-    const selectedDate = picker.value || today;
-    
-    if (selectedDate > today) {
-        showToast('Huwezi kuingia kwa tarehe ya baadaye!', 'warn');
-        return;
-    }
-    
-    const now = new Date();
-    const timeStr = now.toTimeString().slice(0, 8);
-    
-    let record = db.attendance.find(a => a.user_id === currentUser.id && a.date === selectedDate);
-    
-    if (record && record.check_in) {
-        showToast('Tayari umeingia kazini kwa tarehe ' + selectedDate + '!', 'warn');
-        return;
-    }
-    
-    const data = {
-        user_id: currentUser.id,
-        date: selectedDate,
-        check_in: timeStr,
-        check_out: null
-    };
-    
-    if (record) {
-        await supabase.query('attendance', 'PATCH', { check_in: timeStr, check_out: null }, record.id);
-    } else {
-        await supabase.addAttendance(data);
-    }
-    
-    await syncData();
-    renderAll();
-    
-    showToast(`✅ Umeingia kazini saa ${timeStr} kwa tarehe ${selectedDate}.`, 'ok');
-    speakText(`Umeingia kazini saa ${timeStr}.`);
-    
-    if (selectedDate === today) {
-        startWorkTimer(timeStr);
-    }
-}
-
-async function handleCheckOut() {
-    if (!currentUser) return;
-    
-    const picker = document.getElementById('attendanceDatePicker');
-    const today = getTodayStr();
-    const selectedDate = picker.value || today;
-    
-    if (selectedDate > today) {
-        showToast('Huwezi kutoka kwa tarehe ya baadaye!', 'warn');
-        return;
-    }
-    
-    const record = db.attendance.find(a => a.user_id === currentUser.id && a.date === selectedDate);
-    
-    if (!record || !record.check_in) {
-        showToast('Haujaingia kazini kwa tarehe ' + selectedDate + '! Ingia kwanza.', 'warn');
-        return;
-    }
-    if (record.check_out) {
-        showToast('Tayari umetoka kazini kwa tarehe ' + selectedDate + '!', 'warn');
-        return;
-    }
-    
-    const now = new Date();
-    const timeStr = now.toTimeString().slice(0, 8);
-    const hours = getWorkHoursForDay(currentUser.id, selectedDate);
-    const isComplete = hours >= REQUIRED_HOURS;
-    const isLate = hours < MIN_WORK_HOURS;
-    
-    if (isLate && selectedDate === today) {
-        showToast('⚠️ Huwezi kutoka! Umefanya saa ' + hours.toFixed(1) + ' tu. Inahitajika saa ' + MIN_WORK_HOURS.toFixed(1) + ' (1:40) kwanza.', 'warn');
-        speakText('Huwezi kutoka! Umefanya saa ' + hours.toFixed(1) + ' tu. Inahitajika saa moja dakika arobaini kwanza.');
-        return;
-    }
-    
-    await supabase.query('attendance', 'PATCH', { check_out: timeStr }, record.id);
-    await syncData();
-    renderAll();
-    
-    let msg = `✅ Umetoka kazini saa ${timeStr}.`;
-    if (!isComplete) {
-        msg += ` ⚠️ Tahadhari! Umefanya saa ${hours.toFixed(1)} tu kati ya ${REQUIRED_HOURS} zinazotakiwa.`;
-        showToast(msg, 'warn');
-        speakText(`Umetoka kazini saa ${timeStr}. Tahadhari! Umefanya saa ${hours.toFixed(1)} tu kati ya ${REQUIRED_HOURS} zinazotakiwa.`);
-    } else {
-        msg += ` 🎉 Hongera! Umekamilisha saa ${REQUIRED_HOURS} za kazi!`;
-        showToast(msg, 'ok');
-        speakText(`Umetoka kazini saa ${timeStr}. Hongera! Umekamilisha saa ${REQUIRED_HOURS} za kazi.`);
-    }
-    
-    if (selectedDate === today) {
-        stopWorkTimer();
-        const timerDisplay = document.getElementById('workTimerDisplay');
-        if (timerDisplay) {
-            timerDisplay.style.color = 'var(--gold)';
-            timerDisplay.innerHTML = '00:00:00';
-        }
-    }
-}
-
-// ====================================================================
-// USER OPERATIONS (Admin)
-// ====================================================================
-async function confirmAddUser() {
-    if (!currentUser || currentUser.id !== ADMIN_ID) {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-
-    const name = document.getElementById('newUserName').value.trim();
-    const id = document.getElementById('newUserId').value.trim();
-    const phone = document.getElementById('newUserPhone').value.trim();
-    const pass = document.getElementById('newUserPass').value.trim() || '123';
-
-    if (!name || !id) {
-        showToast('Tafadhali jaza taarifa zote', 'warn');
-        return;
-    }
-
-    if (db.users && db.users.find(u => u.id === id)) {
-        showToast('Namba hii tayari ipo!', 'warn');
-        return;
-    }
-
-    const user = { id, name, password: pass, role: 'staff', phone: phone || '' };
-    await supabase.addUser(user);
-    await syncData();
-    closeModal('newUserModal');
-    document.getElementById('newUserName').value = '';
-    document.getElementById('newUserId').value = '';
-    document.getElementById('newUserPhone').value = '';
-    document.getElementById('newUserPass').value = '123';
-    renderAll();
-    showToast('✅ Mfanyakazi ' + name + ' amesajiliwa!', 'ok');
-    showToast('🔑 Namba: "' + id + '" · Nenosiri: "' + pass + '"', 'ok');
-    speakText('Mfanyakazi ' + name + ' amesajiliwa');
-}
-
-async function deleteUser(userId) {
-    if (!currentUser || currentUser.id !== ADMIN_ID) {
-        showToast('Sehemu hii ni ya Admin pekee!', 'warn');
-        return;
-    }
-    if (userId === ADMIN_ID) {
-        showToast('Huwezi kumfuta Admin!', 'warn');
-        return;
-    }
-    if (!confirm('Je, una uhakika unataka kumfuta mfanyakazi huyu?')) return;
-
-    await supabase.deleteUser(userId);
-    await syncData();
-    renderAll();
-    showToast('✅ Mfanyakazi amefutwa!', 'ok');
-}
-
-function openEditUser(userId) {
-    const user = db.users.find(u => u.id === userId);
-    if (!user) return;
-
-    document.getElementById('editUserId').value = userId;
-    document.getElementById('editUserName').value = user.name || '';
-    document.getElementById('editUserPhone').value = user.phone || '';
-    document.getElementById('editUserPass').value = '';
-
-    openModal('editUserModal');
-}
-
-async function confirmEditUser() {
-    const userId = document.getElementById('editUserId').value;
-    const name = document.getElementById('editUserName').value.trim();
-    const phone = document.getElementById('editUserPhone').value.trim();
-    const pass = document.getElementById('editUserPass').value.trim();
-
-    if (!name) {
-        showToast('Tafadhali andika jina', 'warn');
-        return;
-    }
-
-    const updateData = { name: name };
-    if (phone) updateData.phone = phone;
-    if (pass) updateData.password = pass;
-
-    await supabase.updateUser(userId, updateData);
-    await syncData();
-    closeModal('editUserModal');
-    renderAll();
-    showToast('✅ Taarifa zimebadilishwa!', 'ok');
-}
-
-// ====================================================================
-// AI REPORT GENERATION
-// ====================================================================
-function generateAIReport() {
-    if (!currentUser || currentUser.id !== ADMIN_ID) return;
-    
-    const container = document.getElementById('aiReportContainer');
-    if (!container) return;
-    
-    const today = getTodayStr();
-    const reports = [];
-    
-    db.users.forEach(user => {
-        if (user.id === ADMIN_ID) return;
-        
-        const tasks = db.tasks.filter(t => t.user_id === user.id);
-        const todayTasks = tasks.filter(t => t.date === today);
-        const done = todayTasks.filter(t => t.done).length;
-        const approved = todayTasks.filter(t => t.approved).length;
-        const total = todayTasks.length;
-        const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-        
-        const attendance = db.attendance.find(a => a.user_id === user.id && a.date === today);
-        const hours = attendance ? getWorkHoursForDay(user.id, today) : 0;
-        const isComplete = hours >= REQUIRED_HOURS;
-        const isLate = attendance && attendance.check_in && hours < MIN_WORK_HOURS && attendance.check_out;
-        
-        const userBonuses = db.bonuses ? db.bonuses.filter(b => b.user_id === user.id) : [];
-        const totalBonus = userBonuses.reduce((sum, b) => sum + (b.amount || 0), 0);
-        
-        let suggestion = '';
-        let suggestionType = 'good';
-        let advice = '';
-        
-        if (!attendance || !attendance.check_in) {
-            suggestion = '⚠️ Hajaingia kazini leo.';
-            advice = 'Mwasiliane ili kujua sababu ya kutokuwepo.';
-            suggestionType = 'bad';
-        } else if (isLate) {
-            suggestion = '⚠️ Amechelewa! Alifanya kazi chini ya saa 1:40.';
-            advice = 'Mwonye kuhusu muda wa kuingia.';
-            suggestionType = 'bad';
-        } else if (!isComplete && attendance.check_in) {
-            const remaining = (REQUIRED_HOURS - hours).toFixed(1);
-            suggestion = '📌 Bado anahitaji saa ' + remaining + ' za kazi.';
-            advice = 'Mpe kazi za ziada au mfuatilie.';
-            suggestionType = 'warning';
-        } else if (total > 0 && pct < 50) {
-            suggestion = '📌 Amefanya ' + done + '/' + total + ' (' + pct + '%).';
-            advice = 'Mpe motisha au msaada wa ziada.';
-            suggestionType = 'warning';
-        } else if (total > 0 && pct >= 80 && approved === total) {
-            suggestion = '👏 Utendaji bora! ' + done + '/' + total + ' yamekamilika na kuthibitishwa.';
-            advice = 'Endelea kumtia moyo. Anafanya vizuri!';
-            suggestionType = 'good';
-        } else if (total > 0 && pct >= 80) {
-            suggestion = '👍 Amekamilisha ' + done + '/' + total + ' lakini yanasubiri kuthibitishwa.';
-            advice = 'Thibitisha majukumu yake.';
-            suggestionType = 'warning';
-        } else if (total === 0) {
-            suggestion = '📋 Hakuna majukumu.';
-            advice = 'Gawanya baadhi ya majukumu.';
-            suggestionType = 'warning';
-        } else {
-            suggestion = '✅ Anaendelea vizuri.';
-            advice = 'Endelea kufuatilia.';
-            suggestionType = 'good';
-        }
-        
-        reports.push({
-            user: user,
-            tasks: { total, done, approved, pct },
-            attendance: { hasEntry: !!attendance && !!attendance.check_in, hours, isComplete, isLate },
-            bonus: totalBonus,
-            suggestion,
-            advice,
-            suggestionType
-        });
-    });
-    
-    reports.sort((a, b) => a.tasks.pct - b.tasks.pct);
-    
-    let html = `
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;">
-            <div style="padding:10px;background:var(--panel-2);border-radius:8px;">
-                <div style="font-size:13px;color:var(--gold);">📊 Muhtasari</div>
-                <div style="font-size:12px;color:var(--text-dim);">
-                    Wafanyakazi: ${reports.length} ·
-                    Wameingia: ${reports.filter(r => r.attendance.hasEntry).length}
-                </div>
-            </div>
-            <div style="padding:10px;background:var(--panel-2);border-radius:8px;">
-                <div style="font-size:13px;color:var(--gold);">🤖 AI Pendekezo</div>
-                <div style="font-size:12px;color:var(--text-dim);">
-                    ${reports.filter(r => r.suggestionType === 'bad').length > 0 ? 
-                        `⚠️ ${reports.filter(r => r.suggestionType === 'bad').length} wana tatizo` : 
-                        '✅ Wote wako sawa'}
-                </div>
-            </div>
-            <div style="padding:10px;background:var(--panel-2);border-radius:8px;">
-                <div style="font-size:13px;color:var(--gold);">🏆 Bonus</div>
-                <div style="font-size:12px;color:var(--text-dim);">
-                    Jumla ya Bonus: TSh ${reports.reduce((sum, r) => sum + r.bonus, 0).toLocaleString()}
-                </div>
-            </div>
-        </div>
-    `;
-    
-    reports.forEach(r => {
-        const statusColor = r.suggestionType === 'good' ? 'good' : r.suggestionType === 'warning' ? 'warning' : 'bad';
-        html += `
-            <div class="report-item">
-                <div class="report-title">${escapeHtml(r.user.name)} (${r.user.id})</div>
-                <div class="report-detail">
-                    📋 ${r.tasks.done}/${r.tasks.total} (${r.tasks.pct}%) · 
-                    ✅ ${r.tasks.approved || 0} yamethibitishwa ·
-                    🕐 ${r.attendance.hours.toFixed(1)}/${REQUIRED_HOURS}
-                    ${r.attendance.isLate ? ' ⚠️ Imechelewa' : ''}
-                    ${r.attendance.isComplete ? ' ✅' : ''}
-                    ${r.bonus > 0 ? ' 🏆 TSh ' + r.bonus.toLocaleString() : ''}
-                </div>
-                <div class="ai-suggestion">
-                    <span class="ai-icon"><i class="fa-solid fa-robot"></i></span>
-                    <strong>${r.suggestion}</strong><br>
-                    <span style="font-size:12px;color:var(--text-dim);">💡 Ushauri: ${r.advice}</span>
-                </div>
-                <span class="report-status ${statusColor}">
-                    ${r.suggestionType === 'good' ? '✅ Mzuri' : r.suggestionType === 'warning' ? '⚠️ Tahadhari' : '❌ Hitilafu'}
-                </span>
-            </div>
-        `;
-    });
-    
-    container.innerHTML = html;
-}
-
-// ====================================================================
-// PRINT TASKS
-// ====================================================================
-function printTasks() {
-    if (!currentUser) return;
-    
-    const today = getTodayStr();
-    const userTasks = db.tasks.filter(t => t.user_id === currentUser.id && t.date === today);
-    
-    if (userTasks.length === 0) {
-        showToast('Hakuna majukumu ya leo ya kupringi!', 'warn');
-        return;
-    }
-    
-    const done = userTasks.filter(t => t.done).length;
-    const approved = userTasks.filter(t => t.approved).length;
-    const total = userTasks.length;
-    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-    
-    let printContent = `
-        <html><head><title>Majukumu ya ${currentUser.name}</title>
-        <style>
-            body { font-family: 'Inter', sans-serif; padding: 40px; max-width: 800px; margin: auto; }
-            h1 { color: #D4A24E; font-size: 24px; }
-            .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #D4A24E; padding-bottom: 10px; margin-bottom: 20px; }
-            .task-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #eee; }
-            .task-check { width: 20px; height: 20px; border: 2px solid #ccc; border-radius: 4px; display: inline-block; text-align: center; line-height: 18px; }
-            .task-check.done { background: #3DBE7A; border-color: #3DBE7A; color: white; }
-            .task-name { flex: 1; }
-            .task-name.done { text-decoration: line-through; color: #999; }
-            .task-meta { font-size: 12px; color: #666; }
-            .status { font-size: 12px; padding: 2px 10px; border-radius: 12px; font-weight: 600; }
-            .status.pending { background: #fee2e2; color: #dc2626; }
-            .status.done { background: #dcfce7; color: #16a34a; }
-            .status.approved { background: #fef3c7; color: #D4A24E; }
-            .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #ddd; padding-top: 20px; }
-            .summary { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; }
-            .bonus-section { background: #fef3c7; padding: 10px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #D4A24E; }
-        </style>
-        </head><body>
-    `;
-    
-    const dateDisplay = new Date().toLocaleDateString('sw-TZ', {
-        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-    });
-    
-    const userBonuses = db.bonuses ? db.bonuses.filter(b => b.user_id === currentUser.id) : [];
-    const totalBonus = userBonuses.reduce((sum, b) => sum + (b.amount || 0), 0);
-    
-    printContent += `
-        <div class="header">
-            <div>
-                <h1>📋 Majukumu ya ${currentUser.name}</h1>
-                <p style="color:#666;font-size:14px;">ID: ${currentUser.id} · Tarehe: ${dateDisplay}</p>
-            </div>
-            <div style="text-align:right;font-size:14px;">
-                <div style="font-weight:600;color:#D4A24E;">Utendaji: ${pct}%</div>
-                <div style="color:#666;">${done}/${total} yamekamilika</div>
-                <div style="color:#D4A24E;">${approved} yamethibitishwa</div>
-            </div>
-        </div>
-        
-        <div class="summary">
-            <strong>📌 Muhtasari:</strong> 
-            Majukumu yote: ${total} · Yamekamilika: ${done} · Yamesalia: ${total - done} · Yamethibitishwa: ${approved} · Utendaji: ${pct}%
-        </div>
-        ${totalBonus > 0 ? `
-        <div class="bonus-section">
-            🏆 Bonus Jumla: TSh ${totalBonus.toLocaleString()}
-        </div>` : ''}
-    `;
-    
-    const sorted = [...userTasks].sort((a, b) => {
-        if (a.done !== b.done) return a.done ? 1 : -1;
-        if (a.approved !== b.approved) return a.approved ? 1 : -1;
-        const order = { high: 0, medium: 1, low: 2 };
-        return (order[a.priority] || 1) - (order[b.priority] || 1);
-    });
-    
-    sorted.forEach(t => {
-        const priorityIcon = t.priority === 'high' ? '🔴' : t.priority === 'medium' ? '🟡' : '🟢';
-        const statusText = t.approved ? '✅ Imethibitishwa' : (t.done ? '⏳ Inasubiri' : '⏳ Inasubiri');
-        const statusClass = t.approved ? 'approved' : (t.done ? 'done' : 'pending');
-        printContent += `
-            <div class="task-item">
-                <div class="task-check ${t.done ? 'done' : ''}">${t.done ? '✓' : ''}</div>
-                <div>
-                    <div class="task-name ${t.done ? 'done' : ''}">${escapeHtml(t.name)}</div>
-                    <div class="task-meta">${priorityIcon} ${t.priority || 'Kati'} ${t.description ? '· ' + escapeHtml(t.description) : ''}</div>
-                </div>
-                <span class="status ${statusClass}">${statusText}</span>
-            </div>
-        `;
-    });
-    
-    printContent += `
-        <div class="footer">
-            <p>Ripoti hii imetolewa na Dr. William System · ${new Date().toLocaleString('sw-TZ')}</p>
-        </div>
-        </body></html>
-    `;
-    
-    const printWindow = window.open('', '_blank', 'width=800,height=600');
-    if (printWindow) {
-        printWindow.document.write(printContent);
-        printWindow.document.close();
-        setTimeout(() => { printWindow.print(); }, 500);
-    } else {
-        showToast('❌ Tafadhali ruhusu pop-ups!', 'warn');
-    }
-}
-
-// ====================================================================
-// MODAL HELPERS
-// ====================================================================
-function openModal(id) {
-    const modal = document.getElementById(id);
-    if (!modal) return;
-    modal.classList.add('open');
-    modal.style.display = 'flex';
-}
-
-function closeModal(id) {
-    const modal = document.getElementById(id);
-    if (!modal) return;
-    modal.classList.remove('open');
-    modal.style.display = 'none';
-}
-
-// ====================================================================
-// RENDER ALL
-// ====================================================================
-function renderAll() {
-    renderPage(currentPage);
-    renderDashboard();
-    tickClock();
-    updateBonus3D();
-    if (currentUser && currentUser.role === 'admin') {
-        generateAIReport();
-        populateAdminSelects();
-        renderApproveTasks();
-    }
-    populateSaleSelects();
-    populateStockSelects();
-}
-
-// ====================================================================
-// CLOCK
-// ====================================================================
-function tickClock() {
-    document.getElementById('clockDisplay').textContent = new Date().toLocaleTimeString('en-GB');
-}
-setInterval(tickClock, 1000);
-
-// ====================================================================
-// INIT
-// ====================================================================
-function init() {
-    if (!db.users.find(u => u.id === ADMIN_ID)) {
-        db.users.push({ id: ADMIN_ID, name: 'Admin', password: ADMIN_PASS, role: 'admin', phone: '0712345678' });
-        saveData();
-    }
-
-    if (!db.winner) {
-        db.winner = { user_id: null, amount: 0, name: 'Hakuna' };
-        saveData();
-    }
-    
-    document.getElementById('loginId').value = '';
-    document.getElementById('loginPass').value = '';
-    document.getElementById('taskDateInput').value = getTodayStr();
-
-    document.querySelectorAll('.modal-overlay').forEach(m => {
-        m.addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('open');
-                this.style.display = 'none';
-            }
-        });
-    });
-
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.getVoices();
-    }
-
-    setTimeout(syncData, 2000);
-
-    console.log('✅ Dr. William Clinic Ofisi ya Kazi');
-    console.log('👑 Admin: *** / ***');
-    console.log('📦 Vipengele: Sheria, Dawa, Stock, Mauzo, Wagonjwa, Bonus 3D, Voice Reminders');
-    console.log('☁️ Data zote zimehifadhiwa Cloud (Supabase)');
-    console.log('🔊 Voice Reminders: Kila dakika 5 inakumbusha majukumu yaliyobaki');
-    console.log('📌 Majukumu yanakamilishwa na mfanyakazi, yanathibitishwa na Admin');
-}
-
-document.addEventListener('DOMContentLoaded', init);
-if (document.readyState !== 'loading') init();
-</script>
-</body>
-</html>
+            <div class="card" style="padding:0;overflow:hidden;">
+                <div class="table-responsive">
+                    <table class="patient-table" id="patientTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Jina</th>
+                                <th>Simu</th>
+                                <th>Mahali</th>
+                                <th>Maelezo</th>
+                                <th>Dawa</th>
+                                <th>Tarehe</th>
+                                <th>Vitendo</th>
+                            </tr>
+                        </thead>
